@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home Page'),
+        title: const Text('Home Page'),
         automaticallyImplyLeading: false, // ปิดปุ่ม Back
       ),
       body: Center(
@@ -15,7 +17,7 @@ class HomePage extends StatelessWidget {
             Navigator.pushNamedAndRemoveUntil(
                 context, '/login', (route) => false);
           },
-          child: Text('Logout'),
+          child: const Text('Logout'),
         ),
       ),
     );
