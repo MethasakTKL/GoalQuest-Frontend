@@ -13,7 +13,7 @@ class HomePage extends StatelessWidget {
           onPressed: () {
             // Navigate back to the start page
             Navigator.pushNamedAndRemoveUntil(
-                context, '/start', (route) => false);
+                context, '/login', (route) => false);
           },
           child: Text('Logout'),
         ),
