@@ -35,39 +35,38 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
                 borderRadius: const BorderRadius.all(
                   Radius.circular(30),
                 ),
-                child: Container(
-                  color: const Color.fromARGB(255, 19, 19, 19),
-                  child: BottomNavigationBar(
-                    selectedItemColor: Colors.orange,
-                    unselectedItemColor: Colors.white,
-                    backgroundColor: const Color.fromARGB(255, 19, 19, 19),
-                    showSelectedLabels: true,
-                    showUnselectedLabels: true,
-                    currentIndex: _pageIndex,
-                    onTap:(int index) {
-                      setState(() {
-                        _pageIndex = index;
-                      });
-                    },
-                    items: const [
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.home),
-                        label: 'Home',
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.flag),
-                        label: 'Goals',
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.store),
-                        label: 'Store',
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.person),
-                        label: 'Profile',
-                      ),
-                    ]
-                  ),
+                child: BottomNavigationBar(
+                  type: BottomNavigationBarType.fixed,
+                  elevation: 0,
+                  selectedItemColor: Colors.orange,
+                  unselectedItemColor: Colors.white,
+                  backgroundColor:  const Color.fromARGB(255, 19, 19, 19),
+                  showSelectedLabels: true,
+                  showUnselectedLabels: true,
+                  currentIndex: _pageIndex,
+                  onTap:(int index) {
+                    setState(() {
+                      _pageIndex = index;
+                    });
+                  },
+                  items: const [
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.home_outlined),
+                      label: 'Home',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.flag_circle_outlined),
+                      label: 'Goals',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.storefront_outlined),
+                      label: 'Store',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.person_outline_rounded),
+                      label: 'Profile',
+                    ),
+                  ]
                 )
               )),
         )
