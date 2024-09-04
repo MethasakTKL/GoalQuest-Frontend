@@ -28,7 +28,7 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
       children: [
         _pages.elementAt(_pageIndex),
         Padding(
-          padding: const EdgeInsets.all(30.0),
+          padding: const EdgeInsets.only(bottom: 10, right: 20, left: 20),
           child: Align(
               alignment: const Alignment(0.0, 1.0),
               child: ClipRRect(
@@ -44,6 +44,7 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
                   showSelectedLabels: true,
                   showUnselectedLabels: true,
                   currentIndex: _pageIndex,
+                  iconSize: 30,
                   onTap:(int index) {
                     setState(() {
                       _pageIndex = index;
@@ -52,6 +53,7 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
                   items: const [
                     BottomNavigationBarItem(
                       icon: Icon(Icons.home_outlined),
+
                       label: 'Home',
                     ),
                     BottomNavigationBarItem(
