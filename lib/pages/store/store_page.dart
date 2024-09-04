@@ -21,7 +21,7 @@ class StorePage extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const Spacer(), // ใช้ Spacer เพื่อจัดตำแหน่ง
+            const Spacer(),
             IconButton(
               icon: const Icon(Icons.person),
               onPressed: () {
@@ -31,7 +31,7 @@ class StorePage extends StatelessWidget {
             ),
           ],
         ),
-        automaticallyImplyLeading: false, // ปิดปุ่ม Back
+        automaticallyImplyLeading: false,
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
