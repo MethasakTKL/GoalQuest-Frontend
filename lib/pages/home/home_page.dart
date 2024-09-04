@@ -31,18 +31,25 @@ class HomePage extends StatelessWidget {
         ),
         automaticallyImplyLeading: false, // ปิดปุ่ม Back
       ),
-      body: Center(
-        child: Column(
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                // Navigate back to the start page
-                Navigator.pushNamedAndRemoveUntil(
-                    context, '/login', (route) => false);
-              },
-              child: const Text('Logout'),
-            ),
-          ],
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+        child: Center(
+          child: Column(
+            children: [
+              const Text("Welcome back, Steven"),
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                width: double.infinity,
+                height: 170,
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(156, 255, 160, 8),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

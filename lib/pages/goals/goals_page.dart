@@ -33,14 +33,24 @@ class GoalsPage extends StatelessWidget {
         ),
         automaticallyImplyLeading: false, // ปิดปุ่ม Back
       ),
-      body: const Center(
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
         child: Column(
           children: [
-            Text('Goals',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                )),
+            Center(
+              child: Column(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    height: 170,
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(156, 7, 98, 31),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  )
+                ],
+              ),
+            ),
           ],
         ),
       ),

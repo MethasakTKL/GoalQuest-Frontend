@@ -28,7 +28,7 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         elevation: 0,
-        selectedItemColor: Colors.orange,
+        selectedItemColor: const Color.fromARGB(255, 250, 172, 57),
         unselectedItemColor: Colors.white.withOpacity(0.4),
         backgroundColor: const Color.fromARGB(255, 25, 25, 31),
         showSelectedLabels: true,
