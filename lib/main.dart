@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
 import 'pages/auth/start_page.dart';
 import 'pages/auth/login_page.dart';
 import 'pages/home/home_page.dart';
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LoginPage(),
         '/create_account': (context) => const CreateAccountPage(),
         '/home': (context) => const HomePage(),
+        '/bottom_navigation': (context) => const BottomNavigationPage(),
       },
     );
   }

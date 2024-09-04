@@ -78,7 +78,7 @@ class LoginPage extends StatelessWidget {
               const Spacer(), // ใช้ Spacer เพื่อดันองค์ประกอบด้านล่างลงไป
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/home');
+                  Navigator.pushNamed(context, '/bottom_navigation');
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 162, 229, 90),

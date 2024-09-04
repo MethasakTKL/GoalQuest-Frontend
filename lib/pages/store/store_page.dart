@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class StorePage extends StatelessWidget {
+  const StorePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,23 +21,15 @@ class HomePage extends StatelessWidget {
           ),
         ]
       ),
-      body: Center(
+      body: const Center(
         child: Column(
           children: [
-            const Text(
-              'Home',
+            Text(
+              'Store',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               )
-            ),
-            ElevatedButton(
-              onPressed: () {
-                // Navigate back to the start page
-                Navigator.pushNamedAndRemoveUntil(
-                    context, '/login', (route) => false);
-              },
-              child: const Text('Logout'),
             ),
           ],
         ),

@@ -50,7 +50,7 @@ class StartPage extends StatelessWidget {
                     Navigator.pushNamed(context, '/login');
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromARGB(255, 255, 166, 33),
+                    backgroundColor: const Color.fromARGB(255, 255, 166, 33),
                     padding: const EdgeInsets.symmetric(
                         horizontal: 30, vertical: 15),
                     shape: RoundedRectangleBorder(
