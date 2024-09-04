@@ -171,90 +171,123 @@ class ProfilePage extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              Container(
-                width: double.infinity,
-                height: 60,
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(156, 208, 208, 208),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: const Padding(
-                  padding: EdgeInsets.fromLTRB(30, 0, 10, 0),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.edit,
-                        size: 25,
-                        color: Color.fromARGB(255, 64, 64, 64),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text(
-                        "Edit Profile",
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    ],
+              GestureDetector(  // สำหรับกดเพื่อเปลี่ยนหน้าต่าง
+                onTap: () {
+                  Navigator.pushNamed(context, '/edit_profile');
+                },
+                child: Container(
+                  width: double.infinity,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(156, 208, 208, 208),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: const Padding(
+                    padding: EdgeInsets.fromLTRB(30, 0, 10, 0),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.edit,
+                          size: 25,
+                          color: Color.fromARGB(255, 64, 64, 64),
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Text(
+                          "Edit Profile",
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        Spacer(),
+                        Icon(
+                          Icons.arrow_forward_ios,
+                          size: 15,
+                          color: Color.fromARGB(255, 64, 64, 64),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
               const SizedBox(
                 height: 10,
               ),
-              Container(
-                width: double.infinity,
-                height: 60,
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(156, 208, 208, 208),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: const Padding(
-                  padding: EdgeInsets.fromLTRB(30, 0, 10, 0),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.password,
-                        size: 25,
-                        color: Color.fromARGB(255, 64, 64, 64),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text(
-                        "Change Password",
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    ],
+              GestureDetector(  // สำหรับกดเพื่อเปลี่ยนหน้าต่าง
+              onTap: () {
+                  Navigator.pushNamed(context, '/changee_password');
+                },
+                child: Container(
+                  width: double.infinity,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(156, 208, 208, 208),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: const Padding(
+                    padding: EdgeInsets.fromLTRB(30, 0, 10, 0),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.password,
+                          size: 25,
+                          color: Color.fromARGB(255, 64, 64, 64),
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Text(
+                          "Change Password",
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        Spacer(),
+                        Icon(
+                          Icons.arrow_forward_ios,
+                          size: 15,
+                          color: Color.fromARGB(255, 64, 64, 64),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
               const SizedBox(
                 height: 10,
               ),
-              Container(
-                width: double.infinity,
-                height: 60,
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(156, 208, 208, 208),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: const Padding(
-                  padding: EdgeInsets.fromLTRB(30, 0, 10, 0),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.history,
-                        size: 25,
-                        color: Color.fromARGB(255, 64, 64, 64),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text(
-                        "Redeem History",
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    ],
+              GestureDetector(  // สำหรับกดเพื่อเปลี่ยนหน้าต่าง
+              onTap: () {
+                Navigator.pushNamed(context, '/redeem_history');
+                },
+                child: Container(
+                  width: double.infinity,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(156, 208, 208, 208),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: const Padding(
+                    padding: EdgeInsets.fromLTRB(30, 0, 10, 0),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.history,
+                          size: 25,
+                          color: Color.fromARGB(255, 64, 64, 64),
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Text(
+                          "Redeem History",
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        Spacer(),
+                        Icon(
+                          Icons.arrow_forward_ios,
+                          size: 15,
+                          color: Color.fromARGB(255, 64, 64, 64),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               )
