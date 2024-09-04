@@ -24,55 +24,41 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Stack(
-      children: [
-        _pages.elementAt(_pageIndex),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 10, right: 20, left: 20),
-          child: Align(
-              alignment: const Alignment(0.0, 1.0),
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(30),
-                ),
-                child: BottomNavigationBar(
-                  type: BottomNavigationBarType.fixed,
-                  elevation: 0,
-                  selectedItemColor: Colors.orange,
-                  unselectedItemColor: Colors.white,
-                  backgroundColor:  const Color.fromARGB(255, 19, 19, 19),
-                  showSelectedLabels: true,
-                  showUnselectedLabels: true,
-                  currentIndex: _pageIndex,
-                  iconSize: 30,
-                  onTap:(int index) {
-                    setState(() {
-                      _pageIndex = index;
-                    });
-                  },
-                  items: const [
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.home_outlined),
-
-                      label: 'Home',
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.flag_circle_outlined),
-                      label: 'Goals',
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.storefront_outlined),
-                      label: 'Store',
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.person_outline_rounded),
-                      label: 'Profile',
-                    ),
-                  ]
-                )
-              )),
-        )
-      ],
-    ));
+      body: _pages.elementAt(_pageIndex),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        elevation: 0,
+        selectedItemColor: Colors.orange,
+        unselectedItemColor: Colors.white.withOpacity(0.4),
+        backgroundColor: const Color.fromARGB(255, 25, 25, 31),
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+        currentIndex: _pageIndex,
+        iconSize: 30,
+        onTap: (int index) {
+          setState(() {
+            _pageIndex = index;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.flag_circle_outlined),
+            label: 'Goals',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.storefront_outlined),
+            label: 'Store',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline_rounded),
+            label: 'Profile',
+          ),
+        ],
+      ),
+    );
   }
 }

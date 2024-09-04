@@ -7,30 +7,33 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Image.asset(
-          'assets/logo_black.png',
-          height: 70,
-        ),
-        automaticallyImplyLeading: false, // ปิดปุ่ม Back
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.person),
-            onPressed: () {
-            },
-            iconSize: 30,
-          ),
-        ]
-      ),
-      body: Center(
-        child: Column(
+        title: Row(
           children: [
+            Image.asset(
+              'assets/logo_black.png',
+              height: 50,
+            ),
+            const Spacer(), // ใช้ Spacer เพื่อจัดตำแหน่ง
             const Text(
               'Home',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-              )
+              ),
             ),
+            const Spacer(),
+            IconButton(
+              icon: const Icon(Icons.person_outline_rounded),
+              onPressed: () {},
+              iconSize: 30,
+            ),
+          ],
+        ),
+        automaticallyImplyLeading: false, // ปิดปุ่ม Back
+      ),
+      body: Center(
+        child: Column(
+          children: [
             ElevatedButton(
               onPressed: () {
                 // Navigate back to the start page

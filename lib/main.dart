@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LoginPage(),
         '/create_account': (context) => const CreateAccountPage(),
         '/home': (context) => const HomePage(),
-        '/bottom_navigation': (context) => const BottomNavigationPage(),
+        '/bottom_navigation': (context) => BottomNavigationPage(),
       },
     );
   }
