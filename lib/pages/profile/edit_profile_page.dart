@@ -38,13 +38,13 @@ class EditProfilePage extends StatelessWidget {
                           icon: const Icon(
                             Icons.arrow_back,
                             color: Colors.black,
-                            size: 25,
+                            size: 26,
                           ),
                           onPressed: () {
                             Navigator.pop(context);
                           }),
                       const SizedBox(width: 5),
-                      const Icon(Icons.edit_outlined, size: 23.0),
+                      const Icon(Icons.edit_outlined, size: 26.0),
                       const SizedBox(width: 10),
                       const Text(
                         'Edit Profile',

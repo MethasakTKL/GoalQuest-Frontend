@@ -38,13 +38,13 @@ class ChangePasswordPage extends StatelessWidget {
                           icon: const Icon(
                             Icons.arrow_back,
                             color: Colors.black,
-                            size: 25,
+                            size: 26,
                           ),
                           onPressed: () {
                             Navigator.pop(context);
                           }),
                       const SizedBox(width: 5),
-                      const Icon(Icons.password, size: 23.0),
+                      const Icon(Icons.password, size: 26.0),
                       const SizedBox(width: 10),
                       const Text(
                         'Change Password',
