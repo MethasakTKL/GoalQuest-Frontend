@@ -6,7 +6,10 @@ class GoalsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+
         title: Row(
           children: [
             Image.asset(
@@ -23,7 +26,7 @@ class GoalsPage extends StatelessWidget {
             ),
             const Spacer(), // ใช้ Spacer เพื่อจัดตำแหน่ง
             IconButton(
-              icon: const Icon(Icons.person),
+              icon: const Icon(Icons.account_circle),
               onPressed: () {
                 // ทำอะไรบางอย่างเมื่อกดปุ่ม
               },
@@ -40,11 +43,22 @@ class GoalsPage extends StatelessWidget {
             Center(
               child: Column(
                 children: [
+                  const Text("Track your Goals"),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   Container(
                     width: double.infinity,
-                    height: 170,
+                    height: 160,
                     decoration: BoxDecoration(
-                      color: const Color.fromARGB(156, 7, 98, 31),
+                      gradient: const LinearGradient(
+                        colors: [
+                          Color.fromARGB(255, 45, 122, 65), // สีเริ่มต้น
+                          Color(0xFF64E57F), // สีสิ้นสุด
+                        ],
+                        begin: Alignment.topLeft, // เริ่มไล่สีจากมุมบนซ้าย
+                        end: Alignment.bottomRight, // ไล่สีไปยังมุมล่างขวา
+                      ),
                       borderRadius: BorderRadius.circular(20),
                     ),
                   )
