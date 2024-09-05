@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
 import 'package:goal_quest/pages/profile/earn_point_table.dart';
 import 'package:goal_quest/pages/profile/redeem_history_table.dart';
 
@@ -49,9 +50,16 @@ class _RedeemHistoryPageState extends State<RedeemHistoryPage> {
             ),
             const Spacer(), // ใช้ Spacer เพื่อจัดตำแหน่ง
             IconButton(
-              icon: const Icon(Icons.person),
+              icon: const Icon(Icons.account_circle),
               onPressed: () {
-                // ทำอะไรบางอย่างเมื่อกดปุ่ม
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const BottomNavigationPage(
+                      initialIndex: 3,
+                    ),
+                  ),
+                );
               },
               iconSize: 30,
             ),
