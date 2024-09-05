@@ -51,14 +51,7 @@ class GoalsPage extends StatelessWidget {
                     width: double.infinity,
                     height: 160,
                     decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [
-                          Color.fromARGB(255, 45, 122, 65), // สีเริ่มต้น
-                          Color(0xFF64E57F), // สีสิ้นสุด
-                        ],
-                        begin: Alignment.topLeft, // เริ่มไล่สีจากมุมบนซ้าย
-                        end: Alignment.bottomRight, // ไล่สีไปยังมุมล่างขวา
-                      ),
+                      color: const Color.fromARGB(156, 100, 192, 13),
                       borderRadius: BorderRadius.circular(20),
                     ),
                   )

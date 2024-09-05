@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:goal_quest/pages/goals/goals_page.dart';
 import 'package:goal_quest/pages/home/home_page.dart';
 import 'package:goal_quest/pages/profile/profile_page.dart';
-import 'package:goal_quest/pages/store/store_page.dart';
+import 'package:goal_quest/pages/collection/collection_page.dart';
 
 class BottomNavigationPage extends StatefulWidget {
   const BottomNavigationPage({super.key});
@@ -50,8 +50,8 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
             label: 'Goals',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.storefront_outlined),
-            label: 'Store',
+            icon: Icon(Icons.auto_awesome),
+            label: 'Collection',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person_outline_rounded),

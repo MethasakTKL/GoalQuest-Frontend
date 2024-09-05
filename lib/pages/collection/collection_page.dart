@@ -17,7 +17,7 @@ class StorePage extends StatelessWidget {
             ),
             const Spacer(), // ใช้ Spacer เพื่อจัดตำแหน่ง
             const Text(
-              'Store',
+              'Collection',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -43,8 +43,8 @@ class StorePage extends StatelessWidget {
               const Row(
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(left: 30, top: 0),
-                    child: Text('Reward',
+                    padding: EdgeInsets.only(left: 0, top: 0),
+                    child: Text('My Collection',
                         style: TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
