@@ -21,26 +21,15 @@ class LoginPage extends StatelessWidget {
                       onPressed: () {
                         Navigator.pop(context);
                       }),
-                  Image.asset(
-                    'assets/logo_black.png',
-                    height: 70,
-                  ),
                 ],
               ),
               const SizedBox(height: 20),
               Image.asset(
-                'assets/account_image.png',
+                'assets/logo_black_horizon.png',
                 height: 160,
               ),
               const SizedBox(height: 10),
-              const Text(
-                'Login to GoalQuest',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
+
               const SizedBox(height: 20),
               TextField(
                 decoration: InputDecoration(
@@ -70,31 +59,35 @@ class LoginPage extends StatelessWidget {
                     'Forgot Password?',
                     style: TextStyle(
                       fontSize: 15,
-                      color: Color.fromARGB(255, 52, 52, 52),
+                      color: Color.fromARGB(255, 71, 92, 145),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/bottom_navigation');
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 241, 165, 25),
+                    padding: const EdgeInsets.symmetric(vertical: 19),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  child: const Text(
+                    'Log in',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
                     ),
                   ),
                 ),
               ),
               const Spacer(), // ใช้ Spacer เพื่อดันองค์ประกอบด้านล่างลงไป
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/bottom_navigation');
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 162, 229, 90),
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                ),
-                child: const Text(
-                  'Log in',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
+
               const SizedBox(height: 16),
               TextButton(
                 onPressed: () {

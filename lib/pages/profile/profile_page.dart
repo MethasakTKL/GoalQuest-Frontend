@@ -6,7 +6,9 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         title: Row(
           children: [
             Image.asset(
@@ -23,7 +25,7 @@ class ProfilePage extends StatelessWidget {
             ),
             const Spacer(),
             IconButton(
-              icon: const Icon(Icons.person),
+              icon: const Icon(Icons.account_circle),
               onPressed: () {
                 // ทำอะไรบางอย่างเมื่อกดปุ่ม
               },
@@ -171,7 +173,8 @@ class ProfilePage extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              GestureDetector(  // สำหรับกดเพื่อเปลี่ยนหน้าต่าง
+              GestureDetector(
+                // สำหรับกดเพื่อเปลี่ยนหน้าต่าง
                 onTap: () {
                   Navigator.pushNamed(context, '/edit_profile');
                 },
@@ -212,8 +215,9 @@ class ProfilePage extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              GestureDetector(  // สำหรับกดเพื่อเปลี่ยนหน้าต่าง
-              onTap: () {
+              GestureDetector(
+                // สำหรับกดเพื่อเปลี่ยนหน้าต่าง
+                onTap: () {
                   Navigator.pushNamed(context, '/changee_password');
                 },
                 child: Container(
@@ -253,9 +257,10 @@ class ProfilePage extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              GestureDetector(  // สำหรับกดเพื่อเปลี่ยนหน้าต่าง
-              onTap: () {
-                Navigator.pushNamed(context, '/redeem_history');
+              GestureDetector(
+                // สำหรับกดเพื่อเปลี่ยนหน้าต่าง
+                onTap: () {
+                  Navigator.pushNamed(context, '/redeem_history');
                 },
                 child: Container(
                   width: double.infinity,

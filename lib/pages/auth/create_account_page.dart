@@ -34,21 +34,24 @@ class CreateAccountPage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 20),
-                      Image.asset(
-                        'assets/signup_image.png',
-                        height: 170,
-                      ),
+                      // Image.asset(
+                      //   'assets/signup_image.png',
+                      //   height: 170,
+                      // ),
                       const SizedBox(height: 10),
-                      const Text(
-                        'Create Account',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      const Row(
+                        children: [
+                          Text(
+                            'Create Account',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 28,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 30),
                       TextField(
                         decoration: InputDecoration(
                           hintText: 'Username*',
@@ -124,7 +127,7 @@ class CreateAccountPage extends StatelessWidget {
                   // Create account logic
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 162, 229, 90),
+                  backgroundColor: const Color.fromARGB(255, 241, 165, 25),
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
