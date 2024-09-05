@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 class GoalsPage extends StatelessWidget {
   const GoalsPage({super.key});
@@ -52,8 +53,154 @@ class GoalsPage extends StatelessWidget {
                       width: double.infinity,
                       height: 160,
                       decoration: BoxDecoration(
-                        color: const Color.fromARGB(156, 100, 192, 13),
-                        borderRadius: BorderRadius.circular(20),
+                        gradient: const LinearGradient(
+                          begin: Alignment.topLeft, // จุดเริ่มต้นของการไล่สี
+                          end: Alignment.bottomRight, // จุดสิ้นสุดของการไล่สี
+                          colors: [
+                            Color.fromARGB(255, 108, 187, 75), // สีแรก
+                            Color.fromARGB(255, 58, 90, 47), // สีที่สอง
+                          ],
+                        ),
+                        borderRadius: BorderRadius.circular(20), // ปรับขอบให้มน
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                        child: Row(
+                          children: [
+                            Image.asset(
+                              'assets/goal_image.png',
+                              height: 110,
+                            ),
+                            const SizedBox(
+                              width: 0,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Row(
+                                  children: [
+                                    SizedBox(
+                                      height: 60,
+                                    ),
+                                    Text(
+                                      "Goal Achievement",
+                                      style: TextStyle(
+                                          fontSize: 23,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    ),
+                                  ],
+                                ),
+                                const Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Icon(
+                                      Icons.hourglass_bottom,
+                                      size: 15,
+                                      color: Color.fromARGB(255, 255, 255, 255),
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      "Completed",
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      "1",
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      "Goals",
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    ),
+                                  ],
+                                ),
+                                const Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Icon(
+                                      Icons.hourglass_top,
+                                      size: 15,
+                                      color: Color.fromARGB(255, 255, 255, 255),
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      "In Progress",
+                                      style: TextStyle(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      "2",
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      "Goals",
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                LinearPercentIndicator(
+                                  width: 230.0,
+                                  lineHeight: 30.0,
+                                  percent: 0.5,
+                                  center: const Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Padding(
+                                      padding: EdgeInsets.only(left: 10),
+                                      child: Text("50%",
+                                          style:
+                                              TextStyle(color: Colors.white)),
+                                    ),
+                                  ),
+                                  barRadius: const Radius.circular(20),
+                                  backgroundColor:
+                                      const Color.fromARGB(255, 255, 255, 255),
+                                  progressColor:
+                                      const Color.fromARGB(255, 30, 30, 30),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     const SizedBox(
