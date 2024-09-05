@@ -6,7 +6,9 @@ class ChangePasswordPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         title: Row(
           children: [
             Image.asset(
@@ -27,7 +29,7 @@ class ChangePasswordPage extends StatelessWidget {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
+          padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
           child: SingleChildScrollView( // เพิ่อให้สามารถเลื่อนหน้าจอได้ถ้าคอนเทนต์ใหญ่เกิน 
             child: Center(
               child: Column(
@@ -42,7 +44,7 @@ class ChangePasswordPage extends StatelessWidget {
                           ),
                           onPressed: () {
                             Navigator.pop(context);
-                          }),
+                          },),
                       const SizedBox(width: 5),
                       const Icon(Icons.password, size: 26.0),
                       const SizedBox(width: 10),
