@@ -15,7 +15,7 @@ class HomePage extends StatelessWidget {
               'assets/logo_black.png',
               height: 50,
             ),
-            const Spacer(), // ใช้ Spacer เพื่อจัดตำแหน่ง
+            const Spacer(),
             const Text(
               'Home',
               style: TextStyle(
@@ -33,165 +33,204 @@ class HomePage extends StatelessWidget {
         ),
         automaticallyImplyLeading: false, // ปิดปุ่ม Back
       ),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-        child: Center(
-          child: Column(
-            children: [
-              const Text("Welcome back, Steven"),
-              const SizedBox(
-                height: 10,
-              ),
-              Container(
-                width: double.infinity,
-                height: 170,
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(156, 255, 160, 8),
-                  borderRadius: BorderRadius.circular(20),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+          child: Center(
+            child: Column(
+              children: [
+                const Text("Welcome back, Steven"),
+                const SizedBox(
+                  height: 10,
                 ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Row(
-                children: [
-                  GestureDetector(
-                    // สำหรับกดเพื่อเปลี่ยนหน้าต่าง
-                    onTap: () {},
-                    child: Container(
-                      width: 100,
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(156, 208, 208, 208),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: const Padding(
-                        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.flag_circle_rounded,
-                              size: 26,
-                              color: Color.fromARGB(255, 64, 64, 64),
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              "Goal",
-                              style: TextStyle(fontSize: 14),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  GestureDetector(
-                    // สำหรับกดเพื่อเปลี่ยนหน้าต่าง
-                    onTap: () {},
-                    child: Container(
-                      width: 120,
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(156, 208, 208, 208),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: const Padding(
-                        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.redeem,
-                              size: 26,
-                              color: Color.fromARGB(255, 64, 64, 64),
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              "Reward",
-                              style: TextStyle(fontSize: 14),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  GestureDetector(
-                    // สำหรับกดเพื่อเปลี่ยนหน้าต่าง
-                    onTap: () {},
-                    child: Container(
-                      width: 120,
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(156, 208, 208, 208),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: const Padding(
-                        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.history,
-                              size: 26,
-                              color: Color.fromARGB(255, 64, 64, 64),
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              "History",
-                              style: TextStyle(fontSize: 14),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              const Row(
-                children: [
-                  Text(
-                    "In Progress",
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              GestureDetector(
-                // สำหรับกดเพื่อเปลี่ยนหน้าต่าง
-                onTap: () {},
-                child: Container(
+                Container(
                   width: double.infinity,
-                  height: 120,
+                  height: 170,
                   decoration: BoxDecoration(
-                    color: const Color.fromARGB(156, 208, 208, 208),
+                    color: const Color.fromARGB(156, 255, 160, 8),
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: const Padding(
-                    padding: EdgeInsets.fromLTRB(30, 0, 10, 0),
-                    child: Row(
-                      children: [],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        width: 100,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(156, 208, 208, 208),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.flag_circle_rounded,
+                                size: 26,
+                                color: Color.fromARGB(255, 64, 64, 64),
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                "Goal",
+                                style: TextStyle(fontSize: 14),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        width: 120,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(156, 208, 208, 208),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.redeem,
+                                size: 26,
+                                color: Color.fromARGB(255, 64, 64, 64),
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                "Reward",
+                                style: TextStyle(fontSize: 14),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        width: 120,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(156, 208, 208, 208),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.history,
+                                size: 26,
+                                color: Color.fromARGB(255, 64, 64, 64),
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                "History",
+                                style: TextStyle(fontSize: 14),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                const Row(
+                  children: [
+                    Text(
+                      "In Progress",
+                      style:
+                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    width: double.infinity,
+                    height: 120,
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(156, 208, 208, 208),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.fromLTRB(30, 0, 10, 0),
+                      child: Row(
+                        children: [],
+                      ),
                     ),
                   ),
                 ),
-              )
-            ],
+                const SizedBox(
+                  height: 10,
+                ),
+                GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    width: double.infinity,
+                    height: 120,
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(156, 208, 208, 208),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.fromLTRB(30, 0, 10, 0),
+                      child: Row(
+                        children: [],
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    width: double.infinity,
+                    height: 120,
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(156, 208, 208, 208),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.fromLTRB(30, 0, 10, 0),
+                      child: Row(
+                        children: [],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

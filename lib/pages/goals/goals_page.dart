@@ -36,29 +36,106 @@ class GoalsPage extends StatelessWidget {
         ),
         automaticallyImplyLeading: false, // ปิดปุ่ม Back
       ),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-        child: Column(
-          children: [
-            Center(
-              child: Column(
-                children: [
-                  const Text("Track your Goals"),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    width: double.infinity,
-                    height: 160,
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(156, 100, 192, 13),
-                      borderRadius: BorderRadius.circular(20),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+          child: Column(
+            children: [
+              Center(
+                child: Column(
+                  children: [
+                    const Text("Track your Goals"),
+                    const SizedBox(
+                      height: 10,
                     ),
-                  )
-                ],
+                    Container(
+                      width: double.infinity,
+                      height: 160,
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(156, 100, 192, 13),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const Row(
+                      children: [
+                        Text(
+                          "In Progress",
+                          style: TextStyle(
+                              fontSize: 25, fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    GestureDetector(
+                      // สำหรับกดเพื่อเปลี่ยนหน้าต่าง
+                      onTap: () {},
+                      child: Container(
+                        width: double.infinity,
+                        height: 120,
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(156, 208, 208, 208),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.fromLTRB(30, 0, 10, 0),
+                          child: Row(
+                            children: [],
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    GestureDetector(
+                      // สำหรับกดเพื่อเปลี่ยนหน้าต่าง
+                      onTap: () {},
+                      child: Container(
+                        width: double.infinity,
+                        height: 120,
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(156, 208, 208, 208),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.fromLTRB(30, 0, 10, 0),
+                          child: Row(
+                            children: [],
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    GestureDetector(
+                      // สำหรับกดเพื่อเปลี่ยนหน้าต่าง
+                      onTap: () {},
+                      child: Container(
+                        width: double.infinity,
+                        height: 120,
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(156, 208, 208, 208),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.fromLTRB(30, 0, 10, 0),
+                          child: Row(
+                            children: [],
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
