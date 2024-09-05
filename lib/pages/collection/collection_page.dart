@@ -35,51 +35,75 @@ class StorePage extends StatelessWidget {
         ),
         automaticallyImplyLeading: false,
       ),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-        child: Center(
-          child: Column(
-            children: [
-              const Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 0, top: 0),
-                    child: Text('My Collection',
-                        style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                        )),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: double.infinity,
-                    height: 170,
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(156, 199, 199, 199),
-                      borderRadius: BorderRadius.circular(20),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+          child: Center(
+            child: Column(
+              children: [
+                const Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 0, top: 0),
+                      child: Text('My Collection',
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                          )),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    width: double.infinity,
-                    height: 170,
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(156, 199, 199, 199),
-                      borderRadius: BorderRadius.circular(20),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      height: 170,
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(156, 199, 199, 199),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
                     ),
-                  ),
-                ],
-              )
-            ],
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      width: double.infinity,
+                      height: 170,
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(156, 199, 199, 199),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      width: double.infinity,
+                      height: 170,
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(156, 199, 199, 199),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      width: double.infinity,
+                      height: 170,
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(156, 199, 199, 199),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),
