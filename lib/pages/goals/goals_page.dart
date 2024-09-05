@@ -220,7 +220,9 @@ class GoalsPage extends StatelessWidget {
                     ),
                     GestureDetector(
                       // สำหรับกดเพื่อเปลี่ยนหน้าต่าง
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushNamed(context, '/focustimer');
+                      },
                       child: Container(
                         width: double.infinity,
                         height: 120,
@@ -231,7 +233,7 @@ class GoalsPage extends StatelessWidget {
                         child: const Padding(
                           padding: EdgeInsets.fromLTRB(30, 0, 10, 0),
                           child: Row(
-                            children: [],
+                            children: [Text("Route to Mockup FocusTimer")],
                           ),
                         ),
                       ),
