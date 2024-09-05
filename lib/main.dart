@@ -3,6 +3,8 @@ import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
 import 'package:goal_quest/pages/profile/change_password_page.dart';
 import 'package:goal_quest/pages/profile/edit_profile_page.dart';
 import 'package:goal_quest/pages/profile/redeem_history_page.dart';
+import 'package:goal_quest/pages/goals/focus_timer.dart';
+
 import 'pages/auth/start_page.dart';
 import 'pages/auth/login_page.dart';
 import 'pages/home/home_page.dart';
@@ -32,6 +34,7 @@ class MyApp extends StatelessWidget {
         '/edit_profile': (context) => const EditProfilePage(),
         '/changee_password': (context) => const ChangePasswordPage(),
         '/redeem_history': (context) => const RedeemHistoryPage(),
+        '/focustimer': (context) => const FocusTimerPage(),
       },
     );
   }

@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_floating_bottom_bar: ^1.2.1+1
+
   percent_indicator: ^4.2.3
 
 dev_dependencies:
@@ -28,4 +29,8 @@ flutter:
     - assets/signup_image.png
     - assets/change_password_image.png
     - assets/goal_image.png
+  fonts:
+    - family: Barlow
+      fonts:
+        - asset: assets/fonts/Barlow-ExtraBold.ttf
 
