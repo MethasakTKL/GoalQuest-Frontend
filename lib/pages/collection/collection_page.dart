@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
 
 class StorePage extends StatelessWidget {
   const StorePage({super.key});
@@ -27,7 +28,14 @@ class StorePage extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.account_circle),
               onPressed: () {
-                // ทำอะไรบางอย่างเมื่อกดปุ่ม
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const BottomNavigationPage(
+                      initialIndex: 3,
+                    ),
+                  ),
+                );
               },
               iconSize: 30,
             ),

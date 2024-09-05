@@ -5,14 +5,22 @@ import 'package:goal_quest/pages/profile/profile_page.dart';
 import 'package:goal_quest/pages/collection/collection_page.dart';
 
 class BottomNavigationPage extends StatefulWidget {
-  const BottomNavigationPage({super.key});
+  final int initialIndex;
+
+  const BottomNavigationPage({super.key, this.initialIndex = 0});
 
   @override
   State<BottomNavigationPage> createState() => _BottomNavigationPageState();
 }
 
 class _BottomNavigationPageState extends State<BottomNavigationPage> {
-  int _pageIndex = 0;
+  int _pageIndex = 0;  // กำหนดค่าเริ่มต้นโดยตรง
+
+  @override
+  void initState() {
+    super.initState();
+    _pageIndex = widget.initialIndex;  // กำหนดค่าเริ่มต้นใน initState
+  }
 
   final List<Widget> _pages = [
     const HomePage(),
@@ -21,10 +29,19 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
     const ProfilePage(),
   ];
 
+  void changePage(int index) {
+    setState(() {
+      _pageIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _pages.elementAt(_pageIndex),
+      body: IndexedStack(  //IndexedStack เป็น Widget ที่ช่วยในการจัดการการแสดงผลของ Widget ย่อยหลายๆ ตัว โดยจะแสดงเพียงหนึ่ง Widget ในแต่ละครั้งตาม index ที่กำหนด  
+        index: _pageIndex,
+        children: _pages,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         elevation: 0,
@@ -35,11 +52,7 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
         showUnselectedLabels: true,
         currentIndex: _pageIndex,
         iconSize: 30,
-        onTap: (int index) {
-          setState(() {
-            _pageIndex = index;
-          });
-        },
+        onTap: changePage,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
