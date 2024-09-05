@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
+import 'package:goal_quest/pages/History/history_page.dart';
 import 'package:goal_quest/pages/reward/reward_page.dart';
 
 class HomePage extends StatelessWidget {
@@ -152,7 +153,14 @@ class HomePage extends StatelessWidget {
                       width: 10,
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const HistoryPage()
+                          ),
+                        );
+                      },
                       child: Container(
                         width: 120,
                         height: 60,
