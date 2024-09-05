@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
 
-
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -28,7 +27,16 @@ class HomePage extends StatelessWidget {
             const Spacer(),
             IconButton(
               icon: const Icon(Icons.account_circle),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const BottomNavigationPage(
+                      initialIndex: 3,
+                    ),
+                  ),
+                );
+              },
               iconSize: 30,
             ),
           ],
@@ -60,7 +68,14 @@ class HomePage extends StatelessWidget {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const BottomNavigationPage(initialIndex: 1,)));
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const BottomNavigationPage(
+                              initialIndex: 1,
+                            ),
+                          ),
+                        );
                       },
                       child: Container(
                         width: 100,
