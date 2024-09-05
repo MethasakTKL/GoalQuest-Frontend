@@ -14,14 +14,6 @@ class EditProfilePage extends StatelessWidget {
               height: 50,
             ),
             const Spacer(), // ใช้ Spacer เพื่อจัดตำแหน่ง
-            // const Text(
-            //   'Store',
-            //   style: TextStyle(
-            //     fontSize: 20,
-            //     fontWeight: FontWeight.bold,
-            //   ),
-            // ),
-            const Spacer(), // ใช้ Spacer เพื่อจัดตำแหน่ง
             IconButton(
               icon: const Icon(Icons.person),
               onPressed: () {
