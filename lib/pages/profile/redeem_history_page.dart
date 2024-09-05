@@ -53,7 +53,7 @@ class _RedeemHistoryPageState extends State<RedeemHistoryPage> {
         ),
         automaticallyImplyLeading: false, // ปิดปุ่ม Back
       ),
-      body: SafeArea(
+      body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
           child: Center(
@@ -124,14 +124,14 @@ class _RedeemHistoryPageState extends State<RedeemHistoryPage> {
                           ),
                           DataColumn(
                             label: Text(
-                              'Task name',
+                              'Task',
                               style: TextStyle(
                                   fontSize: 14.0, fontWeight: FontWeight.bold),
                             ),
                           ),
                           DataColumn(
                             label: Text(
-                              'Point',
+                              'Earn',
                               style: TextStyle(
                                   fontSize: 14.0, fontWeight: FontWeight.bold),
                             ),
@@ -146,7 +146,8 @@ class _RedeemHistoryPageState extends State<RedeemHistoryPage> {
                                   DataCell(Text(history['point'].toString())),
                                 ],
                               ),
-                            ).toList(),
+                            )
+                            .toList(),
                       ),
                     ),
                   ),
@@ -189,14 +190,14 @@ class _RedeemHistoryPageState extends State<RedeemHistoryPage> {
                           ),
                           DataColumn(
                             label: Text(
-                              'Name',
+                              'Reward',
                               style: TextStyle(
                                   fontSize: 14.0, fontWeight: FontWeight.bold),
                             ),
                           ),
                           DataColumn(
                             label: Text(
-                              'Point spent',
+                              'Spent',
                               style: TextStyle(
                                   fontSize: 14.0, fontWeight: FontWeight.bold),
                             ),
@@ -211,7 +212,8 @@ class _RedeemHistoryPageState extends State<RedeemHistoryPage> {
                                   DataCell(Text(history['point'].toString())),
                                 ],
                               ),
-                            ).toList(),
+                            )
+                            .toList(),
                       ),
                     ),
                   ),
