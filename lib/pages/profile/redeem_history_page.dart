@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:goal_quest/pages/profile/earn_point_table.dart';
+import 'package:goal_quest/pages/profile/redeem_history_table.dart';
 
 class RedeemHistoryPage extends StatefulWidget {
   const RedeemHistoryPage({super.key});
@@ -19,6 +21,8 @@ class _RedeemHistoryPageState extends State<RedeemHistoryPage> {
     {'date': '17/07/2024', 'taskName': 'Task Title', 'point': 200},
   ];
 
+  bool isEarnPointVisible = false;
+
   final List<Map<String, dynamic>> redeemHistory = const [
     {'date': '04/09/2024', 'Name': 'Godji', 'point': 1000},
     {'date': '13/08/2024', 'Name': 'Frogie', 'point': 2500},
@@ -28,6 +32,8 @@ class _RedeemHistoryPageState extends State<RedeemHistoryPage> {
     {'date': '1/07/2024', 'Name': 'Fire Cat', 'point': 1500},
     {'date': '30/06/2024', 'Name': 'Frogie', 'point': 2500},
   ];
+
+  bool isRedeemVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -99,59 +105,20 @@ class _RedeemHistoryPageState extends State<RedeemHistoryPage> {
                         ),
                       ),
                       IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.keyboard_arrow_down),
+                        onPressed: () {
+                          setState((){
+                            isEarnPointVisible = !isEarnPointVisible;
+                          });
+                        },
+                        icon: Icon(
+                          isEarnPointVisible? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down),
                         iconSize: 26.0,
                         color: Colors.black,
                       ),
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                  child: SizedBox(
-                    height: 300,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.vertical,
-                      child: DataTable(
-                        columns: const [
-                          DataColumn(
-                            label: Text(
-                              'Date',
-                              style: TextStyle(
-                                  fontSize: 14.0, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          DataColumn(
-                            label: Text(
-                              'Task',
-                              style: TextStyle(
-                                  fontSize: 14.0, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          DataColumn(
-                            label: Text(
-                              'Earn',
-                              style: TextStyle(
-                                  fontSize: 14.0, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ],
-                        rows: earnPointHistory
-                            .map(
-                              (history) => DataRow(
-                                cells: [
-                                  DataCell(Text(history['date'])),
-                                  DataCell(Text(history['taskName'])),
-                                  DataCell(Text(history['point'].toString())),
-                                ],
-                              ),
-                            )
-                            .toList(),
-                      ),
-                    ),
-                  ),
-                ),
+                EarnPointTable(isEarnPointVisible: isEarnPointVisible, earnPointHistory: earnPointHistory),
                 const SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
@@ -165,59 +132,20 @@ class _RedeemHistoryPageState extends State<RedeemHistoryPage> {
                         ),
                       ),
                       IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.keyboard_arrow_down),
+                        onPressed: () {
+                          setState((){
+                            isRedeemVisible = !isRedeemVisible;
+                          });
+                        },
+                        icon: Icon(
+                          isRedeemVisible ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down),
                         iconSize: 26.0,
                         color: Colors.black,
                       ),
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                  child: SizedBox(
-                    height: 300,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.vertical,
-                      child: DataTable(
-                        columns: const [
-                          DataColumn(
-                            label: Text(
-                              'Date',
-                              style: TextStyle(
-                                  fontSize: 14.0, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          DataColumn(
-                            label: Text(
-                              'Reward',
-                              style: TextStyle(
-                                  fontSize: 14.0, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          DataColumn(
-                            label: Text(
-                              'Spent',
-                              style: TextStyle(
-                                  fontSize: 14.0, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ],
-                        rows: redeemHistory
-                            .map(
-                              (history) => DataRow(
-                                cells: [
-                                  DataCell(Text(history['date'])),
-                                  DataCell(Text(history['Name'])),
-                                  DataCell(Text(history['point'].toString())),
-                                ],
-                              ),
-                            )
-                            .toList(),
-                      ),
-                    ),
-                  ),
-                ),
+                RedeemHistoryTable(isRedeemVisible: isRedeemVisible, redeemHistory: redeemHistory)
               ],
             ),
           ),
