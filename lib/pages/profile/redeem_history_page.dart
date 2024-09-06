@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
-import 'package:goal_quest/pages/profile/earn_point_table.dart';
-import 'package:goal_quest/pages/profile/redeem_history_table.dart';
+import 'package:goal_quest/pages/profile/table/earn_point_table.dart';
+import 'package:goal_quest/pages/profile/table/redeem_history_table.dart';
 
 class RedeemHistoryPage extends StatefulWidget {
   const RedeemHistoryPage({super.key});
