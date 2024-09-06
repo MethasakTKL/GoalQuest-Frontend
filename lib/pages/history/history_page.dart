@@ -58,14 +58,7 @@ class HistoryPage extends StatelessWidget {
                         size: 26,
                       ),
                       onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const BottomNavigationPage(
-                              initialIndex: 0,
-                            ),
-                          ),
-                        );
+                        Navigator.pop(context);
                       },
                     ),
                   ],
