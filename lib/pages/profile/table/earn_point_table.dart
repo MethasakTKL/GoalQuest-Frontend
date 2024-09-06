@@ -10,6 +10,13 @@ class EarnPointTable extends StatelessWidget {
     required this.earnPointHistory,
   });
 
+  String truncateTask(String taskName) {   // ฟังก์ชันสำหรับตัดข้อความที่ยาวเกินไป
+    if (taskName.length > 10) {
+      return '${taskName.substring(0, 10)}...';
+    }
+    return taskName;
+  }
+
   @override
   Widget build(BuildContext context) {
     return isEarnPointVisible
@@ -48,7 +55,7 @@ class EarnPointTable extends StatelessWidget {
                         (history) => DataRow(
                           cells: [
                             DataCell(Text(history['date'])),
-                            DataCell(Text(history['taskName'])),
+                            DataCell(Text(truncateTask(history['taskName']))),
                             DataCell(Text(history['point'].toString())),
                           ],
                         ),
