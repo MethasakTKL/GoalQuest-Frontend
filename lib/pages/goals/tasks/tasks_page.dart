@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
+import 'package:goal_quest/pages/goals/tasks/focus_timer_list.dart';
 
 class TasksPage extends StatelessWidget {
   const TasksPage({super.key});
@@ -99,13 +100,8 @@ class TasksPage extends StatelessWidget {
                               style: TextStyle(fontSize: 18),
                             ),
                           ),
-                          // เนื้อหาในแท็บ FocusTimer
-                          Center(
-                            child: Text(
-                              'FocusTimer Content',
-                              style: TextStyle(fontSize: 18),
-                            ),
-                          ),
+                          // เรียกใช้งาน FocusTimerList ที่นำเข้ามา
+                          FocusTimerList(),
                         ],
                       ),
                     ),
