@@ -291,7 +291,7 @@ class ProfilePage extends StatelessWidget {
                           width: 20,
                         ),
                         Text(
-                          "Redeem History",
+                          "History",
                           style: TextStyle(fontSize: 16),
                         ),
                         Spacer(),

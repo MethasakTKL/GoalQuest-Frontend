@@ -85,19 +85,19 @@ class _RedeemHistoryPageState extends State<RedeemHistoryPage> {
                         Navigator.pop(context);
                       },
                     ),
-                    const SizedBox(width: 5),
-                    const Icon(
-                      Icons.history,
-                      size: 26.0,
-                      color: Colors.black,
-                    ),
                     const SizedBox(width: 10),
                     const Text(
                       'History',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 25,
                         fontWeight: FontWeight.bold,
                       ),
+                    ),
+                    const SizedBox(width: 5),
+                    const Icon(
+                      Icons.history,
+                      size: 25.0,
+                      color: Colors.black,
                     ),
                   ],
                 ),
@@ -106,54 +106,60 @@ class _RedeemHistoryPageState extends State<RedeemHistoryPage> {
                   child: Row(
                     children: [
                       const Text(
-                        'Earn Point History',
+                        'Earn Point',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       IconButton(
                         onPressed: () {
-                          setState((){
+                          setState(() {
                             isEarnPointVisible = !isEarnPointVisible;
                           });
                         },
-                        icon: Icon(
-                          isEarnPointVisible? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down),
+                        icon: Icon(isEarnPointVisible
+                            ? Icons.keyboard_arrow_down
+                            : Icons.keyboard_arrow_right),
                         iconSize: 26.0,
                         color: Colors.black,
                       ),
                     ],
                   ),
                 ),
-                EarnPointTable(isEarnPointVisible: isEarnPointVisible, earnPointHistory: earnPointHistory),
+                EarnPointTable(
+                    isEarnPointVisible: isEarnPointVisible,
+                    earnPointHistory: earnPointHistory),
                 const SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
                   child: Row(
                     children: [
                       const Text(
-                        'Redeem History',
+                        'Redeem',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       IconButton(
                         onPressed: () {
-                          setState((){
+                          setState(() {
                             isRedeemVisible = !isRedeemVisible;
                           });
                         },
-                        icon: Icon(
-                          isRedeemVisible ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down),
+                        icon: Icon(isRedeemVisible
+                            ? Icons.keyboard_arrow_down
+                            : Icons.keyboard_arrow_right),
                         iconSize: 26.0,
                         color: Colors.black,
                       ),
                     ],
                   ),
                 ),
-                RedeemHistoryTable(isRedeemVisible: isRedeemVisible, redeemHistory: redeemHistory)
+                RedeemHistoryTable(
+                    isRedeemVisible: isRedeemVisible,
+                    redeemHistory: redeemHistory)
               ],
             ),
           ),

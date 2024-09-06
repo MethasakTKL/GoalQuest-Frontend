@@ -8,7 +8,7 @@ class TasksPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2, // จำนวนแท็บ
+      length: 2,
       child: Scaffold(
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         appBar: AppBar(
@@ -80,10 +80,19 @@ class TasksPage extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 0),
-                    const TabBar(
+                    TabBar(
                       labelColor: Colors.black,
-                      indicatorColor: Color.fromARGB(255, 95, 148, 80),
-                      tabs: [
+                      indicatorColor: const Color.fromARGB(255, 95, 148, 80),
+                      overlayColor: WidgetStateProperty.resolveWith<Color?>(
+                        (Set<WidgetState> states) {
+                          if (states.contains(WidgetState.pressed)) {
+                            return const Color.fromARGB(
+                                255, 232, 241, 230); // สีที่จะแสดงตอนกดแท็บ
+                          }
+                          return null; // ใช้ค่าเริ่มต้นถ้าไม่ได้กด
+                        },
+                      ),
+                      tabs: const [
                         Tab(text: 'TodoQuest'),
                         Tab(text: 'FocusTimer'),
                       ],
@@ -93,14 +102,12 @@ class TasksPage extends StatelessWidget {
                       height: 400,
                       child: TabBarView(
                         children: [
-                          // เนื้อหาในแท็บ Todoquest
                           Center(
                             child: Text(
                               'Todoquest Content',
                               style: TextStyle(fontSize: 18),
                             ),
                           ),
-                          // เรียกใช้งาน FocusTimerList ที่นำเข้ามา
                           FocusTimerList(),
                         ],
                       ),

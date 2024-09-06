@@ -46,7 +46,7 @@ class StorePage extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+          padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
           child: Center(
             child: Column(
               children: [
@@ -54,7 +54,7 @@ class StorePage extends StatelessWidget {
                   children: [
                     Padding(
                       padding: EdgeInsets.only(left: 0, top: 0),
-                      child: Text('My Collection',
+                      child: Text('My Reward',
                           style: TextStyle(
                             fontSize: 30,
                             fontWeight: FontWeight.bold,

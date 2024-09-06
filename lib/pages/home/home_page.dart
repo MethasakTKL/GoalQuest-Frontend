@@ -74,8 +74,10 @@ class HomePage extends StatelessWidget {
                         Navigator.pushReplacement(
                           context,
                           PageRouteBuilder(
-                            pageBuilder: (context, animation1, animation2) => const BottomNavigationPage(initialIndex: 1),
-                            transitionDuration: const Duration(seconds: 0), // กำหนดเวลาของการเปลี่ยนหน้า
+                            pageBuilder: (context, animation1, animation2) =>
+                                const BottomNavigationPage(initialIndex: 1),
+                            transitionDuration: const Duration(
+                                seconds: 0), // กำหนดเวลาของการเปลี่ยนหน้า
                           ),
                         );
                       },
@@ -153,11 +155,7 @@ class HomePage extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const HistoryPage()),
-                        );
+                        Navigator.pushNamed(context, '/redeem_history');
                       },
                       child: Container(
                         width: 120,

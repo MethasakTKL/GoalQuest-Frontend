@@ -38,7 +38,8 @@ class EditProfilePage extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-          child: SingleChildScrollView( // เพิ่อให้สามารถเลื่อนหน้าจอได้ถ้าคอนเทนต์ใหญ่เกิน 
+          child: SingleChildScrollView(
+            // เพิ่อให้สามารถเลื่อนหน้าจอได้ถ้าคอนเทนต์ใหญ่เกิน
             child: Center(
               child: Column(
                 children: [
@@ -64,11 +65,6 @@ class EditProfilePage extends StatelessWidget {
                         ),
                       ),
                     ],
-                  ),
-                  const SizedBox(height: 20),
-                  Image.asset(
-                    'assets/account_image.png',
-                    height: 160,
                   ),
                   const SizedBox(height: 20),
                   TextField(
@@ -121,9 +117,11 @@ class EditProfilePage extends StatelessWidget {
                       TextButton(
                         onPressed: () {},
                         style: TextButton.styleFrom(
-                          backgroundColor: const Color.fromARGB(255, 161, 161, 161),
+                          backgroundColor:
+                              const Color.fromARGB(255, 161, 161, 161),
                           foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 30.0, vertical: 10.0),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
@@ -134,9 +132,11 @@ class EditProfilePage extends StatelessWidget {
                       TextButton(
                         onPressed: () {},
                         style: TextButton.styleFrom(
-                          backgroundColor: const Color.fromARGB(255, 255, 145, 77),
+                          backgroundColor:
+                              const Color.fromARGB(255, 255, 145, 77),
                           foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(horizontal: 60.0, vertical: 10.0),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 60.0, vertical: 10.0),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),

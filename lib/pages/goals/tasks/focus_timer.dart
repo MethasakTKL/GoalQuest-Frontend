@@ -8,7 +8,7 @@ class FocusTimerPage extends StatefulWidget {
 }
 
 class _FocusTimerPageState extends State<FocusTimerPage> {
-  bool isPlaying = false; // กำหนดสถานะของปุ่ม
+  bool isPlaying = false;
 
   @override
   Widget build(BuildContext context) {

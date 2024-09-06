@@ -29,7 +29,6 @@ class LoginPage extends StatelessWidget {
                 height: 160,
               ),
               const SizedBox(height: 10),
-
               const SizedBox(height: 20),
               TextField(
                 decoration: InputDecoration(
@@ -64,6 +63,8 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
               ),
+              const Spacer(), // ใช้ Spacer เพื่อดันองค์ประกอบด้านล่างลงไป
+
               Padding(
                 padding: const EdgeInsets.only(top: 20),
                 child: ElevatedButton(
@@ -71,7 +72,7 @@ class LoginPage extends StatelessWidget {
                     Navigator.pushNamed(context, '/bottom_navigation');
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 241, 165, 25),
+                    backgroundColor: const Color.fromARGB(255, 207, 138, 11),
                     padding: const EdgeInsets.symmetric(vertical: 19),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -86,8 +87,6 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
               ),
-              const Spacer(), // ใช้ Spacer เพื่อดันองค์ประกอบด้านล่างลงไป
-
               const SizedBox(height: 16),
               TextButton(
                 onPressed: () {

@@ -11,12 +11,12 @@ class StartPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 200), // ปรับตำแหน่งตามต้องการ
+            padding: const EdgeInsets.only(top: 230), // ปรับตำแหน่งตามต้องการ
             child: Center(
               child: Image.asset(
                 'assets/logo_white.png',
                 fit: BoxFit.contain,
-                height: 300,
+                height: 270,
               ),
             ),
           ),
@@ -28,7 +28,7 @@ class StartPage extends StatelessWidget {
                   'Welcome to GoalQuest',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 24,
+                    fontSize: 23,
                     fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.center,
@@ -40,7 +40,7 @@ class StartPage extends StatelessWidget {
                   'Start your journey today!',
                   style: TextStyle(
                     color: Colors.white70,
-                    fontSize: 16,
+                    fontSize: 15,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -52,7 +52,7 @@ class StartPage extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromARGB(255, 241, 165, 25),
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 60, vertical: 15),
+                        horizontal: 40, vertical: 15),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
@@ -60,7 +60,7 @@ class StartPage extends StatelessWidget {
                   child: const Text(
                     "Let's Start",
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 16,
                       color: Colors.white,
                     ),
                   ),
