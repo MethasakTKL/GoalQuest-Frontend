@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:goal_quest/pages/goals/goal_card.dart';
 
 class GoalsPage extends StatelessWidget {
   const GoalsPage({super.key});
@@ -224,73 +225,41 @@ class GoalsPage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    GestureDetector(
-                      // สำหรับกดเพื่อเปลี่ยนหน้าต่าง
-                      onTap: () {
-                        Navigator.pushNamed(context, '/tasks');
-                      },
-                      child: Container(
-                        width: double.infinity,
-                        height: 120,
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(156, 208, 208, 208),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: const Padding(
-                          padding: EdgeInsets.fromLTRB(30, 0, 10, 0),
-                          child: Row(
-                            children: [Text("Route to Mockup Tasks")],
+                    Center(
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 10),
+                          TaskCard(
+                            taskTitle: "เรียนวิถี Backend",
+                            duration: "2 Weeks",
+                            taskProgress: "1/2 Tasks",
+                            progressPercentage: 0.5,
+                            onTap: () {
+                              Navigator.pushNamed(context, '/tasks');
+                            },
                           ),
-                        ),
+                          const SizedBox(height: 10),
+                          TaskCard(
+                            taskTitle: "เรียนรู้ Flutter",
+                            duration: "1 Week",
+                            taskProgress: "3/5 Tasks",
+                            progressPercentage: 0.6,
+                            onTap: () {},
+                          ),
+                          const SizedBox(height: 10),
+                          TaskCard(
+                            taskTitle: "ลดน้ำหนัก 10 กิโล",
+                            duration: "1 Months",
+                            taskProgress: "3/10 Tasks",
+                            progressPercentage: 0.3,
+                            onTap: () {},
+                          ),
+                        ],
                       ),
                     ),
                     const SizedBox(
-                      height: 10,
+                      height: 30,
                     ),
-                    GestureDetector(
-                      // สำหรับกดเพื่อเปลี่ยนหน้าต่าง
-                      onTap: () {
-                        Navigator.pushNamed(context, '/focustimer');
-                      },
-                      child: Container(
-                        width: double.infinity,
-                        height: 120,
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(156, 208, 208, 208),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: const Padding(
-                          padding: EdgeInsets.fromLTRB(30, 0, 10, 0),
-                          child: Row(
-                            children: [Text("Route to Mockup FocusTimer")],
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    GestureDetector(
-                      // สำหรับกดเพื่อเปลี่ยนหน้าต่าง
-                      onTap: () {},
-                      child: Container(
-                        width: double.infinity,
-                        height: 120,
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(156, 208, 208, 208),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: const Padding(
-                          padding: EdgeInsets.fromLTRB(30, 0, 10, 0),
-                          child: Row(
-                            children: [],
-                          ),
-                        ),
-                      ),
-                    )
                   ],
                 ),
               ),

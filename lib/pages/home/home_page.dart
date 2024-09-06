@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
 import 'package:goal_quest/pages/reward/reward_page.dart';
-import 'package:percent_indicator/percent_indicator.dart';
+import 'package:goal_quest/pages/goals/goal_card.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -200,166 +200,40 @@ class HomePage extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/tasks');
-                  },
-                  child: Container(
-                    width: double.infinity,
-                    height: 130,
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(156, 208, 208, 208),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8, top: 20),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Row(
-                                  children: [
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      "จะเป็น Backend Dev ให้ได้",
-                                      style: TextStyle(
-                                          fontSize: 19,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    SizedBox(
-                                      width: 80,
-                                    ),
-                                    Icon(
-                                      Icons.arrow_forward_ios,
-                                      size: 18,
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 4,
-                                ),
-                                const Padding(
-                                  padding:
-                                      EdgeInsets.only(left: 10, bottom: 10),
-                                  child: Row(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.hourglass_top,
-                                            size: 13,
-                                            color: Colors.black54,
-                                          ),
-                                          Text(
-                                            "2 Weeks",
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.black54),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        width: 20,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Icon(Icons.hourglass_top,
-                                              size: 13, color: Colors.black54),
-                                          SizedBox(
-                                            width: 3,
-                                          ),
-                                          Text(
-                                            "1/2 Tasks",
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.black54),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                LinearPercentIndicator(
-                                  width: 350,
-                                  lineHeight: 30.0,
-                                  percent: 0.5,
-                                  center: const Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Padding(
-                                      padding: EdgeInsets.only(left: 10),
-                                      child: Text(
-                                        "50%",
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                    ),
-                                  ),
-                                  barRadius: const Radius.circular(20),
-                                  backgroundColor:
-                                      const Color.fromARGB(255, 255, 255, 255),
-                                  progressColor: const Color.fromARGB(
-                                      255,
-                                      86,
-                                      86,
-                                      86), // ตั้งเป็นสีขาว เพื่อให้ ShaderMask ทำงาน
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
+                Center(
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 10),
+                      TaskCard(
+                        taskTitle: "เรียนวิถี Backend",
+                        duration: "2 Weeks",
+                        taskProgress: "1/2 Tasks",
+                        progressPercentage: 0.5,
+                        onTap: () {
+                          Navigator.pushNamed(context, '/tasks');
+                        },
                       ),
-                    ),
+                      const SizedBox(height: 10),
+                      TaskCard(
+                        taskTitle: "เรียนรู้ Flutter",
+                        duration: "1 Week",
+                        taskProgress: "3/5 Tasks",
+                        progressPercentage: 0.6,
+                        onTap: () {},
+                      ),
+                      const SizedBox(height: 10),
+                      TaskCard(
+                        taskTitle: "ลดน้ำหนัก 10 กิโล",
+                        duration: "1 Months",
+                        taskProgress: "3/10 Tasks",
+                        progressPercentage: 0.3,
+                        onTap: () {},
+                      ),
+                    ],
                   ),
                 ),
                 const SizedBox(
-                  height: 10,
-                ),
-                GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    width: double.infinity,
-                    height: 120,
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(156, 208, 208, 208),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.fromLTRB(30, 0, 10, 0),
-                      child: Row(
-                        children: [],
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    width: double.infinity,
-                    height: 120,
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(156, 208, 208, 208),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.fromLTRB(30, 0, 10, 0),
-                      child: Row(
-                        children: [],
-                      ),
-                    ),
-                  ),
+                  height: 30,
                 ),
               ],
             ),

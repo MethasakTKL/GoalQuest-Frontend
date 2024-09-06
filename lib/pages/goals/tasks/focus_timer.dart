@@ -24,9 +24,9 @@ class _FocusTimerPageState extends State<FocusTimerPage> {
             ),
             const Spacer(),
             const Text(
-              'Goal Title',
+              'เรียนพื้นฐาน Python',
               style: TextStyle(
-                fontSize: 20,
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -60,13 +60,6 @@ class _FocusTimerPageState extends State<FocusTimerPage> {
                         },
                       ),
                       const SizedBox(width: 5),
-                      const Text(
-                        'Learn Python',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
                     ],
                   ),
                   const SizedBox(height: 50),
@@ -118,7 +111,7 @@ class _FocusTimerPageState extends State<FocusTimerPage> {
                           ),
                           const SizedBox(height: 10),
                           const Text(
-                            '112:41',
+                            '120:00',
                             style: TextStyle(
                               fontFamily: 'Barlow',
                               fontSize: 75,

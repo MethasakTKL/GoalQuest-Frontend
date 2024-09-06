@@ -26,7 +26,7 @@ class FocusTimerList extends StatelessWidget {
                     Row(
                       children: [
                         const Text(
-                          'Learn Python',
+                          'เรียนพื้นฐาน Python',
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
@@ -130,7 +130,7 @@ class FocusTimerList extends StatelessWidget {
                     Row(
                       children: [
                         const Text(
-                          'Learn FastAPI',
+                          'ทดลองใช้ FastAPI',
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),

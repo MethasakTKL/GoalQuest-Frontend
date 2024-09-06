@@ -59,7 +59,7 @@ class TasksPage extends StatelessWidget {
                         ),
                         const SizedBox(width: 5),
                         const Text(
-                          'Goal Title 1',
+                          'เรียนวิถี Backend',
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
