@@ -3,7 +3,8 @@ import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
 import 'package:goal_quest/pages/profile/change_password_page.dart';
 import 'package:goal_quest/pages/profile/edit_profile_page.dart';
 import 'package:goal_quest/pages/profile/redeem_history_page.dart';
-import 'package:goal_quest/pages/goals/focus_timer.dart';
+import 'package:goal_quest/pages/goals/tasks/focus_timer.dart';
+import 'package:goal_quest/pages/goals/tasks/tasks_page.dart';
 
 import 'pages/auth/start_page.dart';
 import 'pages/auth/login_page.dart';
@@ -16,7 +17,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
         '/changee_password': (context) => const ChangePasswordPage(),
         '/redeem_history': (context) => const RedeemHistoryPage(),
         '/focustimer': (context) => const FocusTimerPage(),
+        '/tasks': (context) => const TasksPage(),
       },
     );
   }

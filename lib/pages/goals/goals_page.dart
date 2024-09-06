@@ -229,6 +229,29 @@ class GoalsPage extends StatelessWidget {
                     GestureDetector(
                       // สำหรับกดเพื่อเปลี่ยนหน้าต่าง
                       onTap: () {
+                        Navigator.pushNamed(context, '/tasks');
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        height: 120,
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(156, 208, 208, 208),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.fromLTRB(30, 0, 10, 0),
+                          child: Row(
+                            children: [Text("Route to Mockup Tasks")],
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    GestureDetector(
+                      // สำหรับกดเพื่อเปลี่ยนหน้าต่าง
+                      onTap: () {
                         Navigator.pushNamed(context, '/focustimer');
                       },
                       child: Container(
@@ -242,27 +265,6 @@ class GoalsPage extends StatelessWidget {
                           padding: EdgeInsets.fromLTRB(30, 0, 10, 0),
                           child: Row(
                             children: [Text("Route to Mockup FocusTimer")],
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    GestureDetector(
-                      // สำหรับกดเพื่อเปลี่ยนหน้าต่าง
-                      onTap: () {},
-                      child: Container(
-                        width: double.infinity,
-                        height: 120,
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(156, 208, 208, 208),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: const Padding(
-                          padding: EdgeInsets.fromLTRB(30, 0, 10, 0),
-                          child: Row(
-                            children: [],
                           ),
                         ),
                       ),
