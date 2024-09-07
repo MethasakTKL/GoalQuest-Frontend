@@ -22,10 +22,11 @@ class EditProfilePage extends StatelessWidget {
               onPressed: () {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => const BottomNavigationPage(
-                      initialIndex: 3,
-                    ),
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation1, animation2) =>
+                        const BottomNavigationPage(initialIndex: 3),
+                    transitionDuration: const Duration(
+                        seconds: 0), // กำหนดเวลาของการเปลี่ยนหน้า
                   ),
                 );
               },
