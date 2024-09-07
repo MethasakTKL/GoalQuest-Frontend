@@ -87,19 +87,19 @@ class _RedeemHistoryPageState extends State<RedeemHistoryPage> {
                       },
                     ),
                     const SizedBox(width: 10),
+                    const Icon(
+                      Icons.history,
+                      size: 25.0,
+                      color: Colors.black,
+                    ),
+                    const SizedBox(width: 5),
                     const Text(
                       'History',
                       style: TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
                       ),
-                    ),
-                    const SizedBox(width: 5),
-                    const Icon(
-                      Icons.history,
-                      size: 25.0,
-                      color: Colors.black,
-                    ),
+                    ),              
                   ],
                 ),
                 Padding(
