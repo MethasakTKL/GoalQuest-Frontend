@@ -125,8 +125,15 @@ class TaskCard extends StatelessWidget {
                       ),
                       barRadius: const Radius.circular(20),
                       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-                      progressColor: const Color.fromARGB(255, 86, 86, 86),
-                    ),
+                      linearGradient: const LinearGradient(
+                        colors: [
+                          Color.fromARGB(255, 29, 107, 72),
+                          Color.fromARGB(255, 158, 229, 4),
+                        ],
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                      ),
+                    )
                   ],
                 ),
               )
