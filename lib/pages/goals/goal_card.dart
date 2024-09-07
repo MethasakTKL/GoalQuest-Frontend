@@ -9,13 +9,13 @@ class TaskCard extends StatelessWidget {
   final VoidCallback onTap;
 
   const TaskCard({
-    Key? key,
+    super.key,
     required this.taskTitle,
     required this.duration,
     required this.taskProgress,
     required this.progressPercentage,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   LinearGradient _getGradientByPercentage(double percentage) {
     if (percentage < 0.4) {
