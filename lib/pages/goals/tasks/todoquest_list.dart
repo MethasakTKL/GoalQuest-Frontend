@@ -33,6 +33,9 @@ class _TodoQuestListState extends State<TodoQuestList> {
                       );
                     },
                   ),
+                  const SizedBox(
+                    width: 10,
+                  ),
                   Expanded(
                     child: Container(
                       padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
@@ -117,6 +120,9 @@ class _TodoQuestListState extends State<TodoQuestList> {
                         },
                       );
                     },
+                  ),
+                  const SizedBox(
+                    width: 10,
                   ),
                   Expanded(
                     child: Container(
