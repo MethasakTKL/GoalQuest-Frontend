@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
 import 'package:goal_quest/pages/goals/tasks/focus_timer_list.dart';
+import 'package:goal_quest/pages/goals/tasks/todo_quest_list.dart';
 
-class TasksPage extends StatelessWidget {
+class TasksPage extends StatefulWidget {
   const TasksPage({super.key});
 
+  @override
+  
+  TasksPageState createState() => TasksPageState();
+}
+
+class TasksPageState extends State<TasksPage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -102,10 +109,38 @@ class TasksPage extends StatelessWidget {
                       height: 400,
                       child: TabBarView(
                         children: [
-                          Center(
-                            child: Text(
-                              'Todoquest Content',
-                              style: TextStyle(fontSize: 18),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(12, 10, 12, 0),
+                            child: Column(
+                              children: [
+                                TextField(
+                                  decoration: InputDecoration(
+                                    prefixIcon: Align(
+                                      alignment: Alignment.center,
+                                      widthFactor: 1.0,
+                                      heightFactor: 1.0,
+                                      child: Icon(
+                                        Icons.search,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    hintText: 'Search Task name',
+                                    hintStyle: TextStyle(
+                                      color:
+                                          Colors.grey,
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(8.0)),
+                                    ),
+                                  ),
+                                  style: TextStyle(
+                                    color:
+                                        Colors.black,
+                                  ),
+                                ),
+                                TodoQuestList(),
+                              ],
                             ),
                           ),
                           FocusTimerList(),
