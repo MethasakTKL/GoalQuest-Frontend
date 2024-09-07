@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
-class TaskCard extends StatelessWidget {
+class GoalCard extends StatelessWidget {
   final String taskTitle;
   final String duration;
   final String taskProgress;
   final double progressPercentage;
   final VoidCallback onTap;
 
-  const TaskCard({
+  const GoalCard({
     super.key,
     required this.taskTitle,
     required this.duration,

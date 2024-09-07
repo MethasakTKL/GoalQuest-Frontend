@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
-import 'package:goal_quest/pages/goals/tasks/focus_timer_list.dart';
-import 'package:goal_quest/pages/goals/tasks/todo_quest_list.dart';
+import 'package:goal_quest/pages/goals/tasks/focustimer_list.dart';
+import 'package:goal_quest/pages/goals/tasks/todoquest_list.dart';
 
 class TasksPage extends StatefulWidget {
   const TasksPage({super.key});
 
   @override
-  
   TasksPageState createState() => TasksPageState();
 }
 
@@ -31,14 +30,14 @@ class TasksPageState extends State<TasksPage> {
                 icon: const Icon(Icons.account_circle),
                 onPressed: () {
                   Navigator.pushReplacement(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) =>
-                        const BottomNavigationPage(initialIndex: 3),
-                    transitionDuration: const Duration(
-                        seconds: 0), // กำหนดเวลาของการเปลี่ยนหน้า
-                  ),
-                );
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) =>
+                          const BottomNavigationPage(initialIndex: 3),
+                      transitionDuration: const Duration(
+                          seconds: 0), // กำหนดเวลาของการเปลี่ยนหน้า
+                    ),
+                  );
                 },
                 iconSize: 30,
               ),
@@ -127,17 +126,15 @@ class TasksPageState extends State<TasksPage> {
                                     ),
                                     hintText: 'Search Task name',
                                     hintStyle: TextStyle(
-                                      color:
-                                          Colors.grey,
+                                      color: Colors.grey,
                                     ),
                                     border: OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(8.0)),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(8.0)),
                                     ),
                                   ),
                                   style: TextStyle(
-                                    color:
-                                        Colors.black,
+                                    color: Colors.black,
                                   ),
                                 ),
                                 TodoQuestList(),

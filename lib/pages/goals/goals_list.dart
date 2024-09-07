@@ -1,0 +1,48 @@
+import 'package:flutter/material.dart';
+import 'package:goal_quest/pages/goals/goal_card.dart';
+
+class GoalsList extends StatelessWidget {
+  const GoalsList({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const SizedBox(height: 10),
+        GoalCard(
+          taskTitle: "เรียนวิถี Backend",
+          duration: "2 Weeks",
+          taskProgress: "1/2 Tasks",
+          progressPercentage: 0.5,
+          onTap: () {
+            Navigator.pushNamed(context, '/tasks');
+          },
+        ),
+        const SizedBox(height: 10),
+        GoalCard(
+          taskTitle: "เรียนรู้ Flutter",
+          duration: "1 Week",
+          taskProgress: "3/5 Tasks",
+          progressPercentage: 0.6,
+          onTap: () {},
+        ),
+        const SizedBox(height: 10),
+        GoalCard(
+          taskTitle: "ลดน้ำหนัก 10 กิโล",
+          duration: "1 Months",
+          taskProgress: "3/10 Tasks",
+          progressPercentage: 0.3,
+          onTap: () {},
+        ),
+        const SizedBox(height: 10),
+        GoalCard(
+          taskTitle: "ลดน้ำหนัก 10 กิโล",
+          duration: "1 Months",
+          taskProgress: "3/10 Tasks",
+          progressPercentage: 0.3,
+          onTap: () {},
+        ),
+      ],
+    );
+  }
+}

@@ -3,7 +3,7 @@ import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
 import 'package:goal_quest/pages/profile/change_password_page.dart';
 import 'package:goal_quest/pages/profile/edit_profile_page.dart';
 import 'package:goal_quest/pages/profile/redeem_history_page.dart';
-import 'package:goal_quest/pages/goals/tasks/focus_timer.dart';
+import 'package:goal_quest/pages/goals/tasks/focustimer_timer.dart';
 import 'package:goal_quest/pages/goals/tasks/tasks_page.dart';
 
 import 'pages/auth/start_page.dart';
