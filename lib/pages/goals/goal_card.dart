@@ -17,6 +17,37 @@ class TaskCard extends StatelessWidget {
     required this.onTap,
   }) : super(key: key);
 
+  LinearGradient _getGradientByPercentage(double percentage) {
+    if (percentage < 0.4) {
+      return const LinearGradient(
+        colors: [
+          Color.fromARGB(255, 54, 54, 54), // Red
+          Color.fromARGB(255, 133, 133, 133), // Dark Orange
+        ],
+        begin: Alignment.centerLeft,
+        end: Alignment.centerRight,
+      );
+    } else if (percentage < 0.7) {
+      return const LinearGradient(
+        colors: [
+          Color.fromARGB(255, 227, 142, 38), // Dark Orange
+          Color.fromARGB(255, 255, 207, 73), // Yellow
+        ],
+        begin: Alignment.centerLeft,
+        end: Alignment.centerRight,
+      );
+    } else {
+      return const LinearGradient(
+        colors: [
+          Color(0xFF006400), // Dark Green
+          Color(0xFF90EE90), // Light Green
+        ],
+        begin: Alignment.centerLeft,
+        end: Alignment.centerRight,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -49,13 +80,6 @@ class TaskCard extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        // const SizedBox(
-                        //   width: 80,
-                        // ),
-                        // const Icon(
-                        //   Icons.arrow_forward_ios,
-                        //   size: 18,
-                        // ),
                       ],
                     ),
                     const SizedBox(
@@ -125,14 +149,8 @@ class TaskCard extends StatelessWidget {
                       ),
                       barRadius: const Radius.circular(20),
                       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-                      linearGradient: const LinearGradient(
-                        colors: [
-                          Color.fromARGB(255, 29, 107, 72),
-                          Color.fromARGB(255, 158, 229, 4),
-                        ],
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                      ),
+                      linearGradient:
+                          _getGradientByPercentage(progressPercentage),
                     )
                   ],
                 ),

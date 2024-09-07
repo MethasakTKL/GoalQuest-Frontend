@@ -208,7 +208,7 @@ class HomePage extends StatelessWidget {
                         taskTitle: "เรียนวิถี Backend",
                         duration: "2 Weeks",
                         taskProgress: "1/2 Tasks",
-                        progressPercentage: 0.5,
+                        progressPercentage: 0.8,
                         onTap: () {
                           Navigator.pushNamed(context, '/tasks');
                         },
