@@ -63,6 +63,63 @@ class HomePage extends StatelessWidget {
                     color: const Color.fromARGB(156, 255, 160, 8),
                     borderRadius: BorderRadius.circular(20),
                   ),
+                  child: Stack(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(
+                            20), // ปรับขอบให้มนเหมือน container
+                        child: Image.asset(
+                          'assets/slide_1.png',
+                          fit: BoxFit.cover, // ขยายรูปให้เต็ม container
+                          width: double.infinity,
+                          height: double.infinity,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10, right: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Positioned(
+                              top: 10, // กำหนดระยะห่างจากด้านบน
+                              left: 10, // กำหนดระยะห่างจากด้านซ้าย
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12, vertical: 7),
+                                decoration: BoxDecoration(
+                                  color:
+                                      const Color.fromARGB(255, 255, 206, 206),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: const Row(
+                                  mainAxisSize: MainAxisSize
+                                      .min, // กำหนดขนาดของ Row ให้พอดีกับเนื้อหา
+                                  children: [
+                                    Icon(
+                                      Icons.diamond_outlined,
+                                      size: 15,
+                                      color: Color.fromARGB(255, 225, 58, 58),
+                                    ),
+                                    SizedBox(
+                                        width:
+                                            5), // เพิ่มช่องว่างระหว่างไอคอนและข้อความ
+                                    Text(
+                                      '500 Points',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromARGB(255, 225, 58, 58),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(
                   height: 10,
