@@ -52,7 +52,12 @@ class HomePage extends StatelessWidget {
           child: Center(
             child: Column(
               children: [
-                const Text("Welcome back, Steven"),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Welcome back, Steven"),
+                  ],
+                ),
                 const SizedBox(height: 10),
                 // เริ่ม Stack สำหรับ CarouselSlider และคะแนน 500 Points
                 Stack(
@@ -83,7 +88,7 @@ class HomePage extends StatelessWidget {
                           ),
                         ],
                         options: CarouselOptions(
-                          height: 170,
+                          height: 200,
                           autoPlay: true,
                           enlargeCenterPage: true,
                           aspectRatio: 16 / 9,
