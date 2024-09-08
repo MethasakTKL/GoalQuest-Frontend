@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
+import 'package:goal_quest/mockup/user_models_list.dart';
 import 'package:goal_quest/pages/goals/goals_list.dart';
 import 'package:goal_quest/pages/home/routing_panel.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -9,6 +10,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currentuser = usersList[0];
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
@@ -52,10 +54,10 @@ class HomePage extends StatelessWidget {
           child: Center(
             child: Column(
               children: [
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Welcome back, Steven"),
+                    Text("Welcome back, ${currentuser.first_name}"),
                   ],
                 ),
                 const SizedBox(height: 10),
@@ -103,18 +105,18 @@ class HomePage extends StatelessWidget {
                           color: const Color.fromARGB(255, 32, 32, 32),
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        child: const Row(
+                        child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.savings_outlined,
                               size: 15,
                               color: Color.fromARGB(255, 222, 222, 222),
                             ),
-                            SizedBox(width: 5),
+                            const SizedBox(width: 5),
                             Text(
-                              '1250 Points',
-                              style: TextStyle(
+                              '${currentuser.point} Points',
+                              style: const TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
                                 color: Color.fromARGB(255, 233, 233, 233),

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
+import 'package:goal_quest/mockup/user_models_list.dart';
 
 class EditProfilePage extends StatelessWidget {
   const EditProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final currentUser = usersList[0];
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
@@ -68,7 +70,7 @@ class EditProfilePage extends StatelessWidget {
                   const SizedBox(height: 20),
                   TextField(
                     decoration: InputDecoration(
-                      hintText: 'steven007',
+                      hintText: currentUser.username,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -80,7 +82,7 @@ class EditProfilePage extends StatelessWidget {
                       Expanded(
                         child: TextField(
                           decoration: InputDecoration(
-                            hintText: 'Steven',
+                            hintText: currentUser.first_name,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -91,7 +93,7 @@ class EditProfilePage extends StatelessWidget {
                       Expanded(
                         child: TextField(
                           decoration: InputDecoration(
-                            hintText: 'Strange',
+                            hintText: currentUser.last_name,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -103,7 +105,7 @@ class EditProfilePage extends StatelessWidget {
                   const SizedBox(height: 15),
                   TextField(
                     decoration: InputDecoration(
-                      hintText: 'steven.s@email.com',
+                      hintText: currentUser.email,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),

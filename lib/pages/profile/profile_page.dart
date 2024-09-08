@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
+import 'package:goal_quest/mockup/user_models_list.dart';
+
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final currentUser = usersList[0];
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
@@ -65,46 +68,46 @@ class ProfilePage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
-                                "Steven Strange",
-                                style: TextStyle(
+                              Text(
+                                "${currentUser.first_name} ${currentUser.last_name}",
+                                style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 25,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              const Row(
+                              Row(
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     Icons.person_outlined,
                                     size: 19,
                                     color: Colors.white,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 5,
                                   ),
                                   Text(
-                                    "steven007",
-                                    style: TextStyle(
+                                    currentUser.username,
+                                    style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 15,
                                     ),
                                   ),
                                 ],
                               ),
-                              const Row(
+                              Row(
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     Icons.email_outlined,
                                     size: 19,
                                     color: Colors.white,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 5,
                                   ),
                                   Text(
-                                    "steven.s@email.com",
-                                    style: TextStyle(
+                                    currentUser.email,
+                                    style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 15,
                                     ),
@@ -159,21 +162,21 @@ class ProfilePage extends StatelessWidget {
                                             66, 70, 205, 0.612),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
-                                      child: const Center(
+                                      child: Center(
                                         child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
-                                            Icon(
+                                            const Icon(
                                               Icons.savings_outlined,
                                               size: 15,
                                               color: Color.fromARGB(
                                                   255, 222, 222, 222),
                                             ),
-                                            SizedBox(width: 5),
+                                            const SizedBox(width: 5),
                                             Text(
-                                              '1250 Points',
-                                              style: TextStyle(
+                                              '${currentUser.point} Points',
+                                              style: const TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 13,
                                                   fontWeight: FontWeight.bold),
@@ -214,7 +217,7 @@ class ProfilePage extends StatelessWidget {
                       ),
                       child: ClipOval(
                         child: Image.asset(
-                          'assets/user_image.png',
+                          currentUser.image,
                           fit: BoxFit.cover,
                         ),
                       ),
