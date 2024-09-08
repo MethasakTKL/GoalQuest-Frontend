@@ -3,7 +3,7 @@ import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
 import 'package:goal_quest/pages/reward/reward_page.dart';
 
 class HomeRoutingPanel extends StatelessWidget {
-  const HomeRoutingPanel({Key? key}) : super(key: key);
+  const HomeRoutingPanel({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -50,8 +50,8 @@ class HomeRoutingPanel extends StatelessWidget {
           fit: FlexFit.tight,
           child: _buildRoutingButton(
             context,
-            icon: Icons.history,
-            label: "History",
+            icon: Icons.sort,
+            label: "Ranking",
             onTap: () {
               Navigator.pushNamed(context, '/redeem_history');
             },

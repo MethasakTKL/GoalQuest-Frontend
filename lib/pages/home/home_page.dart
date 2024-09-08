@@ -59,34 +59,30 @@ class HomePage extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 10),
-                // เริ่ม Stack สำหรับ CarouselSlider และคะแนน 500 Points
                 Stack(
                   children: [
-                    // CarouselSlider
                     Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20), // ทำขอบโค้ง
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                      clipBehavior: Clip.antiAlias, // ให้คลิปภาพตามขอบที่โค้ง
+                      clipBehavior: Clip.antiAlias,
                       child: CarouselSlider(
                         items: [
-                          Image.asset(
-                            'assets/slide_1.png',
-                            fit: BoxFit.cover,
-                            width: double.infinity,
-                          ),
-                          Image.asset(
-                            'assets/slide_2.png',
-                            fit: BoxFit.cover,
-                            width: double.infinity,
-                          ),
-                          Image.asset(
-                            'assets/slide_3.png',
-                            fit: BoxFit.cover,
-                            width: double.infinity,
-                          ),
-                        ],
+                          'assets/slide_1.png',
+                          'assets/slide_2.png',
+                          'assets/slide_3.png',
+                        ]
+                            .map((item) => Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    image: DecorationImage(
+                                      image: AssetImage(item),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ))
+                            .toList(),
                         options: CarouselOptions(
                           height: 200,
                           autoPlay: true,
@@ -115,9 +111,7 @@ class HomePage extends StatelessWidget {
                               size: 15,
                               color: Color.fromARGB(255, 222, 222, 222),
                             ),
-                            SizedBox(
-                                width:
-                                    5), // เพิ่มช่องว่างระหว่างไอคอนและข้อความ
+                            SizedBox(width: 5),
                             Text(
                               '1250 Points',
                               style: TextStyle(
