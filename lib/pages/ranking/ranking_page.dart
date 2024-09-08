@@ -46,20 +46,19 @@ class RankingPage extends StatelessWidget {
       ),
       body: Column(
         children: [
-          const SizedBox(height: 10),
           _buildTopThree(),
           const SizedBox(height: 10),
           Expanded(
             child: Container(
               decoration: const BoxDecoration(
-                color: Color.fromARGB(255, 25, 25, 31),
+                color: Color.fromARGB(255, 255, 255, 255),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(25),
                   topRight: Radius.circular(25),
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.only(top: 40),
+                padding: const EdgeInsets.only(top: 20),
                 child: _buildRankingList(),
               ),
             ),
@@ -86,7 +85,8 @@ class RankingPage extends StatelessWidget {
 
   Widget _buildTopThreeItem(
       String name, String points, int position, Color color) {
-    double height = position == 1 ? 130 : 90;
+    double height = position == 1 ? 120 : 80;
+    double width = position == 1 ? 100 : 110;
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -102,7 +102,7 @@ class RankingPage extends StatelessWidget {
           ),
           child: CircleAvatar(
             radius: 40,
-            backgroundColor: Color.fromARGB(255, 255, 255, 255),
+            backgroundColor: const Color.fromARGB(255, 255, 255, 255),
             child: ClipOval(
               child: Image.asset(
                 'assets/user_image.png',
@@ -133,7 +133,7 @@ class RankingPage extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         Container(
-          width: 100,
+          width: width,
           height: height,
           decoration: BoxDecoration(
             color: color,
@@ -169,31 +169,32 @@ class RankingPage extends StatelessWidget {
       itemBuilder: (context, index) {
         final item = rankingData[index];
         return Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
+          padding: const EdgeInsets.only(left: 10, right: 10, top: 8),
           child: Container(
             decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 38, 40, 41),
+              color: const Color.fromARGB(255, 230, 230, 230),
               borderRadius: BorderRadius.circular(15), // Rounded corners
             ),
             child: ListTile(
               leading: CircleAvatar(
-                backgroundColor: const Color.fromARGB(255, 18, 133, 190),
+                backgroundColor: const Color.fromARGB(255, 28, 157, 221),
                 child: Text((index + 4).toString(),
                     style: const TextStyle(color: Colors.white)),
               ),
               title: Text(item['name']!,
-                  style: const TextStyle(color: Colors.white)),
+                  style:
+                      const TextStyle(color: Color.fromARGB(255, 24, 24, 24))),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(item['points']!,
                       style: const TextStyle(
-                        color: Color.fromARGB(255, 255, 255, 255),
+                        color: Color.fromARGB(255, 55, 55, 55),
                       )),
                   const SizedBox(width: 4),
                   const Icon(
                     Icons.savings_outlined,
-                    color: Colors.white,
+                    color: Color.fromARGB(255, 60, 60, 60),
                     size: 16,
                   ),
                 ],
