@@ -107,7 +107,7 @@ class HomePage extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Icon(
-                              Icons.diamond_outlined,
+                              Icons.savings_outlined,
                               size: 15,
                               color: Color.fromARGB(255, 222, 222, 222),
                             ),

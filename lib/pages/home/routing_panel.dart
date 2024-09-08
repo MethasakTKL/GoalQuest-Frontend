@@ -50,7 +50,7 @@ class HomeRoutingPanel extends StatelessWidget {
           fit: FlexFit.tight,
           child: _buildRoutingButton(
             context,
-            icon: Icons.sort,
+            icon: Icons.stars,
             label: "Ranking",
             onTap: () {
               Navigator.pushNamed(context, '/redeem_history');

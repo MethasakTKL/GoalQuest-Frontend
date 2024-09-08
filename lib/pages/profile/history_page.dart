@@ -22,7 +22,7 @@ class _RedeemHistoryPageState extends State<RedeemHistoryPage> {
     {'date': '17/07/2024', 'taskName': 'Task Title', 'point': 200},
   ];
 
-  bool isEarnPointVisible = false;
+  bool isEarnPointVisible = true;
 
   final List<Map<String, dynamic>> redeemHistory = const [
     {'date': '04/09/2024', 'Name': 'Godiigozill44444', 'point': 1000},
@@ -86,12 +86,6 @@ class _RedeemHistoryPageState extends State<RedeemHistoryPage> {
                         Navigator.pop(context);
                       },
                     ),
-                    const SizedBox(width: 10),
-                    const Icon(
-                      Icons.history,
-                      size: 25.0,
-                      color: Colors.black,
-                    ),
                     const SizedBox(width: 5),
                     const Text(
                       'History',
@@ -99,7 +93,7 @@ class _RedeemHistoryPageState extends State<RedeemHistoryPage> {
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
                       ),
-                    ),              
+                    ),
                   ],
                 ),
                 Padding(

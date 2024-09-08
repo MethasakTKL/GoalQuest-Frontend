@@ -56,8 +56,6 @@ class EditProfilePage extends StatelessWidget {
                             Navigator.pop(context);
                           }),
                       const SizedBox(width: 5),
-                      const Icon(Icons.edit_outlined, size: 26.0),
-                      const SizedBox(width: 10),
                       const Text(
                         'Edit Profile',
                         style: TextStyle(

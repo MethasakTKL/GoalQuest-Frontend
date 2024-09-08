@@ -57,8 +57,6 @@ class ChangePasswordPage extends StatelessWidget {
                         },
                       ),
                       const SizedBox(width: 5),
-                      const Icon(Icons.password, size: 26.0),
-                      const SizedBox(width: 10),
                       const Text(
                         'Change Password',
                         style: TextStyle(
