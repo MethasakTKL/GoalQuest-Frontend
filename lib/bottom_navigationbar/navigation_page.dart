@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:goal_quest/pages/goals/goals_page.dart';
 import 'package:goal_quest/pages/home/home_page.dart';
 import 'package:goal_quest/pages/profile/profile_page.dart';
-import 'package:goal_quest/pages/collection/collection_page.dart';
+import 'package:goal_quest/pages/ranking/ranking_page.dart';
 
 class BottomNavigationPage extends StatefulWidget {
   final int initialIndex;
@@ -14,18 +14,18 @@ class BottomNavigationPage extends StatefulWidget {
 }
 
 class _BottomNavigationPageState extends State<BottomNavigationPage> {
-  int _pageIndex = 0;  // กำหนดค่าเริ่มต้นโดยตรง
+  int _pageIndex = 0; // กำหนดค่าเริ่มต้นโดยตรง
 
   @override
   void initState() {
     super.initState();
-    _pageIndex = widget.initialIndex;  // กำหนดค่าเริ่มต้นใน initState
+    _pageIndex = widget.initialIndex; // กำหนดค่าเริ่มต้นใน initState
   }
 
   final List<Widget> _pages = [
     const HomePage(),
     const GoalsPage(),
-    const StorePage(),
+    const RankingPage(),
     const ProfilePage(),
   ];
 
@@ -38,7 +38,8 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(  //IndexedStack เป็น Widget ที่ช่วยในการจัดการการแสดงผลของ Widget ย่อยหลายๆ ตัว โดยจะแสดงเพียงหนึ่ง Widget ในแต่ละครั้งตาม index ที่กำหนด  
+      body: IndexedStack(
+        //IndexedStack เป็น Widget ที่ช่วยในการจัดการการแสดงผลของ Widget ย่อยหลายๆ ตัว โดยจะแสดงเพียงหนึ่ง Widget ในแต่ละครั้งตาม index ที่กำหนด
         index: _pageIndex,
         children: _pages,
       ),
@@ -63,8 +64,8 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
             label: 'Goals',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.auto_awesome),
-            label: 'Collection',
+            icon: Icon(Icons.stars),
+            label: 'Ranking',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person_outline_rounded),
