@@ -34,16 +34,12 @@ class HomeRoutingPanel extends StatelessWidget {
           fit: FlexFit.tight,
           child: _buildRoutingButton(
             context,
-            icon: Icons.stars,
-            label: "Ranking",
+            icon: Icons.redeem,
+            label: "Reward",
             onTap: () {
-              Navigator.pushReplacement(
+              Navigator.push(
                 context,
-                PageRouteBuilder(
-                  pageBuilder: (context, animation1, animation2) =>
-                      const BottomNavigationPage(initialIndex: 2),
-                  transitionDuration: const Duration(seconds: 0),
-                ),
+                MaterialPageRoute(builder: (context) => const RewardPage()),
               );
             },
           ),
@@ -54,12 +50,16 @@ class HomeRoutingPanel extends StatelessWidget {
           fit: FlexFit.tight,
           child: _buildRoutingButton(
             context,
-            icon: Icons.redeem,
-            label: "Reward",
+            icon: Icons.stars,
+            label: "Ranking",
             onTap: () {
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => const RewardPage()),
+                PageRouteBuilder(
+                  pageBuilder: (context, animation1, animation2) =>
+                      const BottomNavigationPage(initialIndex: 2),
+                  transitionDuration: const Duration(seconds: 0),
+                ),
               );
             },
           ),

@@ -5,9 +5,9 @@ class RankingPage extends StatelessWidget {
   const RankingPage({super.key});
 
   final List<Map<String, dynamic>> mockRankingData = const [
-    {"username": "Alice", "points": 2000},
-    {"username": "Bob", "points": 1800},
-    {"username": "Charlie", "points": 1700},
+    {"username": "Steven", "points": 2000},
+    {"username": "Deadpool", "points": 1800},
+    {"username": "Loki", "points": 1700},
     {"username": "David", "points": 1600},
     {"username": "Eva", "points": 1500},
     {"username": "Frank", "points": 1400},
