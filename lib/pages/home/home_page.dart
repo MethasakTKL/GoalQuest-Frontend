@@ -71,6 +71,7 @@ class HomePage extends StatelessWidget {
                       clipBehavior: Clip.antiAlias,
                       child: CarouselSlider(
                         items: [
+                          'assets/slide_4.png',
                           'assets/slide_1.png',
                           'assets/slide_2.png',
                           'assets/slide_3.png',

@@ -37,6 +37,8 @@ flutter:
     - assets/slide_1.png
     - assets/slide_2.png
     - assets/slide_3.png
+    - assets/slide_4.png
+
 
 
   fonts:
