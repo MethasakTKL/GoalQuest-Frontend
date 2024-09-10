@@ -127,7 +127,7 @@ class CreateAccountPage extends StatelessWidget {
                   // Create account logic
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 241, 165, 25),
+                  backgroundColor: const Color.fromARGB(255, 14, 176, 212),
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
