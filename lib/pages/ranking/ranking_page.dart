@@ -1,24 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
+import 'package:goal_quest/mockup/user_rankings_list.dart';
 
 class RankingPage extends StatelessWidget {
   const RankingPage({super.key});
 
-  final List<Map<String, dynamic>> mockRankingData = const [
-    {"username": "Steven", "points": 2000},
-    {"username": "Deadpool", "points": 1800},
-    {"username": "Loki", "points": 1700},
-    {"username": "David", "points": 1600},
-    {"username": "Eva", "points": 1500},
-    {"username": "Frank", "points": 1400},
-    {"username": "Grace", "points": 1300},
-    {"username": "Hank", "points": 1200},
-    {"username": "Ivy", "points": 1100},
-    {"username": "Jack", "points": 1000},
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final mockRankingData = userRankingsList;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 79, 195, 247),
@@ -95,13 +84,13 @@ class RankingPage extends StatelessWidget {
                       top: 0,
                       child: Column(
                         children: [
-                          const CircleAvatar(
+                          CircleAvatar(
                             radius: 40,
                             backgroundImage:
-                                AssetImage('assets/user_image.png'),
+                                AssetImage(mockRankingData[0].image),
                           ),
                           Text(
-                            mockRankingData[0]["username"],
+                            mockRankingData[0].username,
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
@@ -110,7 +99,7 @@ class RankingPage extends StatelessWidget {
                           Row(
                             children: [
                               Text(
-                                '${mockRankingData[0]["points"]}',
+                                '${mockRankingData[0].point}',
                                 style: const TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
@@ -136,16 +125,16 @@ class RankingPage extends StatelessWidget {
                       left: 270,
                       child: Row(
                         children: [
-                          const CircleAvatar(
+                           CircleAvatar(
                             radius: 30,
                             backgroundImage:
-                                AssetImage('assets/user_image.png'),
+                                AssetImage(mockRankingData[1].image),
                           ),
                           const SizedBox(width: 5),
                           Column(
                             children: [
                               Text(
-                                mockRankingData[1]["username"],
+                                mockRankingData[1].username,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 14,
@@ -154,7 +143,7 @@ class RankingPage extends StatelessWidget {
                               Row(
                                 children: [
                                   Text(
-                                    '${mockRankingData[1]["points"]}',
+                                    '${mockRankingData[1].point}',
                                     style: const TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold,
@@ -185,7 +174,7 @@ class RankingPage extends StatelessWidget {
                           Column(
                             children: [
                               Text(
-                                mockRankingData[2]["username"],
+                                mockRankingData[2].username,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 14,
@@ -194,7 +183,7 @@ class RankingPage extends StatelessWidget {
                               Row(
                                 children: [
                                   Text(
-                                    '${mockRankingData[2]["points"]}',
+                                    '${mockRankingData[2].point}',
                                     style: const TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold,
@@ -214,10 +203,10 @@ class RankingPage extends StatelessWidget {
                             ],
                           ),
                           const SizedBox(width: 5),
-                          const CircleAvatar(
+                          CircleAvatar(
                             radius: 30,
                             backgroundImage:
-                                AssetImage('assets/user_image.png'),
+                                AssetImage(mockRankingData[2].image),
                           ),
                         ],
                       ),
@@ -262,13 +251,13 @@ class RankingPage extends StatelessWidget {
                                 ),
                               ),
                               title: Text(mockRankingData[index + 3]
-                                  ["username"]), // แสดงชื่อผู้ใช้งานตามลำดับ
+                                  .username), // แสดงชื่อผู้ใช้งานตามลำดับ
                               trailing: Row(
                                 mainAxisSize: MainAxisSize
                                     .min, // เพื่อให้ไอคอนไม่ใช้พื้นที่มากเกินไป
                                 children: [
                                   Text(
-                                    '${mockRankingData[index + 3]["points"]}',
+                                    '${mockRankingData[index + 3].point}',
                                     style: const TextStyle(
                                       fontSize: 12,
                                       color: Color.fromARGB(255, 89, 125, 197),

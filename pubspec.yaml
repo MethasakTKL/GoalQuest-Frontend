@@ -39,6 +39,10 @@ flutter:
     - assets/slide_3.png
     - assets/slide_4.png
 
+    - assets/mockup/rank_1.png
+    - assets/mockup/rank_2.png
+    - assets/mockup/rank_3.png
+
 
 
   fonts:
