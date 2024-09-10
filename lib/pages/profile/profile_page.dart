@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
 import 'package:goal_quest/mockup/user_models_list.dart';
 
-
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
@@ -57,7 +56,7 @@ class ProfilePage extends StatelessWidget {
                     width: double.infinity,
                     height: 170,
                     decoration: BoxDecoration(
-                      color: const Color.fromRGBO(66, 70, 205, 0.612),
+                      color: const Color.fromARGB(247, 26, 26, 26),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Row(
@@ -126,8 +125,8 @@ class ProfilePage extends StatelessWidget {
                                             (route) => false);
                                       },
                                       style: ElevatedButton.styleFrom(
-                                        backgroundColor: const Color.fromRGBO(
-                                            66, 70, 205, 0.612),
+                                        backgroundColor: const Color.fromARGB(
+                                            156, 15, 15, 15),
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(10),
@@ -158,8 +157,15 @@ class ProfilePage extends StatelessWidget {
                                       width: 120,
                                       height: 40,
                                       decoration: BoxDecoration(
-                                        color: const Color.fromRGBO(
-                                            66, 70, 205, 0.612),
+                                        gradient: const LinearGradient(
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
+                                          colors: [
+                                            Color.fromARGB(
+                                                255, 141, 66, 245), // สีฟ้าจางๆ
+                                            Color(0xFF0D47A1), // สีฟ้าเข้ม
+                                          ],
+                                        ),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                       child: Center(

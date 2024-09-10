@@ -32,6 +32,8 @@ flutter:
     - assets/goal_image.png
     - assets/user_image.png
 
+    - assets/ranking.png
+
     - assets/slide_1.png
     - assets/slide_2.png
     - assets/slide_3.png

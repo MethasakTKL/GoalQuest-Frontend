@@ -4,30 +4,43 @@ import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
 class RankingPage extends StatelessWidget {
   const RankingPage({super.key});
 
+  final List<Map<String, dynamic>> mockRankingData = const [
+    {"username": "Alice", "points": 2000},
+    {"username": "Bob", "points": 1800},
+    {"username": "Charlie", "points": 1700},
+    {"username": "David", "points": 1600},
+    {"username": "Eva", "points": 1500},
+    {"username": "Frank", "points": 1400},
+    {"username": "Grace", "points": 1300},
+    {"username": "Hank", "points": 1200},
+    {"username": "Ivy", "points": 1100},
+    {"username": "Jack", "points": 1000},
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 0, 195, 255),
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 0, 195, 255),
+        backgroundColor: const Color.fromARGB(255, 79, 195, 247),
         title: Row(
           children: [
             Image.asset(
-              'assets/logo_white.png',
+              'assets/logo_black.png',
               height: 50,
             ),
             const Spacer(),
             const Text(
               'Ranking',
               style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white),
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 0, 0, 0),
+              ),
             ),
             const Spacer(),
             IconButton(
               icon: const Icon(Icons.account_circle),
-              color: Colors.white,
+              color: const Color.fromARGB(255, 0, 0, 0),
               onPressed: () {
                 Navigator.pushReplacement(
                   context,
@@ -44,165 +57,303 @@ class RankingPage extends StatelessWidget {
         ),
         automaticallyImplyLeading: false,
       ),
-      body: Column(
-        children: [
-          _buildTopThree(),
-          const SizedBox(height: 10),
-          Expanded(
-            child: Container(
-              decoration: const BoxDecoration(
-                color: Color.fromARGB(255, 255, 255, 255),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(25),
-                  topRight: Radius.circular(25),
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: _buildRankingList(),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTopThree() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        _buildTopThreeItem(
-            'Jennie', '2780', 2, const Color.fromARGB(255, 131, 75, 216)),
-        _buildTopThreeItem(
-            'Wade', '3250', 1, const Color.fromARGB(255, 184, 71, 71)),
-        _buildTopThreeItem(
-            'Vinxen', '2750', 3, const Color.fromARGB(255, 186, 97, 168)),
-      ],
-    );
-  }
-
-  Widget _buildTopThreeItem(
-      String name, String points, int position, Color color) {
-    double height = position == 1 ? 120 : 80;
-    double width = position == 1 ? 100 : 110;
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        const SizedBox(
-          height: 20,
-        ),
-        Container(
-          width:
-              90, // กำหนดขนาดให้ใหญ่กว่าขนาดของ CircleAvatar เพื่อให้ขอบแสดงผล
-          height: 90,
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-          ),
-          child: CircleAvatar(
-            radius: 40,
-            backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-            child: ClipOval(
-              child: Image.asset(
-                'assets/user_image.png',
-                width: 80,
-                height: 80,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-        ),
-        Text(name,
-            style: const TextStyle(
-              color: Color.fromARGB(255, 255, 255, 255),
-              fontWeight: FontWeight.bold,
-            )),
-        Row(
-          children: [
-            Text(points,
-                style:
-                    const TextStyle(color: Color.fromARGB(255, 255, 255, 255))),
-            const SizedBox(width: 4),
-            const Icon(
-              Icons.savings_outlined,
-              color: Colors.white,
-              size: 16,
-            ),
-          ],
-        ),
-        const SizedBox(height: 10),
-        Container(
-          width: width,
-          height: height,
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: BorderRadius.circular(15), // Rounded corners
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                position.toString(),
-                style: const TextStyle(
-                    fontSize: 50, color: Colors.white, fontFamily: 'Barlow'),
-              ),
+      body: Container(
+        // เพิ่มไล่เฉดสีพื้นหลัง
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFF4FC3F7), // สีฟ้าอ่อน
+              Color(0xFFFFFFFF), // สีขาว
             ],
           ),
         ),
-      ],
-    );
-  }
+        child: Stack(
+          children: [
+            Column(
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    // Podium Image
+                    Padding(
+                      padding: const EdgeInsets.only(top: 125),
+                      child: Center(
+                        child: Image.asset(
+                          'assets/ranking.png',
+                          width: 250,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
+                    // Positioned for 1st, 2nd, 3rd place user images and points
+                    Positioned(
+                      top: 0,
+                      child: Column(
+                        children: [
+                          const CircleAvatar(
+                            radius: 40,
+                            backgroundImage:
+                                AssetImage('assets/user_image.png'),
+                          ),
+                          Text(
+                            mockRankingData[0]["username"],
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                '${mockRankingData[0]["points"]}',
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromARGB(255, 7, 88, 220),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 3,
+                              ),
+                              const Icon(
+                                Icons.savings_outlined,
+                                size: 13,
+                                color: Color.fromARGB(255, 7, 88, 220),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    // Second place user (on the right)
+                    Positioned(
+                      top: 110,
+                      left: 270,
+                      child: Row(
+                        children: [
+                          const CircleAvatar(
+                            radius: 30,
+                            backgroundImage:
+                                AssetImage('assets/user_image.png'),
+                          ),
+                          const SizedBox(width: 5),
+                          Column(
+                            children: [
+                              Text(
+                                mockRankingData[1]["username"],
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    '${mockRankingData[1]["points"]}',
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color.fromARGB(255, 7, 88, 220),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 3,
+                                  ),
+                                  const Icon(
+                                    Icons.savings_outlined,
+                                    size: 13,
+                                    color: Color.fromARGB(255, 7, 88, 220),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    // Third place user (on the left)
+                    Positioned(
+                      top: 120,
+                      right: 270,
+                      child: Row(
+                        children: [
+                          Column(
+                            children: [
+                              Text(
+                                mockRankingData[2]["username"],
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    '${mockRankingData[2]["points"]}',
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color.fromARGB(255, 7, 88, 220),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 3,
+                                  ),
+                                  const Icon(
+                                    Icons.savings_outlined,
+                                    size: 13,
+                                    color: Color.fromARGB(255, 7, 88, 220),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          const SizedBox(width: 5),
+                          const CircleAvatar(
+                            radius: 30,
+                            backgroundImage:
+                                AssetImage('assets/user_image.png'),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 0),
 
-  Widget _buildRankingList() {
-    final rankingData = [
-      {'name': 'Zico', 'points': '2550'},
-      {'name': 'Loopy', 'points': '2500'},
-      {'name': 'Dean', 'points': '2150'},
-      {'name': 'Jackson', 'points': '1920'},
-      {'name': 'Nafla', 'points': '1500'},
-      {'name': 'Flowsik', 'points': '100'},
-    ];
-
-    return ListView.builder(
-      itemCount: rankingData.length,
-      itemBuilder: (context, index) {
-        final item = rankingData[index];
-        return Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10, top: 8),
-          child: Container(
-            decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 230, 230, 230),
-              borderRadius: BorderRadius.circular(15), // Rounded corners
-            ),
-            child: ListTile(
-              leading: CircleAvatar(
-                backgroundColor: const Color.fromARGB(255, 28, 157, 221),
-                child: Text((index + 4).toString(),
-                    style: const TextStyle(color: Colors.white)),
-              ),
-              title: Text(item['name']!,
-                  style:
-                      const TextStyle(color: Color.fromARGB(255, 24, 24, 24))),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(item['points']!,
-                      style: const TextStyle(
-                        color: Color.fromARGB(255, 55, 55, 55),
-                      )),
-                  const SizedBox(width: 4),
-                  const Icon(
-                    Icons.savings_outlined,
-                    color: Color.fromARGB(255, 60, 60, 60),
-                    size: 16,
+                // Expandable scrollable list of other rankings with gray background and curved borders
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 255, 255, 255),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: ListView.builder(
+                          itemCount: mockRankingData.length -
+                              3, // จำนวนที่เหลือนอกเหนือจาก top 3
+                          padding: const EdgeInsets.only(bottom: 80),
+                          itemBuilder: (context, index) {
+                            int rank = index + 4;
+                            return ListTile(
+                              leading: Container(
+                                width: 40,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[700], // สีเทาเข้ม
+                                  shape: BoxShape.circle, // ทำเป็นวงกลม
+                                ),
+                                alignment: Alignment.center,
+                                child: Text(
+                                  rank.toString(), // แสดงลำดับที่เป็นตัวเลข
+                                  style: const TextStyle(
+                                    color: Colors.white, // สีข้อความเป็นสีขาว
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                              title: Text(mockRankingData[index + 3]
+                                  ["username"]), // แสดงชื่อผู้ใช้งานตามลำดับ
+                              trailing: Row(
+                                mainAxisSize: MainAxisSize
+                                    .min, // เพื่อให้ไอคอนไม่ใช้พื้นที่มากเกินไป
+                                children: [
+                                  Text(
+                                    '${mockRankingData[index + 3]["points"]}',
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      color: Color.fromARGB(255, 89, 125, 197),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                      width:
+                                          3), // เพิ่มระยะห่างระหว่างข้อความกับไอคอน
+                                  const Icon(Icons.savings_outlined,
+                                      size: 16, // ขนาดไอคอน
+                                      color: Color.fromARGB(255, 89, 125, 197)),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
                   ),
-                ],
+                ),
+              ],
+            ),
+
+            // Fixed current user's score section as a Stack, overlapping the ListView
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          CircleAvatar(
+                            backgroundImage:
+                                AssetImage('assets/user_image.png'),
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            '1250 Points',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            'Rank 12th',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Icon(
+                            Icons.bookmark,
+                            color: Color.fromARGB(255, 77, 172, 255),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
-          ),
-        );
-      },
+          ],
+        ),
+      ),
     );
   }
 }
