@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
+import 'package:goal_quest/mockup/user_models_list.dart';
 import 'package:goal_quest/mockup/user_rankings_list.dart';
 
 class RankingPage extends StatelessWidget {
@@ -8,6 +9,7 @@ class RankingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mockRankingData = userRankingsList;
+    final currentUser = usersList;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 79, 195, 247),
@@ -227,8 +229,8 @@ class RankingPage extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.only(top: 10),
                         child: ListView.builder(
-                          itemCount: mockRankingData.length -
-                              3, // จำนวนที่เหลือนอกเหนือจาก top 3
+                          itemCount: currentUser.length -
+                              1, // จำนวนที่เหลือนอกเหนือจาก top 3
                           padding: const EdgeInsets.only(bottom: 80),
                           itemBuilder: (context, index) {
                             int rank = index + 4;
@@ -250,14 +252,14 @@ class RankingPage extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              title: Text(mockRankingData[index + 3]
+                              title: Text(currentUser[index + 1]
                                   .username), // แสดงชื่อผู้ใช้งานตามลำดับ
                               trailing: Row(
                                 mainAxisSize: MainAxisSize
                                     .min, // เพื่อให้ไอคอนไม่ใช้พื้นที่มากเกินไป
                                 children: [
                                   Text(
-                                    '${mockRankingData[index + 3].point}',
+                                    '${currentUser[index + 1].point}',
                                     style: const TextStyle(
                                       fontSize: 12,
                                       color: Color.fromARGB(255, 89, 125, 197),

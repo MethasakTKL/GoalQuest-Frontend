@@ -52,7 +52,7 @@ class RewardPage extends StatelessWidget {
         children: [
           Row(
             children: [
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               IconButton(
