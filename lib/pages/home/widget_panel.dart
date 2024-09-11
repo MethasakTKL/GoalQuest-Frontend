@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
-import 'package:goal_quest/pages/reward/reward_page.dart';
 import 'package:goal_quest/mockup/user_models_list.dart';
 
 class HomeWidgetPanel extends StatelessWidget {
