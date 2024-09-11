@@ -10,6 +10,7 @@ class RankingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final mockRankingData = userRankingsList;
     final currentUser = usersList;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 79, 195, 247),
@@ -127,7 +128,7 @@ class RankingPage extends StatelessWidget {
                       left: 270,
                       child: Row(
                         children: [
-                           CircleAvatar(
+                          CircleAvatar(
                             radius: 30,
                             backgroundImage:
                                 AssetImage(mockRankingData[1].image),
@@ -296,27 +297,33 @@ class RankingPage extends StatelessWidget {
                     color: Colors.black,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         children: [
-                          CircleAvatar(
+                          const CircleAvatar(
                             backgroundImage:
                                 AssetImage('assets/user_image.png'),
                           ),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 20),
                           Text(
-                            '1250 Points',
-                            style: TextStyle(
-                              color: Colors.white,
+                            '${currentUser[0].point}',
+                            style: const TextStyle(
+                              color: Color.fromARGB(255, 219, 238, 255),
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
+                          const SizedBox(width: 5),
+                          const Icon(
+                            Icons.savings_outlined,
+                            size: 20,
+                            color: Color.fromARGB(255, 219, 238, 255),
+                          ),
                         ],
                       ),
-                      Row(
+                      const Row(
                         children: [
                           Text(
                             'Rank 12th',

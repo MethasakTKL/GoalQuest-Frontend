@@ -3,6 +3,8 @@ import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
 import 'package:goal_quest/mockup/user_models_list.dart';
 import 'package:goal_quest/pages/goals/goals_list.dart';
 import 'package:goal_quest/pages/home/routing_panel.dart';
+import 'package:goal_quest/pages/home/widget_panel.dart';
+
 import 'package:carousel_slider/carousel_slider.dart';
 
 class HomePage extends StatelessWidget {
@@ -71,10 +73,8 @@ class HomePage extends StatelessWidget {
                       clipBehavior: Clip.antiAlias,
                       child: CarouselSlider(
                         items: [
-                          'assets/slide_4.png',
                           'assets/slide_1.png',
                           'assets/slide_2.png',
-                          'assets/slide_3.png',
                         ]
                             .map((item) => Container(
                                   decoration: BoxDecoration(
@@ -96,39 +96,10 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Positioned(
-                      top: 10,
-                      right: 10,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 7),
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 32, 32, 32),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Icon(
-                              Icons.savings_outlined,
-                              size: 15,
-                              color: Color.fromARGB(255, 222, 222, 222),
-                            ),
-                            const SizedBox(width: 5),
-                            Text(
-                              '${currentuser.point} Points',
-                              style: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 233, 233, 233),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
                   ],
                 ),
+                const SizedBox(height: 10),
+                const HomeWidgetPanel(),
                 const SizedBox(height: 10),
                 const HomeRoutingPanel(),
                 const SizedBox(height: 20),
@@ -142,7 +113,7 @@ class HomePage extends StatelessWidget {
                   ],
                 ),
                 const GoalsList(),
-                const SizedBox(height: 30),
+                const SizedBox(height: 20),
               ],
             ),
           ),

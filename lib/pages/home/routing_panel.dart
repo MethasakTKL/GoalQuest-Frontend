@@ -77,7 +77,7 @@ class HomeRoutingPanel extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 60,
+        height: 70,
         decoration: BoxDecoration(
           color: const Color.fromARGB(156, 208, 208, 208),
           borderRadius: BorderRadius.circular(20),

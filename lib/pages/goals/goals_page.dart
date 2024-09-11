@@ -167,7 +167,7 @@ class GoalsPage extends StatelessWidget {
                                       width: 10,
                                     ),
                                     Text(
-                                      "2",
+                                      "3",
                                       style: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.bold,
@@ -226,9 +226,7 @@ class GoalsPage extends StatelessWidget {
                       ],
                     ),
                     const GoalsList(),
-                    const SizedBox(
-                      height: 30,
-                    ),
+                    const SizedBox(height: 20),
                   ],
                 ),
               ),

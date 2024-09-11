@@ -14,17 +14,18 @@ class UserRankings {
 List<UserRankings> userRankingsList = [
   UserRankings(
       id: 2,
-      username: 'Steven',
+      username: 'Anxiety',
       point: 2000,
       image: 'assets/mockup/rank_1.png'),
   UserRankings(
       id: 3,
-      username: 'Deadpool',
+      username: 'Sadness',
       point: 1800,
       image: 'assets/mockup/rank_2.png'),
   UserRankings(
-      id: 4,
-      username: 'Loki',
-      point: 1700,
-      image: 'assets/mockup/rank_3.png'),
-  ];
+    id: 4,
+    username: 'Envy',
+    point: 1700,
+    image: 'assets/mockup/rank_3.png',
+  ),
+];

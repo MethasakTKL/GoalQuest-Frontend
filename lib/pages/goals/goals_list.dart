@@ -12,8 +12,8 @@ class GoalsList extends StatelessWidget {
         GoalCard(
           taskTitle: "เรียนวิถี Backend",
           duration: "2 Weeks",
-          taskProgress: "1/2 Tasks",
-          progressPercentage: 0.9,
+          taskProgress: "3/4 Tasks",
+          progressPercentage: 0.75,
           onTap: () {
             Navigator.pushNamed(context, '/tasks');
           },
@@ -28,10 +28,10 @@ class GoalsList extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         GoalCard(
-          taskTitle: "ลดน้ำหนัก 10 กิโล",
-          duration: "1 Months",
-          taskProgress: "3/10 Tasks",
-          progressPercentage: 0.3,
+          taskTitle: "อ่าน Sapients",
+          duration: "2 Months",
+          taskProgress: "4/10 Tasks",
+          progressPercentage: 0.4,
           onTap: () {},
         ),
         const SizedBox(height: 10),
@@ -42,6 +42,7 @@ class GoalsList extends StatelessWidget {
           progressPercentage: 0.3,
           onTap: () {},
         ),
+        const SizedBox(height: 10),
       ],
     );
   }

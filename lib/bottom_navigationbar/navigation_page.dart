@@ -14,12 +14,20 @@ class BottomNavigationPage extends StatefulWidget {
 }
 
 class _BottomNavigationPageState extends State<BottomNavigationPage> {
-  int _pageIndex = 0; // กำหนดค่าเริ่มต้นโดยตรง
+  late int _pageIndex;
+  late PageController _pageController;
 
   @override
   void initState() {
     super.initState();
-    _pageIndex = widget.initialIndex; // กำหนดค่าเริ่มต้นใน initState
+    _pageIndex = widget.initialIndex;
+    _pageController = PageController(initialPage: _pageIndex);
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 
   final List<Widget> _pages = [
@@ -33,15 +41,26 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
     setState(() {
       _pageIndex = index;
     });
+    _pageController.animateToPage(
+      index,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        //IndexedStack เป็น Widget ที่ช่วยในการจัดการการแสดงผลของ Widget ย่อยหลายๆ ตัว โดยจะแสดงเพียงหนึ่ง Widget ในแต่ละครั้งตาม index ที่กำหนด
-        index: _pageIndex,
+      body: PageView(
+        controller: _pageController,
         children: _pages,
+        onPageChanged: (index) {
+          setState(() {
+            _pageIndex = index;
+          });
+        },
+        physics:
+            const NeverScrollableScrollPhysics(), // ป้องกันการสไลด์ด้วยนิ้ว
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
