@@ -26,7 +26,7 @@ class FocusTimerList extends StatelessWidget {
                     Row(
                       children: [
                         const Text(
-                          'เรียนพื้นฐาน Python',
+                          'Body Weight',
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
@@ -51,7 +51,7 @@ class FocusTimerList extends StatelessWidget {
                                   width:
                                       5), // เพิ่มช่องว่างระหว่างไอคอนและข้อความ
                               Text(
-                                '500 Points',
+                                '100 Points',
                                 style: TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,
@@ -66,7 +66,7 @@ class FocusTimerList extends StatelessWidget {
                     const Row(
                       children: [
                         Text(
-                          '120 Minutes',
+                          '30 Minutes',
                           style: TextStyle(fontSize: 13),
                         ),
                       ],
@@ -130,7 +130,7 @@ class FocusTimerList extends StatelessWidget {
                     Row(
                       children: [
                         const Text(
-                          'ทดลองใช้ FastAPI',
+                          'Balance exercise',
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
@@ -152,7 +152,7 @@ class FocusTimerList extends StatelessWidget {
                               ),
                               SizedBox(width: 5),
                               Text(
-                                '500 Points',
+                                '100 Points',
                                 style: TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,
@@ -167,7 +167,7 @@ class FocusTimerList extends StatelessWidget {
                     const Row(
                       children: [
                         Text(
-                          '100 Minutes',
+                          '30 Minutes',
                           style: TextStyle(fontSize: 13),
                         ),
                       ],

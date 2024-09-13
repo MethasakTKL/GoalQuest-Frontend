@@ -49,7 +49,7 @@ class _TodoQuestListState extends State<TodoQuestList> {
                           Row(
                             children: [
                               const Text(
-                                'Title',
+                                'งดกินของมัน',
                                 style: TextStyle(
                                     fontSize: 18, fontWeight: FontWeight.bold),
                               ),
@@ -58,7 +58,8 @@ class _TodoQuestListState extends State<TodoQuestList> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 12, vertical: 7),
                                 decoration: BoxDecoration(
-                                  color: const Color.fromARGB(255, 251, 251, 251),
+                                  color:
+                                      const Color.fromARGB(255, 251, 251, 251),
                                   borderRadius: BorderRadius.circular(20),
                                 ),
                                 child: const Row(
@@ -76,7 +77,8 @@ class _TodoQuestListState extends State<TodoQuestList> {
                                       'Earn 50 Point',
                                       style: TextStyle(
                                         fontSize: 12,
-                                        color: Color.fromARGB(255, 137, 137, 137),
+                                        color:
+                                            Color.fromARGB(255, 137, 137, 137),
                                       ),
                                     ),
                                   ],
@@ -89,7 +91,7 @@ class _TodoQuestListState extends State<TodoQuestList> {
                             style: TextStyle(fontSize: 13),
                           ),
                           const Text(
-                            'Last: -',
+                            'Last: 10 Setember 2024',
                             style: TextStyle(fontSize: 13),
                           ),
                           const Text(
@@ -137,7 +139,7 @@ class _TodoQuestListState extends State<TodoQuestList> {
                           Row(
                             children: [
                               const Text(
-                                'Title',
+                                'วิ่งรอบอ่างเก็บน้ำ',
                                 style: TextStyle(
                                     fontSize: 18, fontWeight: FontWeight.bold),
                               ),
@@ -146,7 +148,8 @@ class _TodoQuestListState extends State<TodoQuestList> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 12, vertical: 7),
                                 decoration: BoxDecoration(
-                                  color: const Color.fromARGB(255, 251, 251, 251),
+                                  color:
+                                      const Color.fromARGB(255, 251, 251, 251),
                                   borderRadius: BorderRadius.circular(20),
                                 ),
                                 child: const Row(
@@ -161,10 +164,11 @@ class _TodoQuestListState extends State<TodoQuestList> {
                                         width:
                                             5), // เพิ่มช่องว่างระหว่างไอคอนและข้อความ
                                     Text(
-                                      'Earn 100 Point',
+                                      'Earn 50 Point',
                                       style: TextStyle(
                                         fontSize: 12,
-                                        color: Color.fromARGB(255, 137, 137, 137),
+                                        color:
+                                            Color.fromARGB(255, 137, 137, 137),
                                       ),
                                     ),
                                   ],
@@ -173,11 +177,11 @@ class _TodoQuestListState extends State<TodoQuestList> {
                             ],
                           ),
                           const Text(
-                            'Every 3 days',
+                            'Every 2 days',
                             style: TextStyle(fontSize: 13),
                           ),
                           const Text(
-                            'Last: -',
+                            'Last: 8 Setember 2024',
                             style: TextStyle(fontSize: 13),
                           ),
                           const Text(

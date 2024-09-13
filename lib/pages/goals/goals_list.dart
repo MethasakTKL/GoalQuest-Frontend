@@ -10,7 +10,7 @@ class GoalsList extends StatelessWidget {
       children: [
         const SizedBox(height: 10),
         GoalCard(
-          taskTitle: "เรียนวิถี Backend",
+          taskTitle: "ลดน้ำหนัก 10 กิโล",
           duration: "2 Weeks",
           taskProgress: "3/4 Tasks",
           progressPercentage: 0.75,

@@ -66,7 +66,7 @@ class TasksPageState extends State<TasksPage> {
                         ),
                         const SizedBox(width: 5),
                         const Text(
-                          'เรียนวิถี Backend',
+                          'ลดน้ำหนัก 10 กิโล',
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
