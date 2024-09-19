@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
 import 'package:goal_quest/pages/goals/tasks/focustimer/focustimer_list.dart';
 import 'package:goal_quest/pages/goals/tasks/todoquest/todoquest_list.dart';
+import 'package:goal_quest/pages/goals/tasks/new_task_dialog.dart'; // Import the new dialog
 
 class TasksPage extends StatefulWidget {
   const TasksPage({super.key});
@@ -78,7 +79,14 @@ class TasksPageState extends State<TasksPage> {
                     ),
                     IconButton(
                       icon: const Icon(Icons.add_circle),
-                      onPressed: () {},
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return const NewTaskDialog();
+                          },
+                        );
+                      },
                       iconSize: 40,
                     ),
                   ],
@@ -87,15 +95,6 @@ class TasksPageState extends State<TasksPage> {
                 TabBar(
                   labelColor: Colors.black,
                   indicatorColor: const Color.fromARGB(255, 95, 148, 80),
-                  overlayColor: WidgetStateProperty.resolveWith<Color?>(
-                    (Set<WidgetState> states) {
-                      if (states.contains(WidgetState.pressed)) {
-                        return const Color.fromARGB(
-                            255, 232, 241, 230); // สีที่จะแสดงตอนกดแท็บ
-                      }
-                      return null; // ใช้ค่าเริ่มต้นถ้าไม่ได้กด
-                    },
-                  ),
                   tabs: const [
                     Tab(text: 'TodoQuest'),
                     Tab(text: 'FocusTimer'),
@@ -134,7 +133,6 @@ class TasksPageState extends State<TasksPage> {
                               ),
                             ),
                             SizedBox(height: 10),
-                            // Wrap TodoQuestList with Expanded or SingleChildScrollView
                             Expanded(
                               child: TodoQuestList(),
                             ),
