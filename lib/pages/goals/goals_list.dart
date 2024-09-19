@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:goal_quest/pages/goals/goal_card.dart';
 
 class GoalsList extends StatelessWidget {
-  const GoalsList({Key? key}) : super(key: key);
+  const GoalsList({super.key});
 
   @override
   Widget build(BuildContext context) {
