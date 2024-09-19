@@ -216,12 +216,24 @@ class GoalsPage extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
-                    const Row(
+                    Row(
                       children: [
-                        Text(
+                        const Text(
                           "In Progress",
                           style: TextStyle(
                               fontSize: 25, fontWeight: FontWeight.bold),
+                        ),
+                        const Spacer(),
+                        const Text(
+                          'New Goal',
+                          style: TextStyle(
+                            fontSize: 14,
+                          ),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.add_circle),
+                          onPressed: () {},
+                          iconSize: 40,
                         ),
                       ],
                     ),
