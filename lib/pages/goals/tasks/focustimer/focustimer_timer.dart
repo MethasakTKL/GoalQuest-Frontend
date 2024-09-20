@@ -10,7 +10,7 @@ class FocusTimerPage extends StatefulWidget {
 
 class _FocusTimerPageState extends State<FocusTimerPage> {
   bool isPlaying = false;
-  int totalSeconds = 1 * 60; // 120 minutes in seconds
+  int totalSeconds = 5 * 60; // 120 minutes in seconds
   late Timer timer;
 
   @override
@@ -212,7 +212,7 @@ class _FocusTimerPageState extends State<FocusTimerPage> {
                         stopTimer();
                       }
                       setState(() {
-                        totalSeconds = 120 * 60; // รีเซ็ตเวลากลับเป็น 120 นาที
+                        totalSeconds = 5 * 60; // รีเซ็ตเวลากลับเป็น 120 นาที
                       });
                     },
                     style: OutlinedButton.styleFrom(
