@@ -10,12 +10,14 @@ class FocusTimerPage extends StatefulWidget {
 
 class _FocusTimerPageState extends State<FocusTimerPage> {
   bool isPlaying = false;
-  int totalSeconds = 5 * 60; // 120 minutes in seconds
+  int totalSeconds = 100 * 60; // 120 minutes in seconds
   late Timer timer;
+  int points = 500; // เริ่มต้นที่ 500 คะแนนสำหรับ 120 นาที
 
   @override
   void initState() {
     super.initState();
+    updatePoints();
   }
 
   @override
@@ -31,6 +33,7 @@ class _FocusTimerPageState extends State<FocusTimerPage> {
       setState(() {
         if (totalSeconds > 0) {
           totalSeconds--;
+          updatePoints();
         } else {
           stopTimer();
         }
@@ -52,6 +55,24 @@ class _FocusTimerPageState extends State<FocusTimerPage> {
         startTimer();
       } else {
         stopTimer();
+      }
+    });
+  }
+
+  void updatePoints() {
+    setState(() {
+      if (totalSeconds >= 120 * 60) {
+        points = 500;
+      } else if (totalSeconds >= 90 * 60) {
+        points = 400;
+      } else if (totalSeconds >= 60 * 60) {
+        points = 300;
+      } else if (totalSeconds >= 45 * 60) {
+        points = 200;
+      } else if (totalSeconds >= 30 * 60) {
+        points = 100;
+      } else {
+        points = 0;
       }
     });
   }
@@ -136,18 +157,18 @@ class _FocusTimerPageState extends State<FocusTimerPage> {
                               color: const Color.fromARGB(255, 213, 255, 168),
                               borderRadius: BorderRadius.circular(20),
                             ),
-                            child: const Row(
+                            child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Icon(
+                                const Icon(
                                   Icons.diamond_outlined,
                                   size: 15,
                                   color: Color.fromARGB(255, 101, 135, 64),
                                 ),
-                                SizedBox(width: 5),
+                                const SizedBox(width: 5),
                                 Text(
-                                  '500 Points',
-                                  style: TextStyle(
+                                  '$points Points',
+                                  style: const TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold,
                                     color: Color.fromARGB(255, 101, 135, 64),
@@ -207,12 +228,12 @@ class _FocusTimerPageState extends State<FocusTimerPage> {
                   const SizedBox(height: 80),
                   OutlinedButton(
                     onPressed: () {
-                      // ใส่ logic สำหรับการกดปุ่ม Give Up ที่นี่
                       if (isPlaying) {
                         stopTimer();
                       }
                       setState(() {
-                        totalSeconds = 5 * 60; // รีเซ็ตเวลากลับเป็น 120 นาที
+                        totalSeconds = 120 * 60; // รีเซ็ตเวลากลับเป็น 120 นาที
+                        updatePoints(); // อัปเดตคะแนนหลังจากรีเซ็ตเวลา
                       });
                     },
                     style: OutlinedButton.styleFrom(
