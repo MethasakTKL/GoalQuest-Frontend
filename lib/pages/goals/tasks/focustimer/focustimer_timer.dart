@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 class FocusTimerPage extends StatefulWidget {
   const FocusTimerPage({super.key});
@@ -9,6 +10,57 @@ class FocusTimerPage extends StatefulWidget {
 
 class _FocusTimerPageState extends State<FocusTimerPage> {
   bool isPlaying = false;
+  int totalSeconds = 1 * 60; // 120 minutes in seconds
+  late Timer timer;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    if (isPlaying) {
+      timer.cancel();
+    }
+    super.dispose();
+  }
+
+  void startTimer() {
+    timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      setState(() {
+        if (totalSeconds > 0) {
+          totalSeconds--;
+        } else {
+          stopTimer();
+        }
+      });
+    });
+  }
+
+  void stopTimer() {
+    setState(() {
+      timer.cancel();
+      isPlaying = false;
+    });
+  }
+
+  void toggleTimer() {
+    setState(() {
+      isPlaying = !isPlaying;
+      if (isPlaying) {
+        startTimer();
+      } else {
+        stopTimer();
+      }
+    });
+  }
+
+  String formatTime(int totalSeconds) {
+    int minutes = totalSeconds ~/ 60;
+    int seconds = totalSeconds % 60;
+    return '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +90,7 @@ class _FocusTimerPageState extends State<FocusTimerPage> {
             ),
           ],
         ),
-        automaticallyImplyLeading: false, // ปิดปุ่ม Back
+        automaticallyImplyLeading: false,
       ),
       body: SafeArea(
         child: Padding(
@@ -63,8 +115,6 @@ class _FocusTimerPageState extends State<FocusTimerPage> {
                     ],
                   ),
                   const SizedBox(height: 50),
-
-                  // ใช้ Stack เพื่อซ้อนข้อความบนวงกลม
                   Stack(
                     alignment: Alignment.center,
                     children: [
@@ -87,17 +137,14 @@ class _FocusTimerPageState extends State<FocusTimerPage> {
                               borderRadius: BorderRadius.circular(20),
                             ),
                             child: const Row(
-                              mainAxisSize: MainAxisSize
-                                  .min, // กำหนดขนาดของ Row ให้พอดีกับเนื้อหา
+                              mainAxisSize: MainAxisSize.min,
                               children: [
                                 Icon(
                                   Icons.diamond_outlined,
                                   size: 15,
                                   color: Color.fromARGB(255, 101, 135, 64),
                                 ),
-                                SizedBox(
-                                    width:
-                                        5), // เพิ่มช่องว่างระหว่างไอคอนและข้อความ
+                                SizedBox(width: 5),
                                 Text(
                                   '500 Points',
                                   style: TextStyle(
@@ -110,9 +157,9 @@ class _FocusTimerPageState extends State<FocusTimerPage> {
                             ),
                           ),
                           const SizedBox(height: 10),
-                          const Text(
-                            '120:00',
-                            style: TextStyle(
+                          Text(
+                            formatTime(totalSeconds),
+                            style: const TextStyle(
                               fontFamily: 'Barlow',
                               fontSize: 75,
                               fontWeight: FontWeight.bold,
@@ -132,19 +179,13 @@ class _FocusTimerPageState extends State<FocusTimerPage> {
                       ),
                     ],
                   ),
-
                   const SizedBox(height: 40),
-
                   SizedBox(
                     width: 80,
                     height: 80,
                     child: FloatingActionButton(
                       backgroundColor: const Color.fromARGB(255, 96, 137, 52),
-                      onPressed: () {
-                        setState(() {
-                          isPlaying = !isPlaying;
-                        });
-                      },
+                      onPressed: toggleTimer,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50),
                       ),
@@ -163,11 +204,16 @@ class _FocusTimerPageState extends State<FocusTimerPage> {
                       fontSize: 13,
                     ),
                   ),
-
                   const SizedBox(height: 80),
                   OutlinedButton(
                     onPressed: () {
                       // ใส่ logic สำหรับการกดปุ่ม Give Up ที่นี่
+                      if (isPlaying) {
+                        stopTimer();
+                      }
+                      setState(() {
+                        totalSeconds = 120 * 60; // รีเซ็ตเวลากลับเป็น 120 นาที
+                      });
                     },
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
