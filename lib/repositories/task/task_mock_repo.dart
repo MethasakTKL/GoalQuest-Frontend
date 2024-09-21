@@ -58,6 +58,12 @@ class TaskMockRepository extends TaskRepository {
   }
 
   @override
+  Future<List<TaskModel>> searchTask(String key) async {
+    await Future.delayed(const Duration(seconds: 0));
+    return tasks.where((task) => task.title.contains(key)).toList();
+  }
+
+  @override
   Future<TaskModel> addTask(
       {required String title,
       required String taskType,

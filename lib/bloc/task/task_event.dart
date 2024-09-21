@@ -20,8 +20,8 @@ class AddTaskEvent extends TaskEvent {
 }
 
 class SearchTaskEvent extends TaskEvent {
-  final String searchQuery;
-  SearchTaskEvent(this.searchQuery);
+  final String key;
+  SearchTaskEvent(this.key);
 }
 
 class SearchTaskClearEvent extends TaskEvent {}

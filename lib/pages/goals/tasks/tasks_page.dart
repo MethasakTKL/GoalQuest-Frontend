@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:goal_quest/bloc/bloc.dart';
 import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
 import 'package:goal_quest/pages/goals/tasks/focustimer/focustimer_list.dart';
 import 'package:goal_quest/pages/goals/tasks/todoquest/todoquest_list.dart';
@@ -12,6 +14,14 @@ class TasksPage extends StatefulWidget {
 }
 
 class TasksPageState extends State<TasksPage> {
+  final _searchController = TextEditingController();
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -101,15 +111,23 @@ class TasksPageState extends State<TasksPage> {
                   ],
                 ),
                 const SizedBox(height: 10),
-                const Expanded(
+                Expanded(
                   child: TabBarView(
                     children: [
                       Padding(
-                        padding: EdgeInsets.fromLTRB(12, 10, 12, 0),
+                        padding: const EdgeInsets.fromLTRB(12, 10, 12, 0),
                         child: Column(
                           children: [
                             TextField(
-                              decoration: InputDecoration(
+                              controller: _searchController,
+                              onTapOutside: (_) =>
+                                  FocusScope.of(context).unfocus(),
+                              onChanged: (key) {
+                                context
+                                    .read<TaskBloc>()
+                                    .add(SearchTaskEvent(key));
+                              },
+                              decoration: const InputDecoration(
                                 prefixIcon: Align(
                                   alignment: Alignment.center,
                                   widthFactor: 1.0,
@@ -128,18 +146,18 @@ class TasksPageState extends State<TasksPage> {
                                       BorderRadius.all(Radius.circular(8.0)),
                                 ),
                               ),
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.black,
                               ),
                             ),
-                            SizedBox(height: 10),
-                            Expanded(
+                            const SizedBox(height: 10),
+                            const Expanded(
                               child: TodoQuestList(),
                             ),
                           ],
                         ),
                       ),
-                      FocusTimerList(),
+                      const FocusTimerList(),
                     ],
                   ),
                 ),
