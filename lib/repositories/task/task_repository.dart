@@ -2,4 +2,11 @@ import 'package:goal_quest/models/models.dart';
 
 abstract class TaskRepository{
   Future<List<TaskModel>> loadTask();
+  Future<void> addTask({
+    required String title,
+    required String taskType,
+    required int repeatDays,
+    required int duration,
+    required DateTime startDate,
+    required DateTime endDate,});
 }

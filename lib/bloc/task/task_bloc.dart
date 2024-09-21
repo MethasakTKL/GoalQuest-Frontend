@@ -7,6 +7,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
 
   TaskBloc(this.taskRepository) : super(LodingTaskState()) {
     on<LoadTaskEvent>(_onLoadTaskEvent);
+    on<AddTaskEvent>(_onAddTaskEvent);
   }
 
   _onLoadTaskEvent(LoadTaskEvent event, Emitter<TaskState> emit) async {
@@ -15,4 +16,18 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       emit(ReadyTaskState(tasks: tasks));
     }
   }
+
+  _onAddTaskEvent(AddTaskEvent event, Emitter<TaskState> emit) async {
+    await taskRepository.addTask(
+      title: event.title,
+      taskType: event.taskType,
+      repeatDays: event.repeatDays ?? 0,
+      duration: event.duration ?? 0,
+      startDate: event.startDate,
+      endDate: event.endDate,
+    );
+    emit(LodingTaskState());
+    add(LoadTaskEvent());
+  }
+
 }

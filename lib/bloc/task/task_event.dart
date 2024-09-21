@@ -9,7 +9,6 @@ class AddTaskEvent extends TaskEvent {
   final int? duration;
   final DateTime startDate;
   final DateTime endDate;
-  final DateTime? lastAction;
   AddTaskEvent(
     this.title,
     this.taskType,
@@ -17,7 +16,6 @@ class AddTaskEvent extends TaskEvent {
     this.duration,
     this.startDate,
     this.endDate,
-    this.lastAction,
   );
 }
 
@@ -27,4 +25,3 @@ class SearchTaskEvent extends TaskEvent {
 }
 
 class SearchTaskClearEvent extends TaskEvent {}
-
