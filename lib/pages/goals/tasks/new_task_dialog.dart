@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:goal_quest/bloc/bloc.dart';
 import 'package:intl/intl.dart';
 
 class NewTaskDialog extends StatefulWidget {
@@ -10,10 +12,11 @@ class NewTaskDialog extends StatefulWidget {
 
 class _NewTaskDialogState extends State<NewTaskDialog> {
   String selectedTaskType = 'TodoQuest';
-  int repeatDays = 1;
-  DateTime? startDate;
-  DateTime? endDate;
-  int duration = 30; // สำหรับ FocusTimer
+  int repeatDaysInput = 1;
+  DateTime? startDateTime;
+  DateTime? endDateTime;
+  int durationInput = 15; // สำหรับ FocusTimer
+  final TextEditingController titleController = TextEditingController();
   final TextEditingController startDateController = TextEditingController();
   final TextEditingController endDateController = TextEditingController();
 
@@ -61,8 +64,9 @@ class _NewTaskDialogState extends State<NewTaskDialog> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const SizedBox(height: 20),
-                  const TextField(
-                    decoration: InputDecoration(
+                  TextField(
+                    controller: titleController,
+                    decoration: const InputDecoration(
                       labelText: 'Task Name',
                       border: OutlineInputBorder(),
                     ),
@@ -147,7 +151,15 @@ class _NewTaskDialogState extends State<NewTaskDialog> {
                       ),
                     ),
                     onPressed: () {
-                      // Logic to save the task goes here
+                      String title = titleController.text;
+                      String taskType = selectedTaskType;
+                      int repeatDays = repeatDaysInput;
+                      int duration = durationInput;
+                      DateTime startDate = startDateTime ?? DateTime.now();
+                      DateTime endDate = endDateTime ?? DateTime.now();
+                      context.read<TaskBloc>().add(AddTaskEvent(title, taskType, repeatDays, duration, startDate, endDate));
+                      context.read<TaskBloc>().add(LoadTaskEvent());
+
                       Navigator.pop(context);
                     },
                     child: const Text(
@@ -162,15 +174,14 @@ class _NewTaskDialogState extends State<NewTaskDialog> {
         ),
       ),
     );
-  }
 
-  Widget _buildTodoQuestOptions() {
+  }  Widget _buildTodoQuestOptions() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text('Repeat Every:'),
         DropdownButton<int>(
-          value: repeatDays,
+          value: repeatDaysInput,
           items: [1, 2, 3, 7, 14].map((int day) {
             return DropdownMenuItem<int>(
               value: day,
@@ -179,7 +190,7 @@ class _NewTaskDialogState extends State<NewTaskDialog> {
           }).toList(),
           onChanged: (int? newValue) {
             setState(() {
-              repeatDays = newValue!;
+              repeatDaysInput = newValue!;
             });
           },
         ),
@@ -194,7 +205,7 @@ class _NewTaskDialogState extends State<NewTaskDialog> {
       children: [
         const Text('Set Duration (minutes):'),
         DropdownButton<int>(
-          value: duration,
+          value: durationInput,
           items: [15, 30, 45, 60, 90].map((int duration) {
             return DropdownMenuItem<int>(
               value: duration,
@@ -203,7 +214,7 @@ class _NewTaskDialogState extends State<NewTaskDialog> {
           }).toList(),
           onChanged: (int? newValue) {
             setState(() {
-              duration = newValue!;
+              durationInput = newValue!;
             });
           },
         ),
@@ -221,10 +232,10 @@ class _NewTaskDialogState extends State<NewTaskDialog> {
     if (picked != null) {
       setState(() {
         if (isStartDate) {
-          startDate = picked;
+          startDateTime = picked;
           startDateController.text = DateFormat('yyyy-MM-dd').format(picked);
         } else {
-          endDate = picked;
+          endDateTime = picked;
           endDateController.text = DateFormat('yyyy-MM-dd').format(picked);
         }
       });
