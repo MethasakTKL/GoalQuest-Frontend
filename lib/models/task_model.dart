@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class TaskModel extends Equatable{
+class TaskModel extends Equatable {
   final int id;
   final String title;
   final String taskType;
@@ -9,6 +9,7 @@ class TaskModel extends Equatable{
   final DateTime startDate;
   final DateTime endDate;
   final DateTime? lastAction;
+  final DateTime? nextAction;
 
   const TaskModel({
     required this.id,
@@ -19,8 +20,18 @@ class TaskModel extends Equatable{
     required this.startDate,
     required this.endDate,
     required this.lastAction,
+    required this.nextAction,
   });
 
   @override
-  List<Object?> get props => [id, title, taskType, repeatDays, duration, startDate, endDate, lastAction];
+  List<Object?> get props => [
+        id,
+        title,
+        taskType,
+        repeatDays,
+        duration,
+        startDate,
+        endDate,
+        lastAction
+      ];
 }

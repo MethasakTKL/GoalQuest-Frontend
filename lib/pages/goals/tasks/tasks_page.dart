@@ -92,10 +92,10 @@ class TasksPageState extends State<TasksPage> {
                   ],
                 ),
                 const SizedBox(height: 0),
-                TabBar(
+                const TabBar(
                   labelColor: Colors.black,
-                  indicatorColor: const Color.fromARGB(255, 95, 148, 80),
-                  tabs: const [
+                  indicatorColor: Color.fromARGB(255, 95, 148, 80),
+                  tabs: [
                     Tab(text: 'TodoQuest'),
                     Tab(text: 'FocusTimer'),
                   ],
