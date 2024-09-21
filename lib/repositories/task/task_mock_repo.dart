@@ -51,9 +51,11 @@ class TaskMockRepository extends TaskRepository {
 
   int lastId = 4;
 
+
   @override
   Future<List<TaskModel>> loadTask() async {
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 0));
+    tasks.sort((a,b) => a.startDate.compareTo(b.startDate));
     return tasks;
   }
 
