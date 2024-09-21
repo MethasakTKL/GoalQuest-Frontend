@@ -13,17 +13,19 @@ class FocusTimerList extends StatelessWidget {
         .toList()); //เช็คว่า Tasktype เป็น FocusTimer ไหม
     return SingleChildScrollView(
       child: Column(
-        children: 
-        tasks.map((task) {
-          return FocusTimerItem(
-            title: task.title,
-            duration: '${task.duration} Minutes',
-            points: 100,
-            onStart: () {
-              Navigator.pushNamed(context, '/focustimer');
-            },
-          );
-        }).toList(),
+        children: tasks
+            .expand((task) => [
+                  const SizedBox(height: 10),
+                  FocusTimerItem(
+                    title: task.title,
+                    duration: '${task.duration} Minutes',
+                    points: 100,
+                    onStart: () {
+                      Navigator.pushNamed(context, '/focustimer');
+                    },
+                  ),
+                ])
+            .toList(),
       ),
     );
   }
