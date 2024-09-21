@@ -11,17 +11,21 @@ class TaskModel extends Equatable {
   final DateTime? lastAction;
   final DateTime? nextAction;
 
-  const TaskModel({
+  TaskModel({
     required this.id,
     required this.title,
     required this.taskType,
-    required this.repeatDays,
-    required this.duration,
+    this.repeatDays,
+    this.duration,
     required this.startDate,
     required this.endDate,
-    required this.lastAction,
-    required this.nextAction,
-  });
+    this.lastAction, required nextAction,
+  }) : nextAction = lastAction != null && repeatDays != null
+          ? lastAction.add(Duration(days: repeatDays))
+          : repeatDays != null
+              ? DateTime.now().add(Duration(days: repeatDays))
+              : null;
+
 
   @override
   List<Object?> get props => [

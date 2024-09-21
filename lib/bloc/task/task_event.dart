@@ -24,4 +24,11 @@ class SearchTaskEvent extends TaskEvent {
   SearchTaskEvent(this.key);
 }
 
+class ActionTaskEvent extends TaskEvent{
+  final int id;
+  final DateTime lastAction;
+  ActionTaskEvent(this.id, this.lastAction);
+}
+
 class SearchTaskClearEvent extends TaskEvent {}
+

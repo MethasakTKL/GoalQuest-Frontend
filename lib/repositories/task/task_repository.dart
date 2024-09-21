@@ -10,4 +10,8 @@ abstract class TaskRepository{
     required int duration,
     required DateTime startDate,
     required DateTime endDate,});
+  Future<void> actionTask({
+    required int id,
+    required DateTime lastAction,
+  });
 }

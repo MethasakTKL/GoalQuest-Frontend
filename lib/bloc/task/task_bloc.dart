@@ -8,6 +8,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   TaskBloc(this.taskRepository) : super(LodingTaskState()) {
     on<LoadTaskEvent>(_onLoadTaskEvent);
     on<AddTaskEvent>(_onAddTaskEvent);
+    on<ActionTaskEvent>(_onActionTaskEvent);
     on<SearchTaskEvent>(_onSearchTaskEvent);
   }
 
@@ -34,5 +35,11 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   _onSearchTaskEvent(SearchTaskEvent event, Emitter<TaskState> emit) async {
     final tasks = await taskRepository.searchTask(event.key);
     emit(ReadyTaskState(tasks: tasks));
+  }
+
+  _onActionTaskEvent(ActionTaskEvent event, Emitter<TaskState> emit) async {
+    await taskRepository.actionTask(id: event.id, lastAction: event.lastAction);
+    emit(LodingTaskState());
+    add(LoadTaskEvent());
   }
 }

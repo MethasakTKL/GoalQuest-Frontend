@@ -89,4 +89,11 @@ class TaskMockRepository extends TaskRepository {
     tasks.add(newTask);
     return newTask;
   }
+
+  @override
+  Future<void> actionTask({required int id, required DateTime lastAction}) async{
+    await Future.delayed(const Duration(seconds: 0));
+    final index = tasks.indexWhere((task) => task.id == id);
+    tasks[index] = TaskModel(id: id, title: tasks[index].title, taskType: tasks[index].taskType, repeatDays: tasks[index].repeatDays, duration: tasks[index].duration, startDate: tasks[index].startDate, endDate:  tasks[index].endDate, lastAction: lastAction, nextAction:  tasks[index].nextAction);
+  }
 }

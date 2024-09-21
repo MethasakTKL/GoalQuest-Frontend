@@ -23,7 +23,7 @@ class _TodoQuestListState extends State<TodoQuestList> {
       child: Column(
         children: tasks.map((task) {
           return TodoQuestItem(
-            isChecked: isChecked,
+            isChecked: task.lastAction != null && task.lastAction!.isAfter(DateTime.now().subtract(Duration(days: task.repeatDays ?? 1))),
             title: task.title,
             frequency: 'Every ${task.repeatDays} days',
             lastDone: task.lastAction != null
@@ -33,9 +33,9 @@ class _TodoQuestListState extends State<TodoQuestList> {
             ? DateFormat('d MMMM yyyy').format(task.nextAction!)
             : '-',
             onChanged: (bool? newValue) {
-              setState(() {
-                isChecked = newValue!;
-              });
+              if (newValue == true){
+                context.read<TaskBloc>().add(ActionTaskEvent(task.id, DateTime.now()));
+              }
             },
           );
         }).toList(),
