@@ -6,6 +6,8 @@ class TaskModel extends Equatable {
   final String taskType;
   final int? repeatDays;
   final int? duration;
+  final int taskCount;
+  final bool taskisDone;
   final DateTime startDate;
   final DateTime endDate;
   final DateTime? lastAction;
@@ -15,6 +17,8 @@ class TaskModel extends Equatable {
     required this.id,
     required this.title,
     required this.taskType,
+    this.taskCount = 0,
+    this.taskisDone = false,
     this.repeatDays,
     this.duration,
     required this.startDate,

@@ -13,5 +13,6 @@ abstract class TaskRepository{
   Future<void> actionTask({
     required int id,
     required DateTime lastAction,
+    required int taskCount,
   });
 }

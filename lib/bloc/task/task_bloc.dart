@@ -38,7 +38,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   }
 
   _onActionTaskEvent(ActionTaskEvent event, Emitter<TaskState> emit) async {
-    await taskRepository.actionTask(id: event.id, lastAction: event.lastAction);
+    await taskRepository.actionTask(id: event.id, lastAction: event.lastAction, taskCount: event.taskCount);
     emit(LodingTaskState());
     add(LoadTaskEvent());
   }
