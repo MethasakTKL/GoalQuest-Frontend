@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<TaskBloc>(
-          create: (context){
+          create: (context) {
             final bloc = TaskBloc(TaskMockRepository());
             bloc.add(LoadTaskEvent());
             return bloc;
@@ -41,8 +41,8 @@ class MyApp extends StatelessWidget {
         initialRoute: '/start',
         routes: {
           '/start': (context) => const StartPage(),
-          '/login': (context) => const LoginPage(),
-          '/create_account': (context) => const CreateAccountPage(),
+          '/login': (context) => LoginPage(),
+          '/create_account': (context) => CreateAccountPage(),
           '/home': (context) => const HomePage(),
           '/bottom_navigation': (context) => const BottomNavigationPage(),
           '/edit_profile': (context) => const EditProfilePage(),

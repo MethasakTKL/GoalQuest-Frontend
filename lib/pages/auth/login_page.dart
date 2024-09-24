@@ -1,8 +1,52 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  final _storage = const FlutterSecureStorage();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  LoginPage({super.key});
+
+  Future<void> _login(BuildContext context) async {
+    // ตรวจสอบว่ามีการกรอกข้อมูล username และ password ครบถ้วนหรือไม่
+    if (_usernameController.text.isEmpty || _passwordController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please fill username and password')),
+      );
+      return; // ออกจากฟังก์ชันหากกรอกข้อมูลไม่ครบ
+    }
+
+    final url = Uri.parse('http://127.0.0.1:8000/token');
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      body: {
+        'username': _usernameController.text,
+        'password': _passwordController.text,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final responseBody = json.decode(response.body);
+      final accessToken = responseBody['access_token'];
+
+      // เก็บ token อย่างปลอดภัย
+      await _storage.write(key: 'access_token', value: accessToken);
+
+      // เปลี่ยนหน้าไปที่หน้า home หลังจากเข้าสู่ระบบสำเร็จ
+      // ignore: use_build_context_synchronously
+      Navigator.pushNamed(context, '/bottom_navigation');
+    } else {
+      // แสดงข้อความผิดพลาดหากการเข้าสู่ระบบล้มเหลว
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Incorrect username or password')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +116,7 @@ class LoginPage extends StatelessWidget {
                               height: 20,
                             ),
                             TextField(
+                              controller: _usernameController,
                               decoration: InputDecoration(
                                 hintText: 'Username',
                                 hintStyle: TextStyle(
@@ -96,6 +141,7 @@ class LoginPage extends StatelessWidget {
                             ),
                             const SizedBox(height: 16),
                             TextField(
+                              controller: _passwordController,
                               obscureText: true,
                               decoration: InputDecoration(
                                 hintText: 'Password',
@@ -136,10 +182,7 @@ class LoginPage extends StatelessWidget {
                             ),
                             const SizedBox(height: 20),
                             ElevatedButton(
-                              onPressed: () {
-                                Navigator.pushNamed(
-                                    context, '/bottom_navigation');
-                              },
+                              onPressed: () => _login(context),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor:
                                     const Color.fromARGB(255, 14, 176, 212),

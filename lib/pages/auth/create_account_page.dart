@@ -1,7 +1,81 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-class CreateAccountPage extends StatelessWidget {
+class CreateAccountPage extends StatefulWidget {
   const CreateAccountPage({super.key});
+
+  @override
+  _CreateAccountPageState createState() => _CreateAccountPageState();
+}
+
+class _CreateAccountPageState extends State<CreateAccountPage> {
+  final _storage = const FlutterSecureStorage();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _firstnameController = TextEditingController();
+  final TextEditingController _lastnameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
+
+  Future<void> _createAccount() async {
+    if (_usernameController.text.isEmpty ||
+        _firstnameController.text.isEmpty ||
+        _lastnameController.text.isEmpty ||
+        _emailController.text.isEmpty ||
+        _passwordController.text.isEmpty ||
+        _confirmPasswordController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please fill all fields')),
+      );
+      return;
+    }
+
+    if (_passwordController.text != _confirmPasswordController.text) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Passwords do not match')),
+      );
+      return;
+    }
+
+    final url = Uri.parse('http://127.0.0.1:8000/users/');
+    try {
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({
+          'username': _usernameController.text,
+          'first_name': _firstnameController.text,
+          'last_name': _lastnameController.text,
+          'email': _emailController.text,
+          'password': _passwordController.text,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Account created successfully')),
+        );
+        Navigator.pushReplacementNamed(context, '/login');
+      } else {
+        final errorData = json.decode(response.body);
+        String errorMessage = 'Failed to create account';
+        if (errorData is Map<String, dynamic> &&
+            errorData.containsKey('detail')) {
+          errorMessage = errorData['detail'].toString();
+        }
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(errorMessage)),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: ${e.toString()}')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +108,6 @@ class CreateAccountPage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      // Image.asset(
-                      //   'assets/signup_image.png',
-                      //   height: 170,
-                      // ),
                       const SizedBox(height: 10),
                       const Row(
                         children: [
@@ -53,6 +123,7 @@ class CreateAccountPage extends StatelessWidget {
                       ),
                       const SizedBox(height: 30),
                       TextField(
+                        controller: _usernameController,
                         decoration: InputDecoration(
                           hintText: 'Username*',
                           border: OutlineInputBorder(
@@ -65,6 +136,7 @@ class CreateAccountPage extends StatelessWidget {
                         children: [
                           Expanded(
                             child: TextField(
+                              controller: _firstnameController,
                               decoration: InputDecoration(
                                 hintText: 'Firstname*',
                                 border: OutlineInputBorder(
@@ -76,6 +148,7 @@ class CreateAccountPage extends StatelessWidget {
                           const SizedBox(width: 16),
                           Expanded(
                             child: TextField(
+                              controller: _lastnameController,
                               decoration: InputDecoration(
                                 hintText: 'Lastname*',
                                 border: OutlineInputBorder(
@@ -88,6 +161,7 @@ class CreateAccountPage extends StatelessWidget {
                       ),
                       const SizedBox(height: 16),
                       TextField(
+                        controller: _emailController,
                         decoration: InputDecoration(
                           hintText: 'Email*',
                           border: OutlineInputBorder(
@@ -97,6 +171,7 @@ class CreateAccountPage extends StatelessWidget {
                       ),
                       const SizedBox(height: 16),
                       TextField(
+                        controller: _passwordController,
                         obscureText: true,
                         decoration: InputDecoration(
                           hintText: 'Password*',
@@ -108,6 +183,7 @@ class CreateAccountPage extends StatelessWidget {
                       ),
                       const SizedBox(height: 16),
                       TextField(
+                        controller: _confirmPasswordController,
                         obscureText: true,
                         decoration: InputDecoration(
                           hintText: 'Password* (Re enter)',
@@ -123,9 +199,7 @@ class CreateAccountPage extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               ElevatedButton(
-                onPressed: () {
-                  // Create account logic
-                },
+                onPressed: _createAccount,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 14, 176, 212),
                   padding: const EdgeInsets.symmetric(vertical: 16),
