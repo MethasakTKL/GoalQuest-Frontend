@@ -62,10 +62,9 @@ class UserRepoFromDb extends UserRepository {
 
   @override
   Future<UserModel> getMeUser() async {
-    final accessToken = await storage.read(key: 'access_token');
     final url = Uri.parse('http://10.0.2.2:8000/users/me/');
     final response = await http.get(url, headers: {
-      'Authorization': 'Bearer $accessToken',
+      'Content-Type': 'application/json',
     });
     if (response.statusCode == 200) {
       final responseBody = json.decode(response.body);
