@@ -45,6 +45,19 @@ class UserModel extends Equatable{
       'register_date': registerDate,
     };
   }
+  
+  factory UserModel.empyt(){
+    return const UserModel(
+      id: 0,
+      username: '',
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      lastLoginDate: '',
+      registerDate: '',
+    );
+  }
   @override  
   List<Object?> get props => [
     id,

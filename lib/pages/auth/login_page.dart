@@ -20,7 +20,7 @@ class LoginPage extends StatelessWidget {
       return; // ออกจากฟังก์ชันหากกรอกข้อมูลไม่ครบ
     }
 
-    final url = Uri.parse('http://127.0.0.1:8000/token');
+    final url = Uri.parse('http://10.0.2.2:8000/token');
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
