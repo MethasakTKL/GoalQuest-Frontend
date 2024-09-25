@@ -5,9 +5,17 @@ import 'package:goal_quest/repositories/repositories.dart';
 class UserBloc extends Bloc<UserEvent, UserState>{
   final UserRepository userRepository;
   UserBloc(this.userRepository) : super(LoadingUserState()){
+    on<LoadUserEvent>(_onLoadUser);
     on<CreateUserEvent>(_onCreateUser);
     on<LoginUserEvent>(_onLoginUser);
     on<LogoutUserEvent>(_onLogoutUser);
+  }
+
+  _onLoadUser(LoadUserEvent event, Emitter<UserState> emit) async{
+    if (state is ReadyUserState){
+      final user = await userRepository.getMeUser();
+      emit(ReadyUserState(user: user));
+    }
   }
 
   _onCreateUser(CreateUserEvent event, Emitter<UserState> emit) async{

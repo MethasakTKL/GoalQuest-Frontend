@@ -32,6 +32,12 @@ class MyApp extends StatelessWidget {
             return bloc;
           },
         ),
+        BlocProvider<UserBloc>(
+          create: (context){
+            final bloc = UserBloc(UserRepoFromDb());
+            bloc.add(LoadUserEvent());
+            return bloc;
+          } ,)
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -42,7 +48,7 @@ class MyApp extends StatelessWidget {
         routes: {
           '/start': (context) => const StartPage(),
           '/login': (context) => LoginPage(),
-          '/create_account': (context) => CreateAccountPage(),
+          '/create_account': (context) => const CreateAccountPage(),
           '/home': (context) => const HomePage(),
           '/bottom_navigation': (context) => const BottomNavigationPage(),
           '/edit_profile': (context) => const EditProfilePage(),
