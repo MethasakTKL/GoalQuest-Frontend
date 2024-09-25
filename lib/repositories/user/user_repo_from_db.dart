@@ -42,7 +42,7 @@ class UserRepoFromDb extends UserRepository {
     final url = Uri.parse('http://10.0.2.2:8000/token');
     final response = await http.post(url,
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        body: json.encode({
+        body:({
           'username': username,
           'password': password,
         }));

@@ -18,7 +18,9 @@ class UserCreated extends UserState {
   List<Object> get props => [message];
 }
 
-class UserLoginSuccess extends UserState {}
+class UserLoginSuccess extends UserState {
+  
+}
 
 class UserFailure extends UserState {
   final String error;
