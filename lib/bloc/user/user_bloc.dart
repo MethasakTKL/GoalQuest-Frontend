@@ -33,7 +33,8 @@ class UserBloc extends Bloc<UserEvent, UserState>{
         email: event.email,
         password: event.password,
       );
-      emit(UserCreated(message: response)); 
+      emit(UserCreated(message: response));
+      emit(UserInitial()); 
     } catch (e) {
       emit(UserFailure(error: e.toString())); 
      }
