@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:goal_quest/bloc/bloc.dart';
 import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
-import 'package:goal_quest/mockup/user_models_list.dart';
 import 'package:goal_quest/pages/goals/goals_list.dart';
 import 'package:goal_quest/pages/home/routing_panel.dart';
 import 'package:goal_quest/pages/home/widget_panel.dart';
@@ -9,10 +10,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
-
   @override
   Widget build(BuildContext context) {
-    final currentuser = usersList[0];
+    
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
@@ -59,7 +59,13 @@ class HomePage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Welcome back, ${currentuser.first_name}"),
+                    BlocBuilder<UserBloc,UserState>(
+                      builder: (context, state){
+                        debugPrint("State: $state");
+                        return Text("Welcome back, ${state.user.firstName}");
+                      },
+                    )
+                    
                   ],
                 ),
                 const SizedBox(height: 10),

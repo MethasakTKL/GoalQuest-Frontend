@@ -1,41 +1,37 @@
-
 import 'package:goal_quest/models/models.dart';
 
 sealed class UserState{
-  List<Object?> get props => [];
-}
-
-class UserInitial extends UserState {}
-
-class UserLoading extends UserState {}
-
-class UserCreated extends UserState {
+  final UserModel user;
+  final String error ;
   final String message;
 
-  UserCreated({required this.message});
+  UserState({required this.user, this.error = ' ', this.message = ' '});
+}
 
-  @override
-  List<Object> get props => [message];
+class UserInitial extends UserState {
+  UserInitial() : super(user: UserModel.empty());
+}
+
+class UserLoading extends UserState {
+  UserLoading() : super(user: UserModel.empty());
+}
+
+class UserCreated extends UserState {
+  
+  UserCreated({required super.message}) : super(user: UserModel.empty());
+
 }
 
 class UserLoginSuccess extends UserState {
-  
+  UserLoginSuccess() : super(user: UserModel.empty());
 }
 
+
+
 class UserFailure extends UserState {
-  final String error;
-
-  UserFailure({required this.error});
-
-  @override
-  List<Object> get props => [error];
+  UserFailure({required super.error}) : super(user: UserModel.empty()); 
 }
 
 class ReadyUserState extends UserState {
-  final UserModel user;
-
-  ReadyUserState({required this.user});
-
-  @override
-  List<Object?> get props => [user];
+  ReadyUserState({required super.user});
 }

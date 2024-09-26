@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:goal_quest/bloc/bloc.dart';
 
@@ -48,63 +49,63 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
   //     ),
   //   );
 
-    // final url = Uri.parse('http://10.0.2.2:8000/users/');
-    // try {
-    //   final response = await http.post(
-    //     url,
-    //     headers: {'Content-Type': 'application/json'},
-    //     body: json.encode({
-    //       'username': _usernameController.text,
-    //       'first_name': _firstnameController.text,
-    //       'last_name': _lastnameController.text,
-    //       'email': _emailController.text,
-    //       'password': _passwordController.text,
-    //     }),
-    //   );
+  // final url = Uri.parse('http://10.0.2.2:8000/users/');
+  // try {
+  //   final response = await http.post(
+  //     url,
+  //     headers: {'Content-Type': 'application/json'},
+  //     body: json.encode({
+  //       'username': _usernameController.text,
+  //       'first_name': _firstnameController.text,
+  //       'last_name': _lastnameController.text,
+  //       'email': _emailController.text,
+  //       'password': _passwordController.text,
+  //     }),
+  //   );
 
-    //   if (response.statusCode == 200) {
-    //     ScaffoldMessenger.of(context).showSnackBar(
-    //       const SnackBar(content: Text('Account created successfully')),
-    //     );
-    //     Navigator.pushReplacementNamed(context, '/login');
-    //   } else {
-    //     final errorData = json.decode(response.body);
-    //     String errorMessage = 'Failed to create account';
-    //     if (errorData is Map<String, dynamic> &&
-    //         errorData.containsKey('detail')) {
-    //       errorMessage = errorData['detail'].toString();
-    //     }
-    //     ScaffoldMessenger.of(context).showSnackBar(
-    //       SnackBar(content: Text(errorMessage)),
-    //     );
-    //   }
-    // } catch (e) {
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     SnackBar(content: Text('Error: ${e.toString()}')),
-    //   );
-    // }
-  
-
+  //   if (response.statusCode == 200) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       const SnackBar(content: Text('Account created successfully')),
+  //     );
+  //     Navigator.pushReplacementNamed(context, '/login');
+  //   } else {
+  //     final errorData = json.decode(response.body);
+  //     String errorMessage = 'Failed to create account';
+  //     if (errorData is Map<String, dynamic> &&
+  //         errorData.containsKey('detail')) {
+  //       errorMessage = errorData['detail'].toString();
+  //     }
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(content: Text(errorMessage)),
+  //     );
+  //   }
+  // } catch (e) {
+  //   ScaffoldMessenger.of(context).showSnackBar(
+  //     SnackBar(content: Text('Error: ${e.toString()}')),
+  //   );
+  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: BlocListener<UserBloc, UserState>(
-        listener: (context, state) {
-          if (state is UserCreated) {
-            // Handle successful user creation
+      body: BlocBuilder<UserBloc, UserState>(builder: (context, state) {
+        if (state is UserCreated) {
+          // Handle successful user creation
+          SchedulerBinding.instance.addPostFrameCallback((_) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Account created successfully')),
             );
             Navigator.pushReplacementNamed(context, '/login');
-          } else if (state is UserFailure) {
-            // Handle user creation error
+          });
+        } else if (state is UserFailure) {
+          // Handle user creation error
+          SchedulerBinding.instance.addPostFrameCallback((_) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(state.error)),
             );
-          }
-        },
-        child: SafeArea(
+          });
+        }
+        return SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30.0),
             child: Column(
@@ -222,21 +223,26 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                 ),
                 const SizedBox(height: 24),
                 ElevatedButton(
-                  onPressed: () {if (_passwordController.text == _confirmPasswordController.text) {
-                    BlocProvider.of<UserBloc>(context).add(
-                      CreateUserEvent(
-                        username: _usernameController.text,
-                        firstName: _firstnameController.text,
-                        lastName: _lastnameController.text,
-                        email: _emailController.text,
-                        password: _passwordController.text,
-                      ),
-                    );
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Passwords do not match')),
-                    );
-                  }},
+                  onPressed: () {
+                    if (_passwordController.text ==
+                        _confirmPasswordController.text) {
+                      String username = _usernameController.text;
+                      String firstName = _firstnameController.text;
+                      String lastName = _lastnameController.text;
+                      String email = _emailController.text;
+                      String password = _passwordController.text;
+                      context.read<UserBloc>().add(CreateUserEvent(
+                          username: username,
+                          firstName: firstName,
+                          lastName: lastName,
+                          email: email,
+                          password: password));
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Passwords do not match')),
+                      );
+                    }
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromARGB(255, 14, 176, 212),
                     padding: const EdgeInsets.symmetric(vertical: 16),
@@ -265,8 +271,8 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
               ],
             ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 }

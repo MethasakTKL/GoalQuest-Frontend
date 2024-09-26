@@ -6,13 +6,11 @@ class UserModel extends Equatable{
   final String firstName;
   final String lastName;
   final String email;
-  final String password;
   final String lastLoginDate;
   final String registerDate; 
 
   const UserModel({
     required this.email,
-    required this.password,
     required this.firstName,
     required this.lastName,
     required this.username,
@@ -28,10 +26,9 @@ class UserModel extends Equatable{
       firstName: json['first_name'],
       lastName: json['last_name'],
       email: json['email'],
-      password: json['password'],
       lastLoginDate: json['last_login_date'],
       registerDate: json['register_date'],
-      );
+    );
   }
   Map<String, dynamic> toJson(){
     return{
@@ -40,20 +37,18 @@ class UserModel extends Equatable{
       'first_name': firstName,
       'last_name': lastName,
       'email': email,
-      'password': password,
       'last_login_date': lastLoginDate,
       'register_date': registerDate,
     };
   }
   
-  factory UserModel.empyt(){
+  factory UserModel.empty(){
     return const UserModel(
       id: 0,
       username: '',
       firstName: '',
       lastName: '',
       email: '',
-      password: '',
       lastLoginDate: '',
       registerDate: '',
     );
@@ -65,7 +60,6 @@ class UserModel extends Equatable{
     firstName,
     lastName,
     email,
-    password,
     lastLoginDate,
     registerDate,
   ];

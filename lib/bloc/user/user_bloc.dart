@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:goal_quest/bloc/bloc.dart';
 import 'package:goal_quest/repositories/repositories.dart';
@@ -12,11 +13,13 @@ class UserBloc extends Bloc<UserEvent, UserState>{
   }
 
   _onLoadUser(LoadUserEvent event, Emitter<UserState> emit) async{
-    if (state is UserInitial){
+    if (state is UserLoginSuccess){
       try {
       final user = await userRepository.getMeUser();
+      debugPrint("loadsuccess: ${user.toString()}");
       emit(ReadyUserState(user: user));
     } catch (e) {
+      debugPrint("loadfaile: ${e.toString()}");
       emit(UserFailure(error: e.toString())); 
       }
     }
@@ -33,8 +36,7 @@ class UserBloc extends Bloc<UserEvent, UserState>{
         email: event.email,
         password: event.password,
       );
-      emit(UserCreated(message: response));
-      emit(UserInitial()); 
+      emit(UserCreated(message: response)); 
     } catch (e) {
       emit(UserFailure(error: e.toString())); 
      }
@@ -50,8 +52,12 @@ class UserBloc extends Bloc<UserEvent, UserState>{
         username: event.username,
         password: event.password,
       );
+      debugPrint("username: ${event.username}");
+      debugPrint("password: ${event.password}");
       emit(UserLoginSuccess());
+      add(LoadUserEvent());
     } catch (e) {
+      debugPrint("loginfaile: ${e.toString()}");
       emit(UserFailure(error: e.toString()));
     }
   }
