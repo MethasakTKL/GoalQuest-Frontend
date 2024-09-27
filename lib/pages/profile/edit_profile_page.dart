@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:goal_quest/bloc/bloc.dart';
 import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
-import 'package:goal_quest/mockup/user_models_list.dart';
+import 'package:goal_quest/models/models.dart';
 
 class EditProfilePage extends StatelessWidget {
   const EditProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final currentUser = usersList[0];
+    TextEditingController _usernameController = TextEditingController();
+    TextEditingController _firstNameController = TextEditingController();
+    TextEditingController _lastNameController = TextEditingController();
+    TextEditingController _emailController = TextEditingController();
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
@@ -44,110 +49,123 @@ class EditProfilePage extends StatelessWidget {
           child: SingleChildScrollView(
             // เพิ่อให้สามารถเลื่อนหน้าจอได้ถ้าคอนเทนต์ใหญ่เกิน
             child: Center(
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      IconButton(
-                          icon: const Icon(
-                            Icons.arrow_back,
-                            color: Colors.black,
-                            size: 26,
+              child:
+                  BlocBuilder<UserBloc, UserState>(builder: (context, state) {
+                return Column(
+                  children: [
+                    Row(
+                      children: [
+                        IconButton(
+                            icon: const Icon(
+                              Icons.arrow_back,
+                              color: Colors.black,
+                              size: 26,
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            }),
+                        const SizedBox(width: 5),
+                        const Text(
+                          'Edit Profile',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
                           ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    TextField(
+                      controller: _usernameController,
+                      decoration: InputDecoration(
+                        hintText: state.user.username,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 15),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            controller: _firstNameController,
+                            decoration: InputDecoration(
+                              hintText: state.user.firstName,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: TextField(
+                            controller: _lastNameController,
+                            decoration: InputDecoration(
+                              hintText: state.user.lastName,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 15),
+                    TextField(
+                      controller: _emailController,
+                      decoration: InputDecoration(
+                        hintText: state.user.email,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                          onPressed: () {},
+                          style: TextButton.styleFrom(
+                            backgroundColor:
+                                const Color.fromARGB(255, 161, 161, 161),
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 30.0, vertical: 10.0),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                          ),
+                          child: const Text('Cancel'),
+                        ),
+                        const SizedBox(width: 10),
+                        TextButton(
                           onPressed: () {
-                            Navigator.pop(context);
-                          }),
-                      const SizedBox(width: 5),
-                      const Text(
-                        'Edit Profile',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  TextField(
-                    decoration: InputDecoration(
-                      hintText: currentUser.username,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          decoration: InputDecoration(
-                            hintText: currentUser.first_name,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
+                            context.read<UserBloc>().add(UpdateUserEvent(
+                                username: _usernameController.text,
+                                firstName: _firstNameController.text,
+                                lastName: _lastNameController.text,
+                                email: _emailController.text));
+                          },
+                          style: TextButton.styleFrom(
+                            backgroundColor:
+                                const Color.fromARGB(255, 255, 145, 77),
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 60.0, vertical: 10.0),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
                             ),
                           ),
+                          child: const Text('Edit'),
                         ),
-                      ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: TextField(
-                          decoration: InputDecoration(
-                            hintText: currentUser.last_name,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 15),
-                  TextField(
-                    decoration: InputDecoration(
-                      hintText: currentUser.email,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                          backgroundColor:
-                              const Color.fromARGB(255, 161, 161, 161),
-                          foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 30.0, vertical: 10.0),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                        ),
-                        child: const Text('Cancel'),
-                      ),
-                      const SizedBox(width: 10),
-                      TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                          backgroundColor:
-                              const Color.fromARGB(255, 255, 145, 77),
-                          foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 60.0, vertical: 10.0),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                        ),
-                        child: const Text('Edit'),
-                      ),
-                    ],
-                  )
-                ],
-              ),
+                      ],
+                    )
+                  ],
+                );
+              }),
             ),
           ),
         ),

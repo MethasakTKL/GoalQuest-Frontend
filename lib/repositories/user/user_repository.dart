@@ -18,5 +18,13 @@ abstract class UserRepository {
 
   Future<void> logoutUser();
 
+
+  Future<String> updateUser({
+    required String username,
+    required String firstName,
+    required String lastName,
+    required String email,
+    });
+
   
 }

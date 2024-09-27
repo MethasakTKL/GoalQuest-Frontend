@@ -10,6 +10,7 @@ class UserBloc extends Bloc<UserEvent, UserState>{
     on<CreateUserEvent>(_onCreateUser);
     on<LoginUserEvent>(_onLoginUser);
     on<LogoutUserEvent>(_onLogoutUser);
+    on<UpdateUserEvent>(_onUpdateUser);
   }
 
   _onLoadUser(LoadUserEvent event, Emitter<UserState> emit) async{
@@ -69,6 +70,25 @@ class UserBloc extends Bloc<UserEvent, UserState>{
         emit(UserInitial()); // ส่งสถานะเริ่มต้นหลังจากออกจากระบบ
   } catch (e) {
     emit(UserFailure(error: e.toString())); // ส่งข้อผิดพลาด
+    }
+  }
+
+
+  _onUpdateUser(UpdateUserEvent event, Emitter<UserState> emit) async {
+    if (state is ReadyUserState) {
+      try {
+        await userRepository.updateUser(
+          username: event.username,
+          firstName: event.firstName,
+          lastName: event.lastName,
+          email: event.email,
+        );
+        final updatedUser = await userRepository.getMeUser();
+        
+        emit(ReadyUserState(user: updatedUser));
+      } catch (e) {
+        emit(UserFailure(error: e.toString()));
+      }
     }
   }
 }

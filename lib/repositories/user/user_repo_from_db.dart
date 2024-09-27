@@ -85,4 +85,45 @@ class UserRepoFromDb extends UserRepository {
       throw Exception('Failed to get user');
     }
   }
+
+  @override
+  @override
+  @override
+  Future<String> updateUser({
+    required String email,
+    required String firstName,
+    required String lastName,
+    required String username,
+  }) async {
+    final url = Uri.parse('http://10.0.2.2:8000/users/edit-profile/');
+    final accessToken = await storage.read(key: 'access_token');
+
+    if (accessToken == null) {
+      throw Exception('No access token found');
+    }
+
+    final response = await http.put(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $accessToken',
+      },
+      body: json.encode({
+        'email': email,
+        'first_name': firstName,
+        'last_name': lastName,
+        'username': username,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final responseBody = json.decode(response.body);
+      debugPrint("response: $responseBody");
+      final user = UserModel.fromJson(responseBody);
+      debugPrint("userUpdated: $user");
+      return 'User updated successfully';
+    } else {
+      throw Exception('Failed to update user');
+    }
+  }
 }

@@ -29,3 +29,17 @@ class LoginUserEvent extends UserEvent{
 
 class LogoutUserEvent extends UserEvent{}
 
+class UpdateUserEvent extends UserEvent{
+  final String username;
+  final String firstName;
+  final String lastName;
+  final String email;
+  
+  UpdateUserEvent({
+    required this.username,
+    required this.firstName,
+    required this.lastName,
+    required this.email,
+  });
+}
+
