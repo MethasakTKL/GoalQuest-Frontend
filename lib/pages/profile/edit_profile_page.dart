@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:goal_quest/bloc/bloc.dart';
 import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
-import 'package:goal_quest/models/models.dart';
 
 class EditProfilePage extends StatelessWidget {
   const EditProfilePage({super.key});
