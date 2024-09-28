@@ -22,8 +22,8 @@ class UserCreated extends UserState {
 
 }
 
-class UserLoginSuccess extends UserState {
-  UserLoginSuccess() : super(user: UserModel.empty());
+class UserSuccess extends UserState {
+  UserSuccess({required String message}) : super(user: UserModel.empty(), message: message);
 }
 
 

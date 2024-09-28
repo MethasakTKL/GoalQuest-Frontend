@@ -26,5 +26,9 @@ abstract class UserRepository {
     required String email,
     });
 
+  Future<String> updatePassword({
+    required String currentPassword,
+    required String newPassword,
+  });
   
 }

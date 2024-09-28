@@ -7,6 +7,7 @@ import 'package:goal_quest/pages/profile/edit_profile_page.dart';
 import 'package:goal_quest/pages/profile/history_page.dart';
 import 'package:goal_quest/pages/goals/tasks/focustimer/focustimer_timer.dart';
 import 'package:goal_quest/pages/goals/tasks/tasks_page.dart';
+import 'package:goal_quest/pages/profile/profile_page.dart';
 import 'package:goal_quest/repositories/repositories.dart';
 
 import 'pages/auth/start_page.dart';
@@ -55,6 +56,7 @@ class MyApp extends StatelessWidget {
           '/redeem_history': (context) => const RedeemHistoryPage(),
           '/focustimer': (context) => const FocusTimerPage(),
           '/tasks': (context) => const TasksPage(),
+          '/profilepage': (context) => const ProfilePage(),
         },
       ),
     );

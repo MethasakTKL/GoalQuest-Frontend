@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:goal_quest/bloc/bloc.dart';
 import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
 
 class ChangePasswordPage extends StatelessWidget {
@@ -6,6 +9,10 @@ class ChangePasswordPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController currentPasswordController = TextEditingController();
+    TextEditingController newPasswordController = TextEditingController();
+    TextEditingController confirmNewPasswordController =
+        TextEditingController();
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
@@ -68,6 +75,8 @@ class ChangePasswordPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   TextField(
+                    controller: currentPasswordController,
+                    obscureText: true,
                     decoration: InputDecoration(
                       hintText: 'Old Password*',
                       border: OutlineInputBorder(
@@ -77,6 +86,8 @@ class ChangePasswordPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 15),
                   TextField(
+                    controller: newPasswordController,
+                    obscureText: true,
                     decoration: InputDecoration(
                       hintText: 'New Password*',
                       border: OutlineInputBorder(
@@ -86,6 +97,8 @@ class ChangePasswordPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 15),
                   TextField(
+                    controller: confirmNewPasswordController,
+                    obscureText: true,
                     decoration: InputDecoration(
                       hintText: 'New Password*(re-enter)',
                       border: OutlineInputBorder(
@@ -112,20 +125,62 @@ class ChangePasswordPage extends StatelessWidget {
                         child: const Text('Cancel'),
                       ),
                       const SizedBox(width: 10),
-                      TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                          backgroundColor:
-                              const Color.fromARGB(255, 255, 145, 77),
-                          foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 60.0, vertical: 10.0),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                      BlocBuilder<UserBloc, UserState>(
+                          builder: (context, state) {
+                        if (state is UserSuccess) {
+                          SchedulerBinding.instance.addPostFrameCallback((_) {
+                            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(state.message)),
+                            );
+                            Navigator.pushReplacement(
+                              context,
+                              PageRouteBuilder(
+                                pageBuilder: (context, animation1,
+                                        animation2) =>
+                                    const BottomNavigationPage(initialIndex: 3),
+                                transitionDuration: const Duration(
+                                    seconds: 0), // กำหนดเวลาของการเปลี่ยนหน้า
+                              ),
+                            );
+                          });
+                        } else if (state is UserFailure) {
+                          SchedulerBinding.instance.addPostFrameCallback((_) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(state.error)),
+                            );
+                          });
+                        }
+                        return TextButton(
+                          onPressed: () {
+                            if (newPasswordController.text !=
+                                confirmNewPasswordController.text) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content:
+                                        Text('New passwords do not match')),
+                              );
+                            } else {
+                              context.read<UserBloc>().add(ChangePasswordEvent(
+                                    currentPassword:
+                                        currentPasswordController.text,
+                                    newPassword: newPasswordController.text,
+                                  ));
+                            }
+                          },
+                          style: TextButton.styleFrom(
+                            backgroundColor:
+                                const Color.fromARGB(255, 255, 145, 77),
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 60.0, vertical: 10.0),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
                           ),
-                        ),
-                        child: const Text('Change'),
-                      ),
+                          child: const Text('Change'),
+                        );
+                      }),
                     ],
                   )
                 ],

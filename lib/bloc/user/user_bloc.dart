@@ -11,10 +11,11 @@ class UserBloc extends Bloc<UserEvent, UserState>{
     on<LoginUserEvent>(_onLoginUser);
     on<LogoutUserEvent>(_onLogoutUser);
     on<UpdateUserEvent>(_onUpdateUser);
+    on<ChangePasswordEvent>(_onChangePassword);
   }
 
   _onLoadUser(LoadUserEvent event, Emitter<UserState> emit) async{
-    if (state is UserLoginSuccess){
+    if (state is UserSuccess){
       try {
       final user = await userRepository.getMeUser();
       debugPrint("loadsuccess: ${user.toString()}");
@@ -55,7 +56,7 @@ class UserBloc extends Bloc<UserEvent, UserState>{
       );
       debugPrint("username: ${event.username}");
       debugPrint("password: ${event.password}");
-      emit(UserLoginSuccess());
+      emit(UserSuccess(message: 'User Login successfully'));
       add(LoadUserEvent());
     } catch (e) {
       debugPrint("loginfaile: ${e.toString()}");
@@ -86,6 +87,25 @@ class UserBloc extends Bloc<UserEvent, UserState>{
         final updatedUser = await userRepository.getMeUser();
         
         emit(ReadyUserState(user: updatedUser));
+        emit(UserSuccess(message: 'User updated successfully')); 
+        add(LoadUserEvent());
+      } catch (e) {
+        emit(UserFailure(error: e.toString()));
+      }
+    }
+  }
+
+  _onChangePassword(ChangePasswordEvent event, Emitter<UserState> emit) async{
+    if (state is ReadyUserState){
+      try {
+        await userRepository.updatePassword(
+          currentPassword: event.currentPassword,
+          newPassword: event.newPassword,
+        );
+        final updatedUser = await userRepository.getMeUser();
+        emit(ReadyUserState(user: updatedUser));
+        emit(UserSuccess(message: 'Password changed successfully'));
+        add(LoadUserEvent());
       } catch (e) {
         emit(UserFailure(error: e.toString()));
       }

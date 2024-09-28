@@ -66,14 +66,14 @@ class LoginPage extends StatelessWidget {
         backgroundColor: Colors.transparent,
         body: BlocBuilder<UserBloc, UserState>(
           builder: (context, state) {
-            if (state is UserLoginSuccess) {
+            if (state is UserSuccess) {
               SchedulerBinding.instance.addPostFrameCallback((_) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('Login successful')),
                 );
                 Navigator.pushNamed(context, '/bottom_navigation');
               });
-            } else {
+            } else if (state is UserFailure) {
               SchedulerBinding.instance.addPostFrameCallback((_) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(

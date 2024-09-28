@@ -43,3 +43,12 @@ class UpdateUserEvent extends UserEvent{
   });
 }
 
+class ChangePasswordEvent extends UserEvent{
+  final String currentPassword;
+  final String newPassword;
+  ChangePasswordEvent({
+    required this.currentPassword,
+    required this.newPassword,
+  });
+}
+

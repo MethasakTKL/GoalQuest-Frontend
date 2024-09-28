@@ -43,7 +43,7 @@ class UserRepoFromDb extends UserRepository {
     final url = Uri.parse('http://10.0.2.2:8000/token');
     final response = await http.post(url,
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        body:({
+        body: ({
           'username': username,
           'password': password,
         }));
@@ -87,8 +87,6 @@ class UserRepoFromDb extends UserRepository {
   }
 
   @override
-  @override
-  @override
   Future<String> updateUser({
     required String email,
     required String firstName,
@@ -124,6 +122,60 @@ class UserRepoFromDb extends UserRepository {
       return 'User updated successfully';
     } else {
       throw Exception('Failed to update user');
+    }
+  }
+
+  @override
+  Future<String> updatePassword({
+    required String currentPassword,
+    required String newPassword,
+  }) async {
+    final url = Uri.parse('http://10.0.2.2:8000/users/change-password/');
+    final accessToken = await storage.read(key: 'access_token');
+
+    if (accessToken == null) {
+      throw Exception('No access token found');
+    }
+
+    final response = await http.put(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $accessToken',
+      },
+      body: json.encode({
+        'current_password': currentPassword,
+        'new_password': newPassword,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final responseBody = json.decode(response.body);
+      debugPrint("Response: $responseBody");
+      return responseBody['message'];
+    } else if (response.statusCode == 400) {
+      final responseBody = json.decode(response.body);
+
+      // เช็คว่าข้อความ error คืออะไร
+      final errorMessage = responseBody['detail'] ?? 'Bad Request';
+
+      // เช็คตามข้อความ error ที่ส่งกลับมา
+      if (errorMessage == "Current password is incorrect") {
+        throw Exception("Current password is incorrect. Please try again.");
+      } else if (errorMessage ==
+          "New password must be different from the current password") {
+        throw Exception(
+            "New password must be different from the current password.");
+      } else {
+        throw Exception(errorMessage); // สำหรับ error อื่นๆ
+      }
+    } else if (response.statusCode == 404) {
+      throw Exception('User not found. Please check your login credentials.');
+    } else {
+      final responseBody = json.decode(response.body);
+      final errorMessage =
+          responseBody['detail'] ?? 'Failed to update password';
+      throw Exception(errorMessage);
     }
   }
 }

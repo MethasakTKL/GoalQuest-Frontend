@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:goal_quest/bloc/bloc.dart';
 import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
@@ -8,10 +9,10 @@ class EditProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController _usernameController = TextEditingController();
-    TextEditingController _firstNameController = TextEditingController();
-    TextEditingController _lastNameController = TextEditingController();
-    TextEditingController _emailController = TextEditingController();
+    TextEditingController usernameController = TextEditingController();
+    TextEditingController firstNameController = TextEditingController();
+    TextEditingController lastNameController = TextEditingController();
+    TextEditingController emailController = TextEditingController();
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
@@ -50,6 +51,29 @@ class EditProfilePage extends StatelessWidget {
             child: Center(
               child:
                   BlocBuilder<UserBloc, UserState>(builder: (context, state) {
+                if (state is UserSuccess) {
+                  SchedulerBinding.instance.addPostFrameCallback((_) {
+                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(state.message)),
+                    );
+                    Navigator.pushReplacement(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation1, animation2) =>
+                            const BottomNavigationPage(initialIndex: 3),
+                        transitionDuration: const Duration(
+                            seconds: 0), // กำหนดเวลาของการเปลี่ยนหน้า
+                      ),
+                    );
+                  });
+                } else if (state is UserFailure) {
+                  SchedulerBinding.instance.addPostFrameCallback((_) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(state.error)),
+                    );
+                  });
+                }
                 return Column(
                   children: [
                     Row(
@@ -75,7 +99,7 @@ class EditProfilePage extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     TextField(
-                      controller: _usernameController,
+                      controller: usernameController,
                       decoration: InputDecoration(
                         hintText: state.user.username,
                         border: OutlineInputBorder(
@@ -88,7 +112,7 @@ class EditProfilePage extends StatelessWidget {
                       children: [
                         Expanded(
                           child: TextField(
-                            controller: _firstNameController,
+                            controller: firstNameController,
                             decoration: InputDecoration(
                               hintText: state.user.firstName,
                               border: OutlineInputBorder(
@@ -100,7 +124,7 @@ class EditProfilePage extends StatelessWidget {
                         const SizedBox(width: 16),
                         Expanded(
                           child: TextField(
-                            controller: _lastNameController,
+                            controller: lastNameController,
                             decoration: InputDecoration(
                               hintText: state.user.lastName,
                               border: OutlineInputBorder(
@@ -113,7 +137,7 @@ class EditProfilePage extends StatelessWidget {
                     ),
                     const SizedBox(height: 15),
                     TextField(
-                      controller: _emailController,
+                      controller: emailController,
                       decoration: InputDecoration(
                         hintText: state.user.email,
                         border: OutlineInputBorder(
@@ -143,10 +167,10 @@ class EditProfilePage extends StatelessWidget {
                         TextButton(
                           onPressed: () {
                             context.read<UserBloc>().add(UpdateUserEvent(
-                                username: _usernameController.text,
-                                firstName: _firstNameController.text,
-                                lastName: _lastNameController.text,
-                                email: _emailController.text));
+                                username: usernameController.text,
+                                firstName: firstNameController.text,
+                                lastName: lastNameController.text,
+                                email: emailController.text));
                           },
                           style: TextButton.styleFrom(
                             backgroundColor:
