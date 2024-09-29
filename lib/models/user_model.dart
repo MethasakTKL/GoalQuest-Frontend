@@ -1,6 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
-import 'package:goal_quest/mockup/user_models_list.dart';
 
 class UserModel extends Equatable {
   final int id;

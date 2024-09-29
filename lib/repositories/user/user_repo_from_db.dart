@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:goal_quest/mockup/user_models_list.dart';
 import 'package:goal_quest/models/models.dart';
 import 'package:goal_quest/repositories/repositories.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
