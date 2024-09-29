@@ -2,7 +2,7 @@ sealed class UserEvent {}
 
 class LoadUserEvent extends UserEvent {}
 
-class CreateUserEvent extends UserEvent{
+class CreateUserEvent extends UserEvent {
   final String username;
   final String firstName;
   final String lastName;
@@ -18,7 +18,7 @@ class CreateUserEvent extends UserEvent{
   });
 }
 
-class LoginUserEvent extends UserEvent{
+class LoginUserEvent extends UserEvent {
   final String username;
   final String password;
   LoginUserEvent({
@@ -27,14 +27,14 @@ class LoginUserEvent extends UserEvent{
   });
 }
 
-class LogoutUserEvent extends UserEvent{}
+class LogoutUserEvent extends UserEvent {}
 
-class UpdateUserEvent extends UserEvent{
+class UpdateUserEvent extends UserEvent {
   final String username;
   final String firstName;
   final String lastName;
   final String email;
-  
+
   UpdateUserEvent({
     required this.username,
     required this.firstName,
@@ -43,7 +43,7 @@ class UpdateUserEvent extends UserEvent{
   });
 }
 
-class ChangePasswordEvent extends UserEvent{
+class ChangePasswordEvent extends UserEvent {
   final String currentPassword;
   final String newPassword;
   ChangePasswordEvent({
@@ -52,3 +52,4 @@ class ChangePasswordEvent extends UserEvent{
   });
 }
 
+class GetAllUsersEvent extends UserEvent {}

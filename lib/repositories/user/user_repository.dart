@@ -30,5 +30,9 @@ abstract class UserRepository {
     required String currentPassword,
     required String newPassword,
   });
+
+  Future<List<UserModel>> getAllUsers(
+    
+  );
   
 }

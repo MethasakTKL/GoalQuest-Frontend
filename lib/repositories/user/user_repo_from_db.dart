@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:goal_quest/mockup/user_models_list.dart';
 import 'package:goal_quest/models/models.dart';
 import 'package:goal_quest/repositories/repositories.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -6,10 +7,9 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class UserRepoFromDb extends UserRepository {
-  late UserModel user;
-
   final FlutterSecureStorage storage = const FlutterSecureStorage();
-
+  late List<UserModel> users;
+  late UserModelList userModelList;
   @override
   Future<String> createUser({
     required String username,
@@ -176,6 +176,31 @@ class UserRepoFromDb extends UserRepository {
       final errorMessage =
           responseBody['detail'] ?? 'Failed to update password';
       throw Exception(errorMessage);
+    }
+  }
+
+  @override
+  Future<List<UserModel>> getAllUsers() async {
+    final url = Uri.parse('http://10.0.2.2:8000/users/get-allUsers/');
+
+    try {
+      final response = await http.get(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        userModelList = UserModelList.fromJson(json.decode(response.body));
+        users = userModelList.users;
+        return users;
+      } else {
+        throw Exception('Failed to load users. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      debugPrint('Error occurred while fetching users: $e');
+      throw Exception('Failed to load users. Error: $e');
     }
   }
 }

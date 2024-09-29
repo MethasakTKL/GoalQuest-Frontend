@@ -36,6 +36,7 @@ class MyApp extends StatelessWidget {
         BlocProvider<UserBloc>(
           create: (context){
             final bloc = UserBloc(UserRepoFromDb());
+            bloc.add(GetAllUsersEvent());
             return bloc;
           } ,)
       ],

@@ -1,13 +1,15 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:goal_quest/mockup/user_models_list.dart';
 
-class UserModel extends Equatable{
+class UserModel extends Equatable {
   final int id;
   final String username;
   final String firstName;
   final String lastName;
   final String email;
   final String lastLoginDate;
-  final String registerDate; 
+  final String registerDate;
 
   const UserModel({
     required this.email,
@@ -15,11 +17,11 @@ class UserModel extends Equatable{
     required this.lastName,
     required this.username,
     this.lastLoginDate = '',
-    this.registerDate = '', 
+    this.registerDate = '',
     this.id = 0,
   });
 
-  factory UserModel.fromJson(Map<String, dynamic> json){
+  factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       id: json['id'],
       username: json['username'],
@@ -30,8 +32,8 @@ class UserModel extends Equatable{
       registerDate: json['register_date'],
     );
   }
-  Map<String, dynamic> toJson(){
-    return{
+  Map<String, dynamic> toJson() {
+    return {
       'id': id,
       'username': username,
       'first_name': firstName,
@@ -41,8 +43,8 @@ class UserModel extends Equatable{
       'register_date': registerDate,
     };
   }
-  
-  factory UserModel.empty(){
+
+  factory UserModel.empty() {
     return const UserModel(
       id: 0,
       username: '',
@@ -53,15 +55,41 @@ class UserModel extends Equatable{
       registerDate: '',
     );
   }
-  @override  
+  @override
   List<Object?> get props => [
-    id,
-    username,
-    firstName,
-    lastName,
-    email,
-    lastLoginDate,
-    registerDate,
-  ];
+        id,
+        username,
+        firstName,
+        lastName,
+        email,
+        lastLoginDate,
+        registerDate,
+      ];
 }
 
+class UserModelList extends Equatable {
+  final List<UserModel> users;
+
+  const UserModelList({
+    required this.users,
+  });
+
+  factory UserModelList.fromJson(Map<String, dynamic> json) {
+    final List<UserModel> users = (json['users'] as List)
+        .map((userJson) => UserModel.fromJson(userJson))
+        .toList();
+    return UserModelList(users: users);
+  }
+  List<Map<String, String>> get simplifiedUsers{
+    return users.map((user){
+      return{
+        'username': user.username,
+        'first_name': user.firstName,
+        'last_name': user.lastName,
+        'email': user.email,
+      };
+    }).toList();
+    }
+    @override
+    List<Object?> get props => [users];
+}

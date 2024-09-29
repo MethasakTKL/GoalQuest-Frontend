@@ -1,11 +1,11 @@
 import 'package:goal_quest/models/models.dart';
 
-sealed class UserState{
+sealed class UserState {
   final UserModel user;
-  final String error ;
+  final String error;
   final String message;
 
-  UserState({required this.user, this.error = ' ', this.message = ' '});
+  UserState({required this.user, this.error = ' ', this.message = ' ' });
 }
 
 class UserInitial extends UserState {
@@ -17,21 +17,27 @@ class UserLoading extends UserState {
 }
 
 class UserCreated extends UserState {
-  
   UserCreated({required super.message}) : super(user: UserModel.empty());
-
 }
 
 class UserSuccess extends UserState {
-  UserSuccess({required String message}) : super(user: UserModel.empty(), message: message);
+  UserSuccess({required super.message}) : super(user: UserModel.empty());
 }
 
-
-
 class UserFailure extends UserState {
-  UserFailure({required super.error}) : super(user: UserModel.empty()); 
+  UserFailure({required super.error}) : super(user: UserModel.empty());
 }
 
 class ReadyUserState extends UserState {
   ReadyUserState({required super.user});
 }
+
+const List<UserModel> emptyUserList = [];
+
+class AllUsersLoaded extends UserState {
+   final List<UserModel> userList; // Add this line
+  
+  AllUsersLoaded({required this.userList}) : super(user: UserModel.empty());
+}
+
+
