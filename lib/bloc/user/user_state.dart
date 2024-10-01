@@ -4,8 +4,9 @@ sealed class UserState {
   final UserModel user;
   final String error;
   final String message;
+  final List<UserModel> usersList;
 
-  UserState({required this.user, this.error = ' ', this.message = ' ' });
+  UserState({required this.user, this.error = ' ', this.message = ' ', this.usersList = const [] });
 }
 
 class UserInitial extends UserState {
@@ -29,15 +30,14 @@ class UserFailure extends UserState {
 }
 
 class ReadyUserState extends UserState {
-  ReadyUserState({required super.user});
+  ReadyUserState({required super.user, super.usersList});
 }
 
-const List<UserModel> emptyUserList = [];
+// const List<UserModel> emptyUserList = [];
 
 class AllUsersLoaded extends UserState {
-   final List<UserModel> userList; // Add this line
   
-  AllUsersLoaded({required this.userList}) : super(user: UserModel.empty());
+  AllUsersLoaded({required super.user, required super.usersList});
 }
 
 

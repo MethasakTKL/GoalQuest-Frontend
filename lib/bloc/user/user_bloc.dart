@@ -7,7 +7,7 @@ import 'package:goal_quest/repositories/repositories.dart';
 class UserBloc extends Bloc<UserEvent, UserState> {
   final UserRepository userRepository;
   final List<UserModel> emptyUserList = [];
-  
+
   UserBloc(this.userRepository) : super(UserInitial()) {
     on<LoadUserEvent>(_onLoadUser);
     on<CreateUserEvent>(_onCreateUser);
@@ -116,7 +116,11 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     if (state is ReadyUserState) {
       try {
         final users = await userRepository.getAllUsers();
-         emit(AllUsersLoaded(userList: users));
+        final currentUser = (state as ReadyUserState)
+            .user; // รับข้อมูลผู้ใช้ที่ล็อกอินอยู่จาก state ปัจจุบัน
+
+        // ส่งข้อมูลผู้ใช้ที่ล็อกอินอยู่ (user) และผู้ใช้ทั้งหมด (usersList)
+        emit(AllUsersLoaded(user: currentUser, usersList: users));
       } catch (e) {
         emit(UserFailure(error: e.toString()));
       }

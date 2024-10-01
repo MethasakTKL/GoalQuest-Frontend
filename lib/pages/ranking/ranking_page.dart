@@ -67,7 +67,7 @@ class RankingPage extends StatelessWidget {
         child: BlocBuilder<UserBloc, UserState>(
           builder: (context, state) {
             if (state is AllUsersLoaded) {
-              final allUsers = state.userList;
+              final allUsers = state.usersList;
               // allUsers.sort((a, b) => b.id.compareTo(a.id)); // ปรับลำดับ point ทีหลัง
               final top3Users =
                   allUsers.take(3).toList(); // ดึงข้อมูลของ top 3 ไว้
@@ -246,7 +246,7 @@ class RankingPage extends StatelessWidget {
                             child: Padding(
                               padding: const EdgeInsets.only(top: 10),
                               child: ListView.builder(
-                                itemCount: remainingUsers
+                                itemCount: remainingUsers.take(7)
                                     .length, // จำนวนที่เหลือนอกเหนือจาก top 3
                                 padding: const EdgeInsets.only(bottom: 80),
                                 itemBuilder: (context, index) {
@@ -270,23 +270,23 @@ class RankingPage extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                                    title: Text(state.user.username), // แสดงชื่อผู้ใช้งานตามลำดับ
-                                    trailing: Row(
+                                    title: Text(remainingUsers[index].username), // แสดงชื่อผู้ใช้งานตามลำดับ
+                                    trailing: const Row(
                                       mainAxisSize: MainAxisSize
                                           .min, // เพื่อให้ไอคอนไม่ใช้พื้นที่มากเกินไป
                                       children: [
-                                        Text(
-                                          '${currentUser[index + 1].point}',
-                                          style: const TextStyle(
-                                            fontSize: 12,
-                                            color: Color.fromARGB(
-                                                255, 89, 125, 197),
-                                          ),
-                                        ),
-                                        const SizedBox(
+                                        // Text(
+                                        //   '${currentUser[index + 1].point}',
+                                        //   style: const TextStyle(
+                                        //     fontSize: 12,
+                                        //     color: Color.fromARGB(
+                                        //         255, 89, 125, 197),
+                                        //   ),
+                                        // ),
+                                        SizedBox(
                                             width:
                                                 3), // เพิ่มระยะห่างระหว่างข้อความกับไอคอน
-                                        const Icon(Icons.savings_outlined,
+                                        Icon(Icons.savings_outlined,
                                             size: 16, // ขนาดไอคอน
                                             color: Color.fromARGB(
                                                 255, 89, 125, 197)),

@@ -191,11 +191,22 @@ class UserRepoFromDb extends UserRepository {
       );
 
       if (response.statusCode == 200) {
-        userModelList = UserModelList.fromJson(json.decode(response.body));
-        users = userModelList.users;
-        return users;
+        // พิมพ์ response.body เพื่อดูข้อมูล JSON ที่ได้รับจาก backend
+        debugPrint('Response body: ${response.body}');
+
+        // ตรวจสอบว่า JSON ที่ได้รับเป็น List หรือไม่
+        final jsonData = json.decode(response.body);
+        if (jsonData is List) {
+          // แปลง JSON เป็น UserModelList
+          final userModelList = UserModelList.fromJson(jsonData);
+          return userModelList.users;
+        } else {
+          throw Exception(
+              'Unexpected JSON format: Expected a List but got ${jsonData.runtimeType}');
+        }
       } else {
-        throw Exception('Failed to load users. Status code: ${response.statusCode}');
+        throw Exception(
+            'Failed to load users. Status code: ${response.statusCode}');
       }
     } catch (e) {
       debugPrint('Error occurred while fetching users: $e');

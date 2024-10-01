@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class UserModel extends Equatable {
-  final int id;
+  final int? id;
   final String username;
   final String firstName;
   final String lastName;
@@ -16,18 +16,18 @@ class UserModel extends Equatable {
     required this.username,
     this.lastLoginDate = '',
     this.registerDate = '',
-    this.id = 0,
+    this.id,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-      id: json['id'],
+      id: json['id'] != null ? json['id'] as int : null,
       username: json['username'],
       firstName: json['first_name'],
       lastName: json['last_name'],
       email: json['email'],
-      lastLoginDate: json['last_login_date'],
-      registerDate: json['register_date'],
+      lastLoginDate: json['last_login_date'] ?? '', // ใช้ค่า default '' ถ้าเป็น null
+      registerDate: json['register_date'] ?? '', 
     );
   }
   Map<String, dynamic> toJson() {
@@ -72,8 +72,8 @@ class UserModelList extends Equatable {
     required this.users,
   });
 
-  factory UserModelList.fromJson(Map<String, dynamic> json) {
-    final List<UserModel> users = (json['users'] as List)
+  factory UserModelList.fromJson(List<dynamic> jsonList) {
+    final List<UserModel> users = jsonList
         .map((userJson) => UserModel.fromJson(userJson))
         .toList();
     return UserModelList(users: users);
