@@ -123,6 +123,7 @@ class ProfilePage extends StatelessWidget {
                                       children: [
                                         ElevatedButton(
                                           onPressed: () {
+                                            context.read<UserBloc>().add(LogoutUserEvent());
                                             Navigator.pushNamedAndRemoveUntil(
                                                 context,
                                                 '/login',
