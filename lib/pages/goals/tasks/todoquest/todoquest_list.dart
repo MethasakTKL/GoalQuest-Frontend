@@ -12,128 +12,233 @@ class TodoQuestList extends StatefulWidget {
 }
 
 class _TodoQuestListState extends State<TodoQuestList> {
+  bool isCompletVisible = false;
+  Map<int, bool> isCheckedMap =
+      {}; // ใช้ map เพื่อจัดการค่า isChecked สำหรับแต่ละ task
 
-  bool isChecked = false;
-
-  void restCheckBox(){
+  void toggleCheckBox(bool? newValue, int taskId) {
     setState(() {
-      isChecked = false;
+      // สลับค่าของ isChecked ใน Map
+      isCheckedMap[taskId] = newValue ?? false;
+      debugPrint('Task $taskId checked state: ${isCheckedMap[taskId]}');
+
+      if (isCheckedMap[taskId]!) {
+        // เมื่อกดให้ Checkbox เป็น true
+        debugPrint("Task $taskId completed, increment task count");
+      } else {
+        // เมื่อกดให้ Checkbox เป็น false
+        debugPrint("Task $taskId unchecked");
+      }
     });
   }
+
   @override
   Widget build(BuildContext context) {
     final tasks = context.select((TaskBloc bloc) => bloc.state.tasks
         .where((task) => task.taskType == 'TodoQuest')
         .toList()); //เช็คว่า Tasktype เป็น TodoQuest ไหม
     final today = DateTime.now();
+
     final todayTasks = tasks.where((task) {
       if (task.nextAction == null) return false;
+      // กรอง task ที่มี nextAction ตรงกับวันที่ปัจจุบัน
       final nextActionDate = task.nextAction!;
-      return nextActionDate.year == today.year &&
+      final isTodayTask = nextActionDate.year == today.year &&
           nextActionDate.month == today.month &&
           nextActionDate.day == today.day;
+
+      final duration = task.endDate.difference(task.startDate);
+      final repeatCount = duration.inDays ~/ task.repeatDays!;
+      return isTodayTask &&
+          task.taskCount < repeatCount; // ต้องอยู่ในวันนี้และยังทำไม่ครบ
     }).toList();
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (todayTasks.isNotEmpty)
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Padding(
-                padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                child: Text(
-                  'Today',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 63, 148, 69),
+    final nextTasks = tasks.where((task) {
+      // ตรวจสอบว่ามันไม่ได้อยู่ใน todayTasks และ task นั้นยังไม่เสร็จ
+      if (todayTasks.contains(task)) return false;
+      final duration = task.endDate.difference(task.startDate);
+      final repeatCount = duration.inDays ~/ task.repeatDays!;
+      return task.taskCount <
+          repeatCount; // taskCount ยังไม่ครบตาม repeatCount แปลว่ายังไม่เสร็จ
+    }).toList();
+
+    final completeTasks = tasks.where((task) {
+      // คำนวณ repeatCount จากระยะเวลา (duration) ระหว่าง startDate และ endDate
+      final duration = task.endDate.difference(task.startDate);
+      final repeatCount = duration.inDays ~/
+          task.repeatDays!; // จำนวนครั้งที่ต้องทำตาม repeatDays
+      // ตรวจสอบว่า taskCount ถึง repeatCount หรือไม่
+      return task.taskCount >= repeatCount;
+    }).toList();
+
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (todayTasks.isNotEmpty)
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                  child: Text(
+                    'Today',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 63, 148, 69),
+                    ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: todayTasks
-                        .map((task) => TodoQuestItem(
-                              cardColor:
-                                  const Color.fromARGB(255, 173, 217, 98),
-                              isChecked: task.lastAction != null &&
-                                  task.lastAction!.isAfter(DateTime.now()
-                                      .subtract(Duration(
-                                          days: task.repeatDays ?? 1))),
-                              title: task.title,
-                              frequency: 'Every ${task.repeatDays} days',
-                              lastDone: task.lastAction != null
-                                  ? DateFormat('d MMMM yyyy')
-                                      .format(task.lastAction!)
-                                  : 'Not started',
-                              nextDue: task.nextAction != null
-                                  ? DateFormat('d MMMM yyyy')
-                                      .format(task.nextAction!)
-                                  : '-',
-                              repeatDays: task.repeatDays ?? 1,
-                              startDate: task.startDate,
-                              taskCount: task.taskCount,
-                              endDate: task.endDate,
-                              onChanged: (bool? newValue) {
-                                if (newValue != null) {
-                                  context.read<TaskBloc>().add(
-                                      ActionTaskEvent(task.id, DateTime.now(), task.taskCount));
-                                }
-                              },
-                            ))
-                        .toList(),
-                  ),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics:
+                      const NeverScrollableScrollPhysics(), // ปิดการเลื่อนใน ListView
+                  itemCount: todayTasks.length,
+                  itemBuilder: (context, index) {
+                    final task = todayTasks[index];
+                    final isChecked = isCheckedMap[task.id] ?? false;
+                    return TodoQuestItem(
+                      cardColor: const Color.fromARGB(255, 173, 217, 98),
+                      isChecked: isChecked,
+                      // task.lastAction != null &&
+                      //     task.lastAction!.isAfter(DateTime.now().subtract(
+                      //         Duration(days: task.repeatDays ?? 1))),
+                      title: task.title,
+                      frequency: 'Every ${task.repeatDays} days',
+                      lastDone: task.lastAction != null
+                          ? DateFormat('d MMMM yyyy').format(task.lastAction!)
+                          : 'Not started',
+                      nextDue: task.nextAction != null
+                          ? DateFormat('d MMMM yyyy').format(task.nextAction!)
+                          : '-',
+                      repeatDays: task.repeatDays ?? 1,
+                      startDate: task.startDate,
+                      taskCount: task.taskCount,
+                      endDate: task.endDate,
+                      onChanged: (bool? newValue) {
+                        if (newValue != null) {
+                          toggleCheckBox(newValue, task.id);
+                          context.read<TaskBloc>().add(ActionTaskEvent(
+                              task.id, DateTime.now(), task.taskCount));
+                        }
+                      },
+                    );
+                  },
+                ),
+              ],
+            ),
+          if (nextTasks.isNotEmpty)
+            const Padding(
+              padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+              child: Text(
+                'Next',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-            ],
-          ),
-        const Padding(
-          padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-          child: Text(
-            'Next',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
             ),
-          ),
-        ),
-        Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              children: tasks
-                  .map((task) => TodoQuestItem(
-                        cardColor: Colors.grey[300]!,
-                        isChecked: task.lastAction != null &&
-                            task.lastAction!.isAfter(DateTime.now().subtract(
-                                Duration(days: task.repeatDays ?? 1))),
-                        title: task.title,
-                        frequency: 'Every ${task.repeatDays} days',
-                        lastDone: task.lastAction != null
-                            ? DateFormat('d MMMM yyyy').format(task.lastAction!)
-                            : 'Not started',
-                        nextDue: task.nextAction != null
-                            ? DateFormat('d MMMM yyyy').format(task.nextAction!)
-                            : '-',
-                        repeatDays: task.repeatDays ?? 1,
-                        startDate: task.startDate,
-                        endDate: task.endDate,
-                        taskCount: task.taskCount,
-                        onChanged: (bool? newValue) {
-                          if (newValue == true) {
-                            context
-                                .read<TaskBloc>()
-                                .add(ActionTaskEvent(task.id, DateTime.now(), task.taskCount));
-                          }
-                        },
-                      ))
-                  .toList(),
+          if (nextTasks.isNotEmpty)
+            ListView.builder(
+              shrinkWrap: true,
+              physics:
+                  const NeverScrollableScrollPhysics(), // ปิดการเลื่อนใน ListView
+              itemCount: nextTasks.length,
+              itemBuilder: (context, index) {
+                final task = nextTasks[index];
+                final isChecked = isCheckedMap[task.id] ?? false;
+                return TodoQuestItem(
+                  cardColor: Colors.grey[300]!,
+                  isChecked: isChecked,
+                  // task.lastAction != null &&
+                  //     task.lastAction!.isAfter(DateTime.now()
+                  //         .subtract(Duration(days: task.repeatDays ?? 1))),
+                  title: task.title,
+                  frequency: 'Every ${task.repeatDays} days',
+                  lastDone: task.lastAction != null
+                      ? DateFormat('d MMMM yyyy').format(task.lastAction!)
+                      : 'Not started',
+                  nextDue: task.nextAction != null
+                      ? DateFormat('d MMMM yyyy').format(task.nextAction!)
+                      : '-',
+                  repeatDays: task.repeatDays ?? 1,
+                  startDate: task.startDate,
+                  endDate: task.endDate,
+                  taskCount: task.taskCount,
+                  onChanged: (bool? newValue) {
+                    toggleCheckBox(newValue, task.id);
+                    context.read<TaskBloc>().add(ActionTaskEvent(
+                        task.id, DateTime.now(), task.taskCount));
+                  },
+                );
+              },
             ),
-          ),
-        ),
-      ],
+          if (completeTasks.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+              child: Row(
+                children: [
+                  const Text(
+                    'Completed',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      setState(() {
+                        isCompletVisible = !isCompletVisible;
+                        debugPrint('isCompletVisible: $isCompletVisible');
+                      });
+                    },
+                    icon: Icon(isCompletVisible
+                        ? Icons.keyboard_arrow_down
+                        : Icons.keyboard_arrow_right),
+                    iconSize: 26.0,
+                    color: Colors.black,
+                  ),
+                ],
+              ),
+            ),
+          if (isCompletVisible && completeTasks.isNotEmpty)
+            ListView.builder(
+              shrinkWrap: true,
+              physics:
+                  const NeverScrollableScrollPhysics(), // ปิดการเลื่อนใน ListView
+              itemCount: completeTasks.length,
+              itemBuilder: (context, index) {
+                final task = completeTasks[index];
+                final isChecked = isCheckedMap[task.id] ?? false;
+                return TodoQuestItem(
+                  cardColor: Colors.grey[300]!,
+                  isChecked: isChecked,
+                  // task.lastAction != null &&
+                  //     task.lastAction!.isAfter(DateTime.now()
+                  //         .subtract(Duration(days: task.repeatDays ?? 1))),
+                  title: task.title,
+                  frequency: 'Every ${task.repeatDays} days',
+                  lastDone: task.lastAction != null
+                      ? DateFormat('d MMMM yyyy').format(task.lastAction!)
+                      : 'Not started',
+                  nextDue: task.nextAction != null
+                      ? DateFormat('d MMMM yyyy').format(task.nextAction!)
+                      : '-',
+                  repeatDays: task.repeatDays ?? 1,
+                  startDate: task.startDate,
+                  endDate: task.endDate,
+                  taskCount: task.taskCount,
+                  onChanged: (bool? newValue) {
+                    toggleCheckBox(newValue, task.id);
+                    context.read<TaskBloc>().add(ActionTaskEvent(
+                        task.id, DateTime.now(), task.taskCount));
+                  },
+                );
+              },
+            ),
+        ],
+      ),
     );
   }
 }

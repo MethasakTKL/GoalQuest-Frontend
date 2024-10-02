@@ -76,7 +76,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }
 
   _onUpdateUser(UpdateUserEvent event, Emitter<UserState> emit) async {
-    if (state is ReadyUserState) {
+    if (state is  AllUsersLoaded) {
       try {
         await userRepository.updateUser(
           username: event.username,
@@ -96,7 +96,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }
 
   _onChangePassword(ChangePasswordEvent event, Emitter<UserState> emit) async {
-    if (state is ReadyUserState) {
+    if (state is AllUsersLoaded) {
       try {
         await userRepository.updatePassword(
           currentPassword: event.currentPassword,

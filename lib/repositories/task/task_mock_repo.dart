@@ -53,13 +53,11 @@ class TaskMockRepository extends TaskRepository {
     ),
   ];
 
-  int lastId = 4;
-
+  int lastId = 5;
 
   @override
   Future<List<TaskModel>> loadTask() async {
     await Future.delayed(const Duration(seconds: 0));
-    tasks.sort((a,b) => a.startDate.compareTo(b.startDate));
     return tasks;
   }
 
@@ -77,7 +75,7 @@ class TaskMockRepository extends TaskRepository {
       required int? duration,
       required DateTime startDate,
       required DateTime endDate}) async {
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 0));
     int id = lastId + 1;
     lastId++;
     TaskModel newTask = TaskModel(
@@ -89,15 +87,50 @@ class TaskMockRepository extends TaskRepository {
         startDate: startDate,
         endDate: endDate,
         lastAction: null,
-        nextAction: null);
+        nextAction: startDate);
     tasks.add(newTask);
     return newTask;
   }
 
   @override
-  Future<void> actionTask({required int id, required DateTime lastAction, required int taskCount}) async{
+  Future<void> actionTask(
+      {required int id,
+      required DateTime lastAction,
+      required int taskCount}) async {
     await Future.delayed(const Duration(seconds: 0));
     final index = tasks.indexWhere((task) => task.id == id);
-    tasks[index] = TaskModel(id: id, title: tasks[index].title, taskType: tasks[index].taskType, repeatDays: tasks[index].repeatDays, duration: tasks[index].duration, startDate: tasks[index].startDate, endDate:  tasks[index].endDate, lastAction: lastAction, nextAction:  tasks[index].nextAction, taskCount: tasks[index].taskCount + 1);
+    if (index != -1) {
+      final task = tasks[index];
+      DateTime? nextAction = task.nextAction;
+
+      // ตรวจสอบว่า task ทำในวันเดียวกันแล้วหรือไม่
+      bool isSameDay = task.lastAction != null &&
+          task.lastAction!.year == lastAction.year &&
+          task.lastAction!.month == lastAction.month &&
+          task.lastAction!.day == lastAction.day;
+
+      // ถ้าไม่ใช่วันเดียวกัน ให้คำนวณ nextAction
+      if (!isSameDay && task.repeatDays != null) {
+        nextAction = lastAction.add(Duration(days: task.repeatDays!));
+      }
+
+      // ถ้ามี repeatDays ให้คำนวณวันที่ถัดไป
+      if (task.repeatDays != null) {
+        nextAction = lastAction.add(Duration(days: task.repeatDays!));
+      }
+
+      tasks[index] = TaskModel(
+        id: id,
+        title: task.title,
+        taskType: task.taskType,
+        repeatDays: task.repeatDays,
+        duration: task.duration,
+        startDate: task.startDate,
+        endDate: task.endDate,
+        lastAction: lastAction,
+        nextAction: nextAction,
+        taskCount: task.taskCount + 1, // เพิ่ม taskCount เมื่อทำ action
+      );
+    }
   }
 }

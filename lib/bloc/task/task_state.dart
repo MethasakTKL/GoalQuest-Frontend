@@ -2,7 +2,8 @@ import 'package:goal_quest/models/models.dart';
 
 sealed class TaskState{
   final List<TaskModel> tasks;
-  TaskState({required this.tasks});
+  final String error;
+  TaskState({required this.tasks, this.error = ''});
 }
 
 const List<TaskModel> emptyTasks = [];
@@ -16,4 +17,8 @@ class ReadyTaskState extends TaskState{
 
 class SearchTaskState extends TaskState{
   SearchTaskState({required super.tasks});
+}
+
+class ErrorTaskState extends TaskState {
+  ErrorTaskState({required super.error}) : super(tasks: emptyTasks);
 }
