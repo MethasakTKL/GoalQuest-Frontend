@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class TodoQuestItem extends StatelessWidget {
   final bool isChecked;
@@ -35,6 +36,8 @@ class TodoQuestItem extends StatelessWidget {
     int repeatCount = totalDays ~/ repeatDays;
 
     bool isComplete = taskCount >= repeatCount;
+    final DateFormat dateFormat = DateFormat('d MMMM yyyy');
+    final DateTime nextDueDate = dateFormat.parse(nextDue);
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
       child: Align(
@@ -43,7 +46,7 @@ class TodoQuestItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             GestureDetector(
-              onTap: isComplete
+              onTap: isComplete ||  DateTime.now().isBefore(nextDueDate)
                   ? null
                   : () {
                       if (onChanged != null) {

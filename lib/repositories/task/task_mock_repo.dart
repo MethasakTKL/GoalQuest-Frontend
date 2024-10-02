@@ -5,18 +5,6 @@ class TaskMockRepository extends TaskRepository {
   List<TaskModel> tasks = [
     TaskModel(
       id: 1,
-      title: 'Task 1',
-      taskType: 'TodoQuest',
-      repeatDays: 1,
-      taskCount: 10,
-      duration: null,
-      startDate: DateTime(2024, 9, 10),
-      endDate: DateTime.now().add(const Duration(days: 7)),
-      lastAction: null,
-      nextAction: DateTime.now(),
-    ),
-    TaskModel(
-      id: 2,
       title: 'Task 2',
       taskType: 'FocusTimer',
       repeatDays: null,
@@ -28,19 +16,7 @@ class TaskMockRepository extends TaskRepository {
       nextAction: null,
     ),
     TaskModel(
-      id: 3,
-      title: 'Task 3',
-      taskType: 'TodoQuest',
-      repeatDays: 4,
-      taskCount: 0,
-      duration: null,
-      startDate: DateTime(2024, 9, 10),
-      endDate: DateTime.now().add(const Duration(days: 7)),
-      lastAction: DateTime(2024, 9, 10),
-      nextAction: DateTime(2024, 9, 14),
-    ),
-    TaskModel(
-      id: 4,
+      id: 2,
       title: 'Task 4',
       taskType: 'FocusTimer',
       repeatDays: null,
@@ -53,7 +29,7 @@ class TaskMockRepository extends TaskRepository {
     ),
   ];
 
-  int lastId = 5;
+  int lastId = 2;
 
   @override
   Future<List<TaskModel>> loadTask() async {
