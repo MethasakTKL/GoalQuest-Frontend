@@ -1,53 +1,18 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:goal_quest/bloc/bloc.dart';
-
 import 'package:flutter/scheduler.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
-  LoginPage({super.key});
-
-  // Future<void> _login(BuildContext context) async {
-  //   // ตรวจสอบว่ามีการกรอกข้อมูล username และ password ครบถ้วนหรือไม่
-  //   if (_usernameController.text.isEmpty || _passwordController.text.isEmpty) {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(content: Text('Please fill username and password')),
-  //     );
-  //     return; // ออกจากฟังก์ชันหากกรอกข้อมูลไม่ครบ
-  //   }
-
-  //   final url = Uri.parse('http://10.0.2.2:8000/token');
-  //   final response = await http.post(
-  //     url,
-  //     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-  //     body: {
-  //       'username': _usernameController.text,
-  //       'password': _passwordController.text,
-  //     },
-  //   );
-
-  //   if (response.statusCode == 200) {
-  //     final responseBody = json.decode(response.body);
-  //     final accessToken = responseBody['access_token'];
-
-  //     // เก็บ token อย่างปลอดภัย
-  //     await _storage.write(key: 'access_token', value: accessToken);
-
-  //     // เปลี่ยนหน้าไปที่หน้า home หลังจากเข้าสู่ระบบสำเร็จ
-  //     // ignore: use_build_context_synchronously
-  //     Navigator.pushNamed(context, '/bottom_navigation');
-  //   } else {
-  //     // แสดงข้อความผิดพลาดหากการเข้าสู่ระบบล้มเหลว
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(content: Text('Incorrect username or password')),
-  //     );
-  //   }
-  // }
+  bool _isPasswordVisible = false; // ตัวแปรสำหรับควบคุมการแสดงพาสเวิร์ด
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +34,11 @@ class LoginPage extends StatelessWidget {
             if (state is UserSuccess) {
               SchedulerBinding.instance.addPostFrameCallback((_) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Login successful')),
+                  const SnackBar(
+                    content: Text('Login successful'),
+                    backgroundColor:
+                        Colors.green, // เปลี่ยนสีของ SnackBar เป็นสีเขียว
+                  ),
                 );
                 Navigator.pushNamed(context, '/bottom_navigation');
               });
@@ -77,10 +46,14 @@ class LoginPage extends StatelessWidget {
               SchedulerBinding.instance.addPostFrameCallback((_) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
-                      content: Text('Incorrect username or password')),
+                    content: Text('Incorrect username or password'),
+                    backgroundColor: Color.fromARGB(255, 215, 95,
+                        89), // เปลี่ยนสีของ SnackBar สำหรับข้อผิดพลาด
+                  ),
                 );
               });
             }
+
             return SafeArea(
               child: SingleChildScrollView(
                 child: Padding(
@@ -161,7 +134,8 @@ class LoginPage extends StatelessWidget {
                                 const SizedBox(height: 16),
                                 TextField(
                                   controller: _passwordController,
-                                  obscureText: true,
+                                  obscureText:
+                                      !_isPasswordVisible, // ซ่อนข้อความตามสถานะ
                                   decoration: InputDecoration(
                                     hintText: 'Password',
                                     hintStyle: TextStyle(
@@ -180,6 +154,20 @@ class LoginPage extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(10),
                                       borderSide:
                                           const BorderSide(color: Colors.white),
+                                    ),
+                                    suffixIcon: IconButton(
+                                      icon: Icon(
+                                        _isPasswordVisible
+                                            ? Icons.visibility
+                                            : Icons.visibility_off,
+                                        color: Colors.white.withOpacity(0.7),
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          _isPasswordVisible =
+                                              !_isPasswordVisible;
+                                        });
+                                      },
                                     ),
                                   ),
                                   style: const TextStyle(color: Colors.white),
@@ -201,19 +189,35 @@ class LoginPage extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 20),
                                 ElevatedButton(
-                                  onPressed: () {
-                                    if (_usernameController.text.isNotEmpty &&
-                                        _passwordController.text.isNotEmpty) {
-                                      context.read<UserBloc>().add(
-                                            LoginUserEvent(
-                                              username:
-                                                  _usernameController.text,
-                                              password:
-                                                  _passwordController.text,
-                                            ),
-                                          );
-                                    }
-                                  },
+                                  onPressed: state is UserLoading
+                                      ? null
+                                      : () {
+                                          if (_usernameController
+                                                  .text.isEmpty ||
+                                              _passwordController
+                                                  .text.isEmpty) {
+                                            // แสดง SnackBar ถ้าช่องกรอกข้อมูลไม่ครบ
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              const SnackBar(
+                                                content: Text(
+                                                    'Please fill in all fields.'),
+                                                duration: Duration(seconds: 2),
+                                              ),
+                                            );
+                                          } else {
+                                            context.read<UserBloc>().add(
+                                                  LoginUserEvent(
+                                                    username:
+                                                        _usernameController
+                                                            .text,
+                                                    password:
+                                                        _passwordController
+                                                            .text,
+                                                  ),
+                                                );
+                                          }
+                                        },
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor:
                                         const Color.fromARGB(255, 14, 176, 212),
@@ -223,13 +227,24 @@ class LoginPage extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                   ),
-                                  child: const Text(
-                                    'Log in',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      color: Colors.white,
-                                    ),
-                                  ),
+                                  child: state is UserLoading
+                                      ? const SizedBox(
+                                          width: 20,
+                                          height: 20,
+                                          child: CircularProgressIndicator(
+                                            valueColor:
+                                                AlwaysStoppedAnimation<Color>(
+                                                    Colors.white),
+                                            strokeWidth: 2,
+                                          ),
+                                        )
+                                      : const Text(
+                                          'Log in',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            color: Colors.white,
+                                          ),
+                                        ),
                                 ),
                               ],
                             ),
