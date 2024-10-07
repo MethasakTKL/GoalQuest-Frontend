@@ -4,12 +4,14 @@ import 'package:goal_quest/pages/goals/tasks/focustimer/focustimer_item.dart'; /
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FocusTimerList extends StatelessWidget {
-  const FocusTimerList({super.key});
+  final int goalId;
+  const FocusTimerList({super.key, required this.goalId});
 
   @override
   Widget build(BuildContext context) {
+    final int goalId = ModalRoute.of(context)!.settings.arguments as int;
     final tasks = context.select((TaskBloc bloc) => bloc.state.tasks
-        .where((task) => task.taskType == 'FocusTimer')
+        .where((task) => task.goalId == goalId && task.taskType == 'FocusTimer')
         .toList()); //เช็คว่า Tasktype เป็น FocusTimer ไหม
     return SingleChildScrollView(
       child: Column(

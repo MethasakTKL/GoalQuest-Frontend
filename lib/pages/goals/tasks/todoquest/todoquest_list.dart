@@ -5,7 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 class TodoQuestList extends StatefulWidget {
-  const TodoQuestList({super.key});
+  final int goalId;
+
+  const TodoQuestList({super.key, required this.goalId});
 
   @override
   State<TodoQuestList> createState() => _TodoQuestListState();
@@ -34,8 +36,9 @@ class _TodoQuestListState extends State<TodoQuestList> {
 
   @override
   Widget build(BuildContext context) {
+    final int goalId = ModalRoute.of(context)!.settings.arguments as int;
     final tasks = context.select((TaskBloc bloc) => bloc.state.tasks
-        .where((task) => task.taskType == 'TodoQuest')
+        .where((task) => task.goalId == goalId && task.taskType == 'TodoQuest')
         .toList()); //เช็คว่า Tasktype เป็น TodoQuest ไหม
     final today = DateTime.now();
 

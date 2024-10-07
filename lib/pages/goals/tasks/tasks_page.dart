@@ -24,6 +24,13 @@ class TasksPageState extends State<TasksPage> {
 
   @override
   Widget build(BuildContext context) {
+    final int goalId = ModalRoute.of(context)!.settings.arguments as int;
+
+    final goal = context.read<GoalBloc>().state.goals.firstWhere(
+          (goal) => goal.goalId == goalId,
+          orElse: () => throw Exception('Goal with ID $goalId not found'),
+        );
+
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -73,9 +80,9 @@ class TasksPageState extends State<TasksPage> {
                       },
                     ),
                     const SizedBox(width: 5),
-                    const Text(
-                      'ลดน้ำหนัก 10 กิโล',
-                      style: TextStyle(
+                    Text(
+                      goal.goalTitle,
+                      style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
@@ -93,7 +100,7 @@ class TasksPageState extends State<TasksPage> {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return const NewTaskDialog();
+                            return NewTaskDialog(goalId: goalId);
                           },
                         );
                       },
@@ -151,13 +158,13 @@ class TasksPageState extends State<TasksPage> {
                               ),
                             ),
                             const SizedBox(height: 10),
-                            const Expanded(
-                              child: TodoQuestList(),
+                            Expanded(
+                              child: TodoQuestList(goalId: goalId),
                             ),
                           ],
                         ),
                       ),
-                      const FocusTimerList(),
+                      FocusTimerList(goalId: goalId),
                     ],
                   ),
                 ),

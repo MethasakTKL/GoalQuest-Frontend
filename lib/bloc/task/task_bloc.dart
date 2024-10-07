@@ -38,6 +38,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   _onAddTaskEvent(AddTaskEvent event, Emitter<TaskState> emit) async {
     try {
       await taskRepository.addTask(
+        goalId: event.goalId,
         title: event.title,
         taskType: event.taskType,
         repeatDays: event.repeatDays ?? 0,

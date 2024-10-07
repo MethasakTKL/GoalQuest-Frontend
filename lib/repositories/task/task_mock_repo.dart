@@ -5,6 +5,7 @@ class TaskMockRepository extends TaskRepository {
   List<TaskModel> tasks = [
     TaskModel(
       id: 1,
+      goalId: 1,
       title: 'Task 2',
       taskType: 'FocusTimer',
       repeatDays: null,
@@ -17,6 +18,7 @@ class TaskMockRepository extends TaskRepository {
     ),
     TaskModel(
       id: 2,
+      goalId: 2,
       title: 'Task 4',
       taskType: 'FocusTimer',
       repeatDays: null,
@@ -44,28 +46,34 @@ class TaskMockRepository extends TaskRepository {
   }
 
   @override
-  Future<TaskModel> addTask(
-      {required String title,
-      required String taskType,
-      required int? repeatDays,
-      required int? duration,
-      required DateTime startDate,
-      required DateTime endDate}) async {
+  Future<TaskModel> addTask({
+    required String title,
+    required String taskType,
+    required int goalId, // goalId ที่เชื่อมกับ Task
+    required int? repeatDays,
+    required int? duration,
+    required DateTime startDate,
+    required DateTime endDate,
+  }) async {
     await Future.delayed(const Duration(seconds: 0));
     int id = lastId + 1;
     lastId++;
+
     TaskModel newTask = TaskModel(
-        id: id,
-        title: title,
-        taskType: taskType,
-        repeatDays: repeatDays,
-        duration: duration,
-        startDate: startDate,
-        endDate: endDate,
-        lastAction: null,
-        nextAction: startDate);
+      id: id,
+      goalId: goalId,
+      title: title,
+      taskType: taskType,
+      repeatDays: repeatDays,
+      duration: duration,
+      startDate: startDate,
+      endDate: endDate,
+      lastAction: null,
+      nextAction: startDate,
+    );
+    
     tasks.add(newTask);
-    return newTask;
+    return newTask; // คืนค่า TaskModel
   }
 
   @override
@@ -97,6 +105,7 @@ class TaskMockRepository extends TaskRepository {
 
       tasks[index] = TaskModel(
         id: id,
+        goalId: task.goalId,
         title: task.title,
         taskType: task.taskType,
         repeatDays: task.repeatDays,

@@ -12,6 +12,7 @@ class TaskModel extends Equatable {
   final DateTime endDate;
   final DateTime? lastAction;
   final DateTime? nextAction;
+  final int goalId;
 
   TaskModel({
     required this.id,
@@ -25,6 +26,7 @@ class TaskModel extends Equatable {
     required this.endDate,
     this.lastAction,
     required nextAction,
+    required this.goalId,
   }) : nextAction = nextAction ??
             _calculateNextAction(lastAction, repeatDays, startDate);
 

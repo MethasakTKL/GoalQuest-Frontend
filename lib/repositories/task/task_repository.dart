@@ -4,6 +4,7 @@ abstract class TaskRepository{
   Future<List<TaskModel>> loadTask();
   Future<List<TaskModel>> searchTask(String key);
   Future<void> addTask({
+    required int goalId,
     required String title,
     required String taskType,
     required int repeatDays,

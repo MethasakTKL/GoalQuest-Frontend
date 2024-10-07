@@ -4,7 +4,8 @@ import 'package:goal_quest/bloc/bloc.dart';
 import 'package:intl/intl.dart';
 
 class NewTaskDialog extends StatefulWidget {
-  const NewTaskDialog({super.key});
+  final int goalId;
+  const NewTaskDialog({super.key, required this.goalId});
 
   @override
   _NewTaskDialogState createState() => _NewTaskDialogState();
@@ -160,7 +161,8 @@ class _NewTaskDialogState extends State<NewTaskDialog> {
                       int duration = durationInput;
                       DateTime startDate = startDateTime ?? DateTime.now();
                       DateTime endDate = endDateTime ?? DateTime.now();
-                      context.read<TaskBloc>().add(AddTaskEvent(title, taskType,
+                      context.read<TaskBloc>().add(AddTaskEvent(widget.goalId,
+                        title, taskType,
                           repeatDays, duration, startDate, endDate));
                       context.read<TaskBloc>().add(LoadTaskEvent());
 

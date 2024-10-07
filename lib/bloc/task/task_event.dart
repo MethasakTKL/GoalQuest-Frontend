@@ -3,6 +3,7 @@ sealed class TaskEvent {}
 class LoadTaskEvent extends TaskEvent {}
 
 class AddTaskEvent extends TaskEvent {
+  final int goalId;
   final String title;
   final String taskType;
   final int? repeatDays;
@@ -10,6 +11,7 @@ class AddTaskEvent extends TaskEvent {
   final DateTime startDate;
   final DateTime endDate;
   AddTaskEvent(
+    this.goalId,
     this.title,
     this.taskType,
     this.repeatDays,
