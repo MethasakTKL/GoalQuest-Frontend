@@ -9,16 +9,27 @@ class GoalsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final goals = context.select((GoalBloc bloc) => bloc.state.goals.toList());
+    final tasks = context.select((TaskBloc bloc) => bloc.state.tasks.toList());
     return SingleChildScrollView(
       child: Column(
         children: [
           const SizedBox(height: 10),
           ...goals.map((goal) {
+             final goalTasks = tasks.where((task) => task.goalId == goal.goalId).toList();
+             // นับจำนวน Task ทั้งหมด
+            final totalTasks = goalTasks.length;
+
+            // นับจำนวน Task ที่เสร็จแล้ว
+            final completedTasks = goalTasks.where((task) {
+              final duration = task.endDate.difference(task.startDate);
+              final repeatCount = duration.inDays ~/ (task.repeatDays ?? 1);
+              return task.taskCount >= repeatCount;
+            }).length;
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 5.0),
               child: GoalCard(
                 taskTitle: goal.goalTitle,
-                taskProgress: "1/5 Tasks",
+                taskProgress: "$completedTasks/$totalTasks Tasks",
                 progressPercentage: goal.goalProgressPercent,
                 onTap: () {
                   Navigator.pushNamed(context, '/tasks',
