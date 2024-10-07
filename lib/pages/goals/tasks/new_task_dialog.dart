@@ -39,6 +39,9 @@ class _NewTaskDialogState extends State<NewTaskDialog> {
     return Dialog(
       backgroundColor: Colors.white,
       insetPadding: const EdgeInsets.all(10),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
       child: Container(
         width: double.infinity,
         height: 620,
@@ -157,7 +160,8 @@ class _NewTaskDialogState extends State<NewTaskDialog> {
                       int duration = durationInput;
                       DateTime startDate = startDateTime ?? DateTime.now();
                       DateTime endDate = endDateTime ?? DateTime.now();
-                      context.read<TaskBloc>().add(AddTaskEvent(title, taskType, repeatDays, duration, startDate, endDate));
+                      context.read<TaskBloc>().add(AddTaskEvent(title, taskType,
+                          repeatDays, duration, startDate, endDate));
                       context.read<TaskBloc>().add(LoadTaskEvent());
 
                       Navigator.pop(context);
@@ -174,8 +178,9 @@ class _NewTaskDialogState extends State<NewTaskDialog> {
         ),
       ),
     );
+  }
 
-  }  Widget _buildTodoQuestOptions() {
+  Widget _buildTodoQuestOptions() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

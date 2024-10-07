@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:goal_quest/pages/goals/goals_list.dart';
+import 'package:goal_quest/pages/goals/new_goal_dialog.dart';
 
 class GoalsPage extends StatelessWidget {
   const GoalsPage({super.key});
@@ -232,7 +233,14 @@ class GoalsPage extends StatelessWidget {
                         ),
                         IconButton(
                           icon: const Icon(Icons.add_circle),
-                          onPressed: () {},
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return const NewGoalDialog();
+                              },
+                            );
+                          },
                           iconSize: 40,
                         ),
                       ],
