@@ -13,8 +13,8 @@ class UserRepoFromDb extends UserRepository {
   final String baseUrl;
 
   // กำหนดค่า baseUrl
-  UserRepoFromDb({this.baseUrl = '127.0.0.1'}); // iOS Simulator
-  //UserRepoFromDb({this.baseUrl = '10.0.2.2'}); // Android Simulator
+  //UserRepoFromDb({this.baseUrl = '127.0.0.1'}); // iOS Simulator
+  UserRepoFromDb({this.baseUrl = '10.0.2.2'}); // Android Simulator
 
   @override
   Future<String> createUser({
