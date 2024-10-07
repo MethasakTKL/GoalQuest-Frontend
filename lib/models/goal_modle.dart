@@ -4,7 +4,7 @@ class GoalModel extends Equatable{
   final int goalId;
   final String goalTitle;
   final String goalDescription;
-  final int goalProgressPercent;
+  final double goalProgressPercent;
 
 
   const GoalModel({

@@ -7,7 +7,7 @@ class GoalMockRepository extends GoalRepository{
       goalId: 1,
       goalTitle: 'ออกกำลังกาย',
       goalDescription: 'สำหรับออกกำลังกาย',
-      goalProgressPercent: 0,
+      goalProgressPercent: 0.5,
     ),
     const GoalModel(
       goalId: 2,

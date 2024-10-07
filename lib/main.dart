@@ -38,7 +38,13 @@ class MyApp extends StatelessWidget {
             final bloc = UserBloc(UserRepoFromDb());
             bloc.add(GetAllUsersEvent());
             return bloc;
-          } ,)
+          } ,),
+        BlocProvider<GoalBloc>(create: 
+        (context){
+          final bloc = GoalBloc(GoalMockRepository());
+          bloc.add(LoadGoalEvent());
+          return bloc;
+        })
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:goal_quest/bloc/bloc.dart';
+import 'package:goal_quest/bloc/goal/goal_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:goal_quest/bloc/bloc.dart';
 
 class NewGoalDialog extends StatefulWidget {
   const NewGoalDialog({super.key});
@@ -99,6 +100,9 @@ class _NewGoalDialogState extends State<NewGoalDialog> {
                     onPressed: () {
                       String goalTitle = titleController.text;
                       String description = descriptionController.text;
+                      context.read<GoalBloc>().add(AddGoalEvent(goalTitle, description));
+                      
+                      context.read<GoalBloc>().add(LoadGoalEvent());
                       Navigator.pop(context);
                     },
                     child: const Text(

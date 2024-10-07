@@ -3,7 +3,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 
 class GoalCard extends StatelessWidget {
   final String taskTitle;
-  final String duration;
+  // final String duration;
   final String taskProgress;
   final double progressPercentage;
   final VoidCallback onTap;
@@ -11,7 +11,7 @@ class GoalCard extends StatelessWidget {
   const GoalCard({
     super.key,
     required this.taskTitle,
-    required this.duration,
+    // required this.duration,
     required this.taskProgress,
     required this.progressPercentage,
     required this.onTap,
@@ -89,25 +89,25 @@ class GoalCard extends StatelessWidget {
                       padding: const EdgeInsets.only(left: 10, bottom: 10),
                       child: Row(
                         children: [
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.hourglass_top,
-                                size: 13,
-                                color: Colors.black54,
-                              ),
-                              Text(
-                                duration,
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.black54,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
+                          // const Row(
+                          //   children: [
+                          //     Icon(
+                          //       Icons.hourglass_top,
+                          //       size: 13,
+                          //       color: Colors.black54,
+                          //     ),
+                          //     Text(
+                          //       duration,
+                          //       style: const TextStyle(
+                          //         fontSize: 12,
+                          //         color: Colors.black54,
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
+                          // const SizedBox(
+                          //   width: 20,
+                          // ),
                           Row(
                             children: [
                               const Icon(
