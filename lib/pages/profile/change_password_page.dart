@@ -146,17 +146,11 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text(state.message)),
                               );
-                              Navigator.pushReplacement(
-                                context,
-                                PageRouteBuilder(
-                                  pageBuilder:
-                                      (context, animation1, animation2) =>
-                                          const BottomNavigationPage(
-                                              initialIndex: 3),
-                                  transitionDuration:
-                                      const Duration(seconds: 0),
-                                ),
-                              );
+
+                              // Reset the password fields after a successful change
+                              currentPasswordController.clear();
+                              newPasswordController.clear();
+                              confirmNewPasswordController.clear();
                             });
                           } else if (state is UserFailure) {
                             SchedulerBinding.instance.addPostFrameCallback((_) {
