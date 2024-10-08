@@ -76,7 +76,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }
 
   _onUpdateUser(UpdateUserEvent event, Emitter<UserState> emit) async {
-    if (state is  AllUsersLoaded) {
+    if (state is AllUsersLoaded) {
       try {
         await userRepository.updateUser(
           username: event.username,
@@ -88,7 +88,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
         emit(ReadyUserState(user: updatedUser));
         emit(UserSuccess(message: 'User updated successfully'));
-        add(LoadUserEvent());
+
+        add(LoadUserEvent()); // เรียกโหลดผู้ใช้หลังจากกลับไปที่สถานะเริ่มต้น
       } catch (e) {
         emit(UserFailure(error: e.toString()));
       }
@@ -105,7 +106,11 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         final updatedUser = await userRepository.getMeUser();
         emit(ReadyUserState(user: updatedUser));
         emit(UserSuccess(message: 'Password changed successfully'));
-        add(LoadUserEvent());
+        await Future.delayed(const Duration(seconds: 2));
+        emit(UserInitial()); // เปลี่ยนสถานะเป็น
+        await Future.delayed(const Duration(seconds: 1));
+        emit(UserSuccess(message: 'Welcome to GoalQuest'));
+        add(LoadUserEvent()); // เรียกโหลดผู้ใช้หลังจากกลับไปที่สถานะเริ่มต้น
       } catch (e) {
         emit(UserFailure(error: e.toString()));
       }
