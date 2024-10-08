@@ -34,17 +34,26 @@ class MyApp extends StatelessWidget {
           },
         ),
         BlocProvider<UserBloc>(
-          create: (context){
+          create: (context) {
             final bloc = UserBloc(UserRepoFromDb());
             bloc.add(GetAllUsersEvent());
             return bloc;
-          } ,),
-        BlocProvider<GoalBloc>(create: 
-        (context){
-          final bloc = GoalBloc(GoalMockRepository());
-          bloc.add(LoadGoalEvent());
-          return bloc;
-        })
+          },
+        ),
+        BlocProvider<GoalBloc>(
+          create: (context) {
+            final bloc = GoalBloc(GoalMockRepository());
+            bloc.add(LoadGoalEvent());
+            return bloc;
+          },
+        ),
+        BlocProvider<PointBloc>(
+          create: (context) {
+            final bloc = PointBloc(PointMockRepository());
+            bloc.add(LoadPointEvent());
+            return bloc;
+          },
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

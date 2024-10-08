@@ -40,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
                         Colors.green, // เปลี่ยนสีของ SnackBar เป็นสีเขียว
                   ),
                 );
-                Navigator.pushNamed(context, '/bottom_navigation');
+                Navigator.pushNamed(context, '/bottom_navigation', arguments: state.user.id);
               });
             } else if (state is UserFailure) {
               SchedulerBinding.instance.addPostFrameCallback((_) {
