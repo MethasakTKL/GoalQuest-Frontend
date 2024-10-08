@@ -4,15 +4,26 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:goal_quest/bloc/bloc.dart';
 import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
 
-class ChangePasswordPage extends StatelessWidget {
+class ChangePasswordPage extends StatefulWidget {
   const ChangePasswordPage({super.key});
 
   @override
+  State<ChangePasswordPage> createState() => _ChangePasswordPageState();
+}
+
+class _ChangePasswordPageState extends State<ChangePasswordPage> {
+  final TextEditingController currentPasswordController =
+      TextEditingController();
+  final TextEditingController newPasswordController = TextEditingController();
+  final TextEditingController confirmNewPasswordController =
+      TextEditingController();
+
+  bool _obscureCurrentPassword = true;
+  bool _obscureNewPassword = true;
+  bool _obscureConfirmNewPassword = true;
+
+  @override
   Widget build(BuildContext context) {
-    TextEditingController currentPasswordController = TextEditingController();
-    TextEditingController newPasswordController = TextEditingController();
-    TextEditingController confirmNewPasswordController =
-        TextEditingController();
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
@@ -23,7 +34,7 @@ class ChangePasswordPage extends StatelessWidget {
               'assets/logo_black.png',
               height: 50,
             ),
-            const Spacer(), // ใช้ Spacer เพื่อจัดตำแหน่ง
+            const Spacer(),
             IconButton(
               icon: const Icon(Icons.account_circle),
               onPressed: () {
@@ -32,8 +43,7 @@ class ChangePasswordPage extends StatelessWidget {
                   PageRouteBuilder(
                     pageBuilder: (context, animation1, animation2) =>
                         const BottomNavigationPage(initialIndex: 3),
-                    transitionDuration: const Duration(
-                        seconds: 0), // กำหนดเวลาของการเปลี่ยนหน้า
+                    transitionDuration: const Duration(seconds: 0),
                   ),
                 );
               },
@@ -41,13 +51,12 @@ class ChangePasswordPage extends StatelessWidget {
             ),
           ],
         ),
-        automaticallyImplyLeading: false, // ปิดปุ่ม Back
+        automaticallyImplyLeading: false,
       ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
           child: SingleChildScrollView(
-            // เพิ่อให้สามารถเลื่อนหน้าจอได้ถ้าคอนเทนต์ใหญ่เกิน
             child: Center(
               child: Column(
                 children: [
@@ -74,44 +83,47 @@ class ChangePasswordPage extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 20),
-                  TextField(
+                  _buildPasswordField(
                     controller: currentPasswordController,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      hintText: 'Old Password*',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
+                    hintText: 'Old Password*',
+                    obscureText: _obscureCurrentPassword,
+                    onToggle: () {
+                      setState(() {
+                        _obscureCurrentPassword = !_obscureCurrentPassword;
+                      });
+                    },
                   ),
                   const SizedBox(height: 15),
-                  TextField(
+                  _buildPasswordField(
                     controller: newPasswordController,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      hintText: 'New Password*',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
+                    hintText: 'New Password*',
+                    obscureText: _obscureNewPassword,
+                    onToggle: () {
+                      setState(() {
+                        _obscureNewPassword = !_obscureNewPassword;
+                      });
+                    },
                   ),
                   const SizedBox(height: 15),
-                  TextField(
+                  _buildPasswordField(
                     controller: confirmNewPasswordController,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      hintText: 'New Password*(re-enter)',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
+                    hintText: 'New Password*(re-enter)',
+                    obscureText: _obscureConfirmNewPassword,
+                    onToggle: () {
+                      setState(() {
+                        _obscureConfirmNewPassword =
+                            !_obscureConfirmNewPassword;
+                      });
+                    },
                   ),
                   const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
                         style: TextButton.styleFrom(
                           backgroundColor:
                               const Color.fromARGB(255, 161, 161, 161),
@@ -126,61 +138,60 @@ class ChangePasswordPage extends StatelessWidget {
                       ),
                       const SizedBox(width: 10),
                       BlocBuilder<UserBloc, UserState>(
-                          builder: (context, state) {
-                        if (state is UserSuccess) {
-                          SchedulerBinding.instance.addPostFrameCallback((_) {
-                            ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(state.message)),
-                            );
-                            Navigator.pushReplacement(
-                              context,
-                              PageRouteBuilder(
-                                pageBuilder: (context, animation1,
-                                        animation2) =>
-                                    const BottomNavigationPage(initialIndex: 3),
-                                transitionDuration: const Duration(
-                                    seconds: 0), // กำหนดเวลาของการเปลี่ยนหน้า
-                              ),
-                            );
-                          });
-                        } else if (state is UserFailure) {
-                          SchedulerBinding.instance.addPostFrameCallback((_) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(state.error)),
-                            );
-                          });
-                        }
-                        return TextButton(
-                          onPressed: () {
-                            if (newPasswordController.text !=
-                                confirmNewPasswordController.text) {
+                        builder: (context, state) {
+                          if (state is UserSuccess) {
+                            SchedulerBinding.instance.addPostFrameCallback((_) {
+                              ScaffoldMessenger.of(context)
+                                  .hideCurrentSnackBar();
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content:
-                                        Text('New passwords do not match')),
+                                SnackBar(content: Text(state.message)),
                               );
-                            } else {
-                              context.read<UserBloc>().add(ChangePasswordEvent(
-                                    currentPassword:
-                                        currentPasswordController.text,
-                                    newPassword: newPasswordController.text,
-                                  ));
-                            }
-                          },
-                          style: TextButton.styleFrom(
-                            backgroundColor:
-                                const Color.fromARGB(255, 255, 145, 77),
-                            foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 60.0, vertical: 10.0),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
+                              Navigator.pushReplacement(
+                                context,
+                                PageRouteBuilder(
+                                  pageBuilder:
+                                      (context, animation1, animation2) =>
+                                          const BottomNavigationPage(
+                                              initialIndex: 3),
+                                  transitionDuration:
+                                      const Duration(seconds: 0),
+                                ),
+                              );
+                            });
+                          } else if (state is UserFailure) {
+                            SchedulerBinding.instance.addPostFrameCallback((_) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(state.error)),
+                              );
+                            });
+                          }
+                          return TextButton(
+                            onPressed: () {
+                              if (newPasswordController.text !=
+                                  confirmNewPasswordController.text) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content:
+                                          Text('New passwords do not match')),
+                                );
+                              } else {
+                                _showConfirmationDialog(context);
+                              }
+                            },
+                            style: TextButton.styleFrom(
+                              backgroundColor:
+                                  const Color.fromARGB(255, 255, 145, 77),
+                              foregroundColor: Colors.white,
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 60.0, vertical: 10.0),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
                             ),
-                          ),
-                          child: const Text('Change'),
-                        );
-                      }),
+                            child: const Text('Change'),
+                          );
+                        },
+                      ),
                     ],
                   )
                 ],
@@ -189,6 +200,61 @@ class ChangePasswordPage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildPasswordField({
+    required TextEditingController controller,
+    required String hintText,
+    required bool obscureText,
+    required VoidCallback onToggle,
+  }) {
+    return TextField(
+      controller: controller,
+      obscureText: obscureText,
+      decoration: InputDecoration(
+        hintText: hintText,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        suffixIcon: IconButton(
+          icon: Icon(
+            obscureText ? Icons.visibility_off : Icons.visibility,
+            color: Colors.grey,
+          ),
+          onPressed: onToggle,
+        ),
+      ),
+    );
+  }
+
+  void _showConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirm Password Change'),
+          content: const Text('Are you sure you want to change your password?'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('Confirm'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                context.read<UserBloc>().add(ChangePasswordEvent(
+                      currentPassword: currentPasswordController.text,
+                      newPassword: newPasswordController.text,
+                    ));
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
