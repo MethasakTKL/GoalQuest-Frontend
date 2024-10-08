@@ -8,6 +8,11 @@ export './user/user_repo_from_db.dart';
 export './user/user_mock_repo.dart';
 export './user/user_repository.dart';
 
-//Goal'
+//Goal
 export './goal/goal_mock_repo.dart';
 export './goal/goal_repository.dart';
+
+
+//Point
+export './point/point_mock_repo.dart';
+export './point/point_repository.dart';

@@ -13,3 +13,8 @@ export './user/user_state.dart';
 export './goal/goal_bloc.dart';
 export './goal/goal_event.dart';
 export './goal/goal_state.dart';
+
+//Point Bloc'
+export './point/point_bloc.dart';
+export './point/point_event.dart';
+export './point/point_state.dart';
