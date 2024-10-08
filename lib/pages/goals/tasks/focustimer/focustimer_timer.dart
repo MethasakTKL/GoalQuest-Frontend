@@ -10,9 +10,13 @@ class FocusTimerPage extends StatefulWidget {
 
 class _FocusTimerPageState extends State<FocusTimerPage> {
   bool isPlaying = false;
-  int totalSeconds = 100 * 60; // 120 minutes in seconds
+  int totalSeconds = 120 * 60; // เวลาเริ่มต้นในหน่วยวินาที
   late Timer timer;
-  int points = 500; // เริ่มต้นที่ 500 คะแนนสำหรับ 120 นาที
+  late Timer cancelTimer;
+  int points = 500;
+  bool showGiveUp = false;
+  bool isCancelable = true;
+  int? initialSeconds; // เก็บค่าเวลาเริ่มต้นในแต่ละรอบ
 
   @override
   void initState() {
@@ -25,10 +29,32 @@ class _FocusTimerPageState extends State<FocusTimerPage> {
     if (isPlaying) {
       timer.cancel();
     }
+    if (cancelTimer.isActive) {
+      cancelTimer.cancel();
+    }
     super.dispose();
   }
 
   void startTimer() {
+    setState(() {
+      // ถ้าเป็นการเริ่มนับครั้งแรก ให้ตั้งค่า initialSeconds
+      if (initialSeconds == null) {
+        initialSeconds = totalSeconds;
+        isCancelable = true;
+        showGiveUp = true;
+
+        // ตั้งเวลาสำหรับให้ Cancel ได้ใน 10 วินาทีแรก
+        cancelTimer = Timer(const Duration(seconds: 10), () {
+          setState(() {
+            isCancelable =
+                false; // เมื่อครบ 10 วินาทีแล้วจะไม่สามารถ Cancel ได้
+            // showGiveUp จะถูกเซ็ตไว้ให้เป็น true ในช่วงนี้
+          });
+        });
+      }
+    });
+
+    // เริ่มต้นการนับเวลา
     timer = Timer.periodic(const Duration(seconds: 1), (_) {
       setState(() {
         if (totalSeconds > 0) {
@@ -59,6 +85,16 @@ class _FocusTimerPageState extends State<FocusTimerPage> {
     });
   }
 
+  void handleGiveUp() {
+    stopTimer();
+    setState(() {
+      totalSeconds =
+          initialSeconds ?? totalSeconds; // รีเซ็ตเวลาเป็นเวลาเริ่มต้น
+      updatePoints();
+      showGiveUp = false; // ซ่อนปุ่ม Give Up
+    });
+  }
+
   void updatePoints() {
     setState(() {
       if (totalSeconds >= 120 * 60) {
@@ -71,6 +107,8 @@ class _FocusTimerPageState extends State<FocusTimerPage> {
         points = 200;
       } else if (totalSeconds >= 30 * 60) {
         points = 100;
+      } else if (totalSeconds >= 1 * 60) {
+        points = 50;
       } else {
         points = 0;
       }
@@ -221,40 +259,33 @@ class _FocusTimerPageState extends State<FocusTimerPage> {
                   Text(
                     isPlaying ? "Tap to Pause" : "Tap to Start",
                     style: const TextStyle(
-                      color: Color.fromARGB(255, 78, 111, 42),
-                      fontSize: 13,
+                      color: Color.fromARGB(255, 35, 75, 20),
+                      fontSize: 18,
                     ),
                   ),
-                  const SizedBox(height: 80),
-                  OutlinedButton(
-                    onPressed: () {
-                      if (isPlaying) {
-                        stopTimer();
-                      }
-                      setState(() {
-                        totalSeconds = 120 * 60; // รีเซ็ตเวลากลับเป็น 120 นาที
-                        updatePoints(); // อัปเดตคะแนนหลังจากรีเซ็ตเวลา
-                      });
-                    },
-                    style: OutlinedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 25, vertical: 11),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
+                  const SizedBox(height: 20),
+                  if (showGiveUp)
+                    OutlinedButton(
+                      onPressed: handleGiveUp,
+                      style: OutlinedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 25, vertical: 11),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        side: const BorderSide(
+                          color: Color.fromARGB(255, 104, 151, 57),
+                          width: 2,
+                        ),
                       ),
-                      side: const BorderSide(
-                        color: Color.fromARGB(255, 104, 151, 57),
-                        width: 2,
-                      ),
-                    ),
-                    child: const Text(
-                      'Give Up',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Color.fromARGB(255, 78, 111, 42),
+                      child: Text(
+                        isCancelable ? 'Cancel' : 'Give Up',
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Color.fromARGB(255, 78, 111, 42),
+                        ),
                       ),
                     ),
-                  ),
                 ],
               ),
             ),
