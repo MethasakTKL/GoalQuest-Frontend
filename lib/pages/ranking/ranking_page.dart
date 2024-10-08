@@ -246,7 +246,8 @@ class RankingPage extends StatelessWidget {
                             child: Padding(
                               padding: const EdgeInsets.only(top: 10),
                               child: ListView.builder(
-                                itemCount: remainingUsers.take(7)
+                                itemCount: remainingUsers
+                                    .take(7)
                                     .length, // จำนวนที่เหลือนอกเหนือจาก top 3
                                 padding: const EdgeInsets.only(bottom: 80),
                                 itemBuilder: (context, index) {
@@ -270,7 +271,8 @@ class RankingPage extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                                    title: Text(remainingUsers[index].username), // แสดงชื่อผู้ใช้งานตามลำดับ
+                                    title: Text(remainingUsers[index]
+                                        .username), // แสดงชื่อผู้ใช้งานตามลำดับ
                                     trailing: const Row(
                                       mainAxisSize: MainAxisSize
                                           .min, // เพื่อให้ไอคอนไม่ใช้พื้นที่มากเกินไป
@@ -325,19 +327,39 @@ class RankingPage extends StatelessWidget {
                                       AssetImage('assets/user_image.png'),
                                 ),
                                 const SizedBox(width: 20),
-                                Text(
-                                  '${currentUser[0].point}',
-                                  style: const TextStyle(
-                                    color: Color.fromARGB(255, 219, 238, 255),
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const SizedBox(width: 5),
-                                const Icon(
-                                  Icons.savings_outlined,
-                                  size: 20,
-                                  color: Color.fromARGB(255, 219, 238, 255),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '${state.user.username}',
+                                      style: const TextStyle(
+                                        color:
+                                            Color.fromARGB(255, 219, 238, 255),
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const Row(
+                                      children: [
+                                        Text(
+                                          '1000',
+                                          style: TextStyle(
+                                            color: Color.fromARGB(
+                                                255, 219, 238, 255),
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        SizedBox(width: 5),
+                                        Icon(
+                                          Icons.savings_outlined,
+                                          size: 20,
+                                          color: Color.fromARGB(
+                                              255, 219, 238, 255),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
@@ -369,12 +391,12 @@ class RankingPage extends StatelessWidget {
                   ),
                 ],
               );
-            } else if (state is UserLoading){
+            } else if (state is UserLoading) {
               return const Center(child: CircularProgressIndicator());
             } else {
               return const Center(child: Text('Failed to load users'));
             }
-          } ,
+          },
         ),
       ),
     );

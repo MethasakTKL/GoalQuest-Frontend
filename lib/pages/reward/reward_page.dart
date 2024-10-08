@@ -4,6 +4,35 @@ import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
 class RewardPage extends StatelessWidget {
   const RewardPage({super.key});
 
+  void _showRedeemConfirmationDialog(BuildContext context, int rewardIndex) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirm Redemption'),
+          content: Text(
+              'Are you sure you want to redeem Reward ${rewardIndex + 1}?'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('Confirm'),
+              onPressed: () {
+                // Add the actual redemption logic here
+                print('Confirmed: Redeeming Reward ${rewardIndex + 1}');
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,10 +105,7 @@ class RewardPage extends StatelessWidget {
                 decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   gradient: LinearGradient(
-                    colors: [
-                      Color(0xFF6A00F4),
-                      Color(0xFF32C5FF)
-                    ], // Gradient colors
+                    colors: [Color(0xFF6A00F4), Color(0xFF32C5FF)],
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                   ),
@@ -128,29 +154,74 @@ class RewardPage extends StatelessWidget {
           const SizedBox(
             height: 5,
           ),
-
-          // Scrollable List of Reward Cards
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: ListView.builder(
-                itemCount: 5, // Set the number of items (or get dynamically)
+                itemCount: 5,
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10.0),
                     child: Container(
                       height: 100,
                       decoration: BoxDecoration(
-                        color:
-                            Colors.grey[300], // Background color of containers
+                        color: Colors.grey[300],
                         borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Reward ${index + 1}',
+                                    style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    'Description for Reward ${index + 1}',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.grey[600],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                _showRedeemConfirmationDialog(context, index);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFF6A00F4),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                              child: const Text(
+                                'Redeem',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   );
                 },
               ),
             ),
-          ),
+          )
         ],
       ),
     );
