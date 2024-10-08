@@ -11,6 +11,7 @@ class FocusTimerPage extends StatefulWidget {
 class _FocusTimerPageState extends State<FocusTimerPage> {
   bool isPlaying = false;
   int totalSeconds = 120 * 60; // เวลาเริ่มต้นในหน่วยวินาที
+  int static_timer = 120 * 60;
   late Timer timer;
   late Timer cancelTimer;
   int points = 500;
@@ -95,19 +96,111 @@ class _FocusTimerPageState extends State<FocusTimerPage> {
     });
   }
 
+  void showConfirmationDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        child: Container(
+          width: 400, // กำหนดความกว้าง
+          height: 200, // กำหนดความสูง
+
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Padding(
+                padding: EdgeInsets.all(20.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Confirm your surrender',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      width: 1,
+                    ),
+                    Icon(
+                      Icons.flag_outlined,
+                      color: Color.fromARGB(255, 25, 25, 25),
+                      size: 30.0,
+                    ),
+                  ],
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 18.0),
+                child: Column(
+                  children: [
+                    Text(
+                      'Are you sure you want to give up?',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    Text('You will lose 30 points.'),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.only(
+                  right: 18.0,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop(); // ปิดกล่องข้อความ
+                      },
+                      child: const Text(
+                        'Cancel',
+                        style: TextStyle(color: Color.fromARGB(255, 2, 2, 2)),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop(); // ปิดกล่องข้อความ
+                        handleGiveUp(); // เรียกใช้ handleGiveUp เมื่อยืนยัน
+                      },
+                      style: TextButton.styleFrom(
+                        backgroundColor: const Color.fromARGB(255, 63, 87, 38),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 10), // ขนาดของปุ่ม
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30), // ขอบมน
+                        ),
+                      ),
+                      child: const Text(
+                        'Confirm',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   void updatePoints() {
     setState(() {
-      if (totalSeconds >= 120 * 60) {
+      if (static_timer >= 120 * 60) {
         points = 500;
-      } else if (totalSeconds >= 90 * 60) {
+      } else if (static_timer >= 90 * 60) {
         points = 400;
-      } else if (totalSeconds >= 60 * 60) {
+      } else if (static_timer >= 60 * 60) {
         points = 300;
-      } else if (totalSeconds >= 45 * 60) {
+      } else if (static_timer >= 45 * 60) {
         points = 200;
-      } else if (totalSeconds >= 30 * 60) {
+      } else if (static_timer >= 30 * 60) {
         points = 100;
-      } else if (totalSeconds >= 1 * 60) {
+      } else if (static_timer >= 1 * 60) {
         points = 50;
       } else {
         points = 0;
@@ -266,7 +359,8 @@ class _FocusTimerPageState extends State<FocusTimerPage> {
                   const SizedBox(height: 20),
                   if (showGiveUp)
                     OutlinedButton(
-                      onPressed: handleGiveUp,
+                      onPressed:
+                          showConfirmationDialog, // เรียกฟังก์ชันสำหรับแสดง dialog
                       style: OutlinedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 25, vertical: 11),
