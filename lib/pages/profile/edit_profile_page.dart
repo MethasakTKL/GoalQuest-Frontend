@@ -220,46 +220,78 @@ class EditProfilePage extends StatelessWidget {
         return AlertDialog(
           title: const Text("Confirm Edit"),
           content: const Text("Are you sure you want to edit your profile?"),
+          backgroundColor: Colors.white,
           actions: <Widget>[
             TextButton(
-              child: const Text("Cancel"),
+              child: const Text(
+                "Cancel",
+                style: TextStyle(color: Color.fromARGB(255, 98, 98, 98)),
+              ),
               onPressed: () {
                 Navigator.of(context).pop(); // ปิด dialog ถ้าไม่ยืนยัน
               },
             ),
             TextButton(
-              child: const Text("Confirm"),
               onPressed: () {
-                // ยืนยันการแก้ไข
-                final updatedUsername = usernameController.text.isNotEmpty
-                    ? usernameController.text
-                    : state.user.username;
+                // เริ่มแสดง loading
+                showDialog(
+                  context: context,
+                  barrierDismissible: false, // ไม่ให้ปิด dialog ขณะ loading
+                  builder: (BuildContext context) {
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        color: Color.fromARGB(255, 255, 145, 77),
+                      ),
+                    );
+                  },
+                );
 
-                final updatedFirstName = firstNameController.text.isNotEmpty
-                    ? firstNameController.text
-                    : state.user.firstName;
+                // หน่วงเวลา 2 วินาทีก่อนที่จะทำการอัปเดตข้อมูลและปิด loading
+                Future.delayed(const Duration(seconds: 2), () {
+                  final updatedUsername = usernameController.text.isNotEmpty
+                      ? usernameController.text
+                      : state.user.username;
 
-                final updatedLastName = lastNameController.text.isNotEmpty
-                    ? lastNameController.text
-                    : state.user.lastName;
+                  final updatedFirstName = firstNameController.text.isNotEmpty
+                      ? firstNameController.text
+                      : state.user.firstName;
 
-                final updatedEmail = emailController.text.isNotEmpty
-                    ? emailController.text
-                    : state.user.email;
-                // Clear text controllers after confirmation
-                usernameController.clear();
-                firstNameController.clear();
-                lastNameController.clear();
-                emailController.clear();
+                  final updatedLastName = lastNameController.text.isNotEmpty
+                      ? lastNameController.text
+                      : state.user.lastName;
 
-                context.read<UserBloc>().add(UpdateUserEvent(
-                      username: updatedUsername,
-                      firstName: updatedFirstName,
-                      lastName: updatedLastName,
-                      email: updatedEmail,
-                    ));
-                Navigator.of(context).pop();
+                  final updatedEmail = emailController.text.isNotEmpty
+                      ? emailController.text
+                      : state.user.email;
+
+                  // Clear text controllers after confirmation
+                  usernameController.clear();
+                  firstNameController.clear();
+                  lastNameController.clear();
+                  emailController.clear();
+
+                  // อัปเดตข้อมูลผู้ใช้
+                  // ignore: use_build_context_synchronously
+                  context.read<UserBloc>().add(UpdateUserEvent(
+                        username: updatedUsername,
+                        firstName: updatedFirstName,
+                        lastName: updatedLastName,
+                        email: updatedEmail,
+                      ));
+
+                  // ปิด loading และ dialog
+                  // ignore: use_build_context_synchronously
+                  Navigator.of(context).pop();
+                  // ignore: use_build_context_synchronously
+                  Navigator.of(context).pop(); // ปิด AlertDialog
+                });
               },
+              style: TextButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 255, 145, 77)),
+              child: const Text(
+                "Confirm",
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ],
         );

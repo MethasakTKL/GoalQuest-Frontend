@@ -66,143 +66,147 @@ class ProfilePage extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(25, 15, 10, 10),
                           child: BlocBuilder<UserBloc, UserState>(
-                            builder: (context, state) {
-                              return Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "${state.user.firstName} ${state.user.lastName}",
-                                    style: const TextStyle(
+                              builder: (context, state) {
+                            return Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "${state.user.firstName} ${state.user.lastName}",
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.person_outlined,
+                                      size: 19,
                                       color: Colors.white,
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.bold,
                                     ),
-                                  ),
-                                  Row(
-                                    children: [
-                                      const Icon(
-                                        Icons.person_outlined,
-                                        size: 19,
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      state.user.username,
+                                      style: const TextStyle(
                                         color: Colors.white,
+                                        fontSize: 15,
                                       ),
-                                      const SizedBox(
-                                        width: 5,
-                                      ),
-                                      Text(
-                                        state.user.username,
-                                        style: const TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 15,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      const Icon(
-                                        Icons.email_outlined,
-                                        size: 19,
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.email_outlined,
+                                      size: 19,
+                                      color: Colors.white,
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      state.user.email,
+                                      style: const TextStyle(
                                         color: Colors.white,
+                                        fontSize: 15,
                                       ),
-                                      const SizedBox(
-                                        width: 5,
-                                      ),
-                                      Text(
-                                        state.user.email,
-                                        style: const TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 15,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                    child: Row(
-                                      children: [
-                                        ElevatedButton(
-                                          onPressed: () {
-                                            context.read<UserBloc>().add(LogoutUserEvent());
-                                            Navigator.pushNamedAndRemoveUntil(
-                                                context,
-                                                '/login',
-                                                (route) => false);
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor: const Color.fromARGB(
-                                                156, 15, 15, 15),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            ),
+                                    ),
+                                  ],
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                  child: Row(
+                                    children: [
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          context
+                                              .read<UserBloc>()
+                                              .add(LogoutUserEvent());
+                                          Navigator.pushNamedAndRemoveUntil(
+                                              context,
+                                              '/login',
+                                              (route) => false);
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color.fromARGB(
+                                              156, 15, 15, 15),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
                                           ),
-                                          child: const Row(
-                                            children: [
-                                              Icon(
-                                                Icons.logout_outlined,
-                                                size: 19,
+                                        ),
+                                        child: const Row(
+                                          children: [
+                                            Icon(
+                                              Icons.logout_outlined,
+                                              size: 19,
+                                              color: Colors.white,
+                                            ),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
+                                            Text(
+                                              'Logout',
+                                              style: TextStyle(
                                                 color: Colors.white,
+                                                fontSize: 12,
                                               ),
-                                              SizedBox(
-                                                width: 5,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(width: 10),
+                                      Container(
+                                        width: 120,
+                                        height: 40,
+                                        decoration: BoxDecoration(
+                                          gradient: const LinearGradient(
+                                            begin: Alignment.topLeft,
+                                            end: Alignment.bottomRight,
+                                            colors: [
+                                              Color.fromARGB(255, 141, 66,
+                                                  245), // สีฟ้าจางๆ
+                                              Color(0xFF0D47A1), // สีฟ้าเข้ม
+                                            ],
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        child: Center(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              const Icon(
+                                                Icons.savings_outlined,
+                                                size: 15,
+                                                color: Color.fromARGB(
+                                                    255, 222, 222, 222),
                                               ),
+                                              const SizedBox(width: 5),
                                               Text(
-                                                'Logout',
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 12,
-                                                ),
+                                                '${currentUser.point} Points',
+                                                style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 13,
+                                                    fontWeight:
+                                                        FontWeight.bold),
                                               ),
                                             ],
                                           ),
                                         ),
-                                        const SizedBox(width: 10),
-                                        Container(
-                                          width: 120,
-                                          height: 40,
-                                          decoration: BoxDecoration(
-                                            gradient: const LinearGradient(
-                                              begin: Alignment.topLeft,
-                                              end: Alignment.bottomRight,
-                                              colors: [
-                                                Color.fromARGB(
-                                                    255, 141, 66, 245), // สีฟ้าจางๆ
-                                                Color(0xFF0D47A1), // สีฟ้าเข้ม
-                                              ],
-                                            ),
-                                            borderRadius: BorderRadius.circular(10),
-                                          ),
-                                          child: Center(
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                const Icon(
-                                                  Icons.savings_outlined,
-                                                  size: 15,
-                                                  color: Color.fromARGB(
-                                                      255, 222, 222, 222),
-                                                ),
-                                                const SizedBox(width: 5),
-                                                Text(
-                                                  '${currentUser.point} Points',
-                                                  style: const TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 13,
-                                                      fontWeight: FontWeight.bold),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              );
-                            }
-                          ),
+                                ),
+                              ],
+                            );
+                          }),
                         ),
                       ],
                     ),

@@ -225,26 +225,56 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   void _showConfirmationDialog(BuildContext context) {
     showDialog(
       context: context,
+      barrierDismissible: false, // ป้องกันไม่ให้ผู้ใช้ปิด dialog ขณะ loading
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Confirm Password Change'),
           content: const Text('Are you sure you want to change your password?'),
+          backgroundColor: Colors.white,
           actions: <Widget>[
             TextButton(
-              child: const Text('Cancel'),
+              child: const Text(
+                'Cancel',
+                style: TextStyle(color: Color.fromARGB(255, 98, 98, 98)),
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: const Text('Confirm'),
               onPressed: () {
-                Navigator.of(context).pop();
-                context.read<UserBloc>().add(ChangePasswordEvent(
-                      currentPassword: currentPasswordController.text,
-                      newPassword: newPasswordController.text,
-                    ));
+                // แสดง loading indicator
+                showDialog(
+                  context: context,
+                  barrierDismissible: false, // ปิดไม่ได้ระหว่าง loading
+                  builder: (BuildContext context) {
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        color: Color.fromARGB(255, 255, 145, 77),
+                      ),
+                    );
+                  },
+                );
+
+                // หน่วงเวลา 2 วินาทีแล้วจึงทำการอัปเดตข้อมูล
+                Future.delayed(const Duration(seconds: 2), () {
+                  Navigator.of(context).pop(); // ปิด loading dialog
+
+                  // เรียกการเปลี่ยนรหัสผ่าน
+                  context.read<UserBloc>().add(ChangePasswordEvent(
+                        currentPassword: currentPasswordController.text,
+                        newPassword: newPasswordController.text,
+                      ));
+
+                  Navigator.of(context).pop(); // ปิด AlertDialog
+                });
               },
+              style: TextButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 255, 145, 77)),
+              child: const Text(
+                'Confirm',
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ],
         );

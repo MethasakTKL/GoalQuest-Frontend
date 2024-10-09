@@ -138,7 +138,7 @@ class RankingPage extends StatelessWidget {
                           Positioned(
                             top:
                                 -8, // กำหนดตำแหน่งของรูป winner.png ด้านบนของ CircleAvatar
-                            right: 185, // ด้านขวา
+                            right: 182, // ด้านขวา
                             child: Image.asset(
                               'assets/winner.png',
                               width: 40, // กำหนดขนาดของรูปตามที่คุณต้องการ
