@@ -18,16 +18,7 @@ class GoalCard extends StatelessWidget {
   });
 
   LinearGradient _getGradientByPercentage(double percentage) {
-    if (percentage < 0.4) {
-      return const LinearGradient(
-        colors: [
-          Color.fromARGB(255, 54, 54, 54), // Red
-          Color.fromARGB(255, 133, 133, 133), // Dark Orange
-        ],
-        begin: Alignment.centerLeft,
-        end: Alignment.centerRight,
-      );
-    } else if (percentage < 0.7) {
+    if (percentage < 0.7) {
       return const LinearGradient(
         colors: [
           Color.fromARGB(255, 227, 142, 38), // Dark Orange

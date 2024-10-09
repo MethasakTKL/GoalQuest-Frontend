@@ -39,7 +39,7 @@ class _TodoQuestListState extends State<TodoQuestList> {
     final int goalId = ModalRoute.of(context)!.settings.arguments as int;
     final tasks = context.select((TaskBloc bloc) => bloc.state.tasks
         .where((task) => task.goalId == goalId && task.taskType == 'TodoQuest')
-        .toList()); //เช็คว่า Tasktype เป็น TodoQuest ไหม
+        .toList()); // เช็คว่า Task type เป็น TodoQuest ไหม
     final today = DateTime.now();
 
     final todayTasks = tasks.where((task) {
@@ -104,9 +104,6 @@ class _TodoQuestListState extends State<TodoQuestList> {
                     return TodoQuestItem(
                       cardColor: const Color.fromARGB(255, 173, 217, 98),
                       isChecked: isChecked,
-                      // task.lastAction != null &&
-                      //     task.lastAction!.isAfter(DateTime.now().subtract(
-                      //         Duration(days: task.repeatDays ?? 1))),
                       title: task.title,
                       frequency: 'Every ${task.repeatDays} days',
                       lastDone: task.lastAction != null
@@ -154,9 +151,6 @@ class _TodoQuestListState extends State<TodoQuestList> {
                 return TodoQuestItem(
                   cardColor: Colors.grey[300]!,
                   isChecked: isChecked,
-                  // task.lastAction != null &&
-                  //     task.lastAction!.isAfter(DateTime.now()
-                  //         .subtract(Duration(days: task.repeatDays ?? 1))),
                   title: task.title,
                   frequency: 'Every ${task.repeatDays} days',
                   lastDone: task.lastAction != null
@@ -176,6 +170,17 @@ class _TodoQuestListState extends State<TodoQuestList> {
                   },
                 );
               },
+            ),
+          if (nextTasks.isEmpty && todayTasks.isEmpty)
+            const Padding(
+              padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+              child: Text(
+                'No TodoQuest',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey,
+                ),
+              ),
             ),
           if (completeTasks.isNotEmpty)
             Padding(
@@ -217,9 +222,6 @@ class _TodoQuestListState extends State<TodoQuestList> {
                 return TodoQuestItem(
                   cardColor: Colors.grey[300]!,
                   isChecked: isChecked,
-                  // task.lastAction != null &&
-                  //     task.lastAction!.isAfter(DateTime.now()
-                  //         .subtract(Duration(days: task.repeatDays ?? 1))),
                   title: task.title,
                   frequency: 'Every ${task.repeatDays} days',
                   lastDone: task.lastAction != null
