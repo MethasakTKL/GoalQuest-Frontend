@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'giveup_dialog.dart';
+import 'complete_dialog.dart';
 
 class FocusTimerPage extends StatefulWidget {
   const FocusTimerPage({super.key});
@@ -10,8 +12,8 @@ class FocusTimerPage extends StatefulWidget {
 
 class _FocusTimerPageState extends State<FocusTimerPage> {
   bool isPlaying = false;
-  int totalSeconds = 120 * 60; // เวลาเริ่มต้นในหน่วยวินาที
-  int static_timer = 120 * 60;
+  int totalSeconds = 1 * 60; // เวลาเริ่มต้นในหน่วยวินาที
+  int static_timer = 1 * 60;
   late Timer timer;
   late Timer cancelTimer;
   int points = 500;
@@ -38,21 +40,17 @@ class _FocusTimerPageState extends State<FocusTimerPage> {
 
   void startTimer() {
     setState(() {
-      // ถ้าเป็นการเริ่มนับครั้งแรก ให้ตั้งค่า initialSeconds
-      if (initialSeconds == null) {
-        initialSeconds = totalSeconds;
-        isCancelable = true;
-        showGiveUp = true;
+      initialSeconds ??= totalSeconds;
 
-        // ตั้งเวลาสำหรับให้ Cancel ได้ใน 10 วินาทีแรก
-        cancelTimer = Timer(const Duration(seconds: 10), () {
-          setState(() {
-            isCancelable =
-                false; // เมื่อครบ 10 วินาทีแล้วจะไม่สามารถ Cancel ได้
-            // showGiveUp จะถูกเซ็ตไว้ให้เป็น true ในช่วงนี้
-          });
+      isCancelable = true; // รีเซ็ตสถานะการ cancel
+      showGiveUp = true; // แสดงปุ่ม give up เมื่อเริ่มจับเวลาใหม่
+
+      // ตั้งเวลาสำหรับให้ Cancel ได้ใน 10 วินาทีแรก
+      cancelTimer = Timer(const Duration(seconds: 10), () {
+        setState(() {
+          isCancelable = false; // เมื่อครบ 10 วินาทีแล้วจะไม่สามารถ Cancel ได้
         });
-      }
+      });
     });
 
     // เริ่มต้นการนับเวลา
@@ -72,6 +70,20 @@ class _FocusTimerPageState extends State<FocusTimerPage> {
     setState(() {
       timer.cancel();
       isPlaying = false;
+      if (totalSeconds == 0) {
+        showCompleteDialog(
+            context); // เรียก Complete Dialog เมื่อเวลาเป็น 00:00
+      }
+    });
+  }
+
+  void resetTimer() {
+    setState(() {
+      timer.cancel(); // หยุดการนับเวลา
+      totalSeconds =
+          initialSeconds ?? totalSeconds; // รีเซ็ตเวลาไปยังค่าเริ่มต้น
+      isPlaying = false; // หยุดการเล่น
+      showGiveUp = false; // ซ่อนปุ่ม Give Up หลังจากการรีเซ็ต
     });
   }
 
@@ -97,95 +109,7 @@ class _FocusTimerPageState extends State<FocusTimerPage> {
   }
 
   void showConfirmationDialog() {
-    showDialog(
-      context: context,
-      builder: (context) => Dialog(
-        child: Container(
-          width: 400, // กำหนดความกว้าง
-          height: 200, // กำหนดความสูง
-
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Padding(
-                padding: EdgeInsets.all(20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Confirm your surrender',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(
-                      width: 1,
-                    ),
-                    Icon(
-                      Icons.flag_outlined,
-                      color: Color.fromARGB(255, 25, 25, 25),
-                      size: 30.0,
-                    ),
-                  ],
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 18.0),
-                child: Column(
-                  children: [
-                    Text(
-                      'Are you sure you want to give up?',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                    Text('You will lose 30 points.'),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.only(
-                  right: 18.0,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop(); // ปิดกล่องข้อความ
-                      },
-                      child: const Text(
-                        'Cancel',
-                        style: TextStyle(color: Color.fromARGB(255, 2, 2, 2)),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop(); // ปิดกล่องข้อความ
-                        handleGiveUp(); // เรียกใช้ handleGiveUp เมื่อยืนยัน
-                      },
-                      style: TextButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(255, 63, 87, 38),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 10), // ขนาดของปุ่ม
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30), // ขอบมน
-                        ),
-                      ),
-                      child: const Text(
-                        'Confirm',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+    showGiveUpDialog(context, handleGiveUp);
   }
 
   void updatePoints() {
@@ -353,14 +277,15 @@ class _FocusTimerPageState extends State<FocusTimerPage> {
                     isPlaying ? "Tap to Pause" : "Tap to Start",
                     style: const TextStyle(
                       color: Color.fromARGB(255, 35, 75, 20),
-                      fontSize: 18,
+                      fontSize: 15,
                     ),
                   ),
                   const SizedBox(height: 20),
                   if (showGiveUp)
                     OutlinedButton(
                       onPressed:
-                          showConfirmationDialog, // เรียกฟังก์ชันสำหรับแสดง dialog
+                          isCancelable ? resetTimer : showConfirmationDialog,
+                      // กด Cancel จะหยุดจับเวลาในช่วง 10 วินาทีแรก, กด Give Up จะแสดง dialog
                       style: OutlinedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 25, vertical: 11),
