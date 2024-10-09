@@ -38,6 +38,8 @@ flutter:
     - assets/user_image.png
 
     - assets/ranking.png
+    - assets/winner.png
+
 
     - assets/slide_1.png
     - assets/slide_2.png

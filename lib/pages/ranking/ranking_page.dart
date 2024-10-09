@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:goal_quest/bloc/bloc.dart';
 import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
+import 'package:goal_quest/mockup/user_models_list.dart';
 import 'package:goal_quest/mockup/user_rankings_list.dart';
 
 class RankingPage extends StatelessWidget {
@@ -10,6 +11,7 @@ class RankingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mockRankingData = userRankingsList;
+    final currentUser = usersList;
     context.read<UserBloc>().add(GetAllUsersEvent());
 
     return Scaffold(
@@ -93,6 +95,7 @@ class RankingPage extends StatelessWidget {
                             ),
                           ),
                           // Positioned for 1st, 2nd, 3rd place user images and points
+
                           Positioned(
                             top: 0,
                             child: Column(
@@ -132,10 +135,20 @@ class RankingPage extends StatelessWidget {
                               ],
                             ),
                           ),
+                          Positioned(
+                            top:
+                                -8, // กำหนดตำแหน่งของรูป winner.png ด้านบนของ CircleAvatar
+                            right: 185, // ด้านขวา
+                            child: Image.asset(
+                              'assets/winner.png',
+                              width: 40, // กำหนดขนาดของรูปตามที่คุณต้องการ
+                              height: 40,
+                            ),
+                          ),
                           // Second place user (on the right)
                           Positioned(
                             top: 110,
-                            left: 270,
+                            left: 255,
                             child: Row(
                               children: [
                                 CircleAvatar(
@@ -182,8 +195,8 @@ class RankingPage extends StatelessWidget {
                           ),
                           // Third place user (on the left)
                           Positioned(
-                            top: 120,
-                            right: 270,
+                            top: 123,
+                            right: 255,
                             child: Row(
                               children: [
                                 Column(
