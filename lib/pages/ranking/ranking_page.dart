@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:goal_quest/bloc/bloc.dart';
 import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
-import 'package:goal_quest/mockup/user_models_list.dart';
 import 'package:goal_quest/mockup/user_rankings_list.dart';
 
 class RankingPage extends StatelessWidget {
@@ -11,7 +10,6 @@ class RankingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mockRankingData = userRankingsList;
-    final currentUser = usersList;
     context.read<UserBloc>().add(GetAllUsersEvent());
 
     return Scaffold(

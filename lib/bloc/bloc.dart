@@ -23,3 +23,8 @@ export './point/point_state.dart';
 export './reward/reward_bloc.dart';
 export './reward/reward_event.dart';
 export './reward/reward_state.dart';
+
+//History Bloc
+export './history/history_bloc.dart';
+export './history/history_event.dart';
+export './history/history_state.dart';
