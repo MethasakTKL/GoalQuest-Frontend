@@ -3,17 +3,34 @@ import 'package:goal_quest/bloc/goal/goal_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:goal_quest/bloc/bloc.dart';
 
-class NewGoalDialog extends StatefulWidget {
-  const NewGoalDialog({super.key});
+class EditGoalDialog extends StatefulWidget {
+  final String initialTitle; // ชื่อเป้าหมายเริ่มต้น
+  final String initialDescription; // คำอธิบายเริ่มต้น
+  final int goalId; // ID ของเป้าหมายที่ต้องการแก้ไข
+
+  const EditGoalDialog({
+    super.key,
+    required this.initialTitle,
+    required this.initialDescription,
+    required this.goalId,
+  });
 
   @override
   // ignore: library_private_types_in_public_api
-  _NewGoalDialogState createState() => _NewGoalDialogState();
+  _EditGoalDialogState createState() => _EditGoalDialogState();
 }
 
-class _NewGoalDialogState extends State<NewGoalDialog> {
+class _EditGoalDialogState extends State<EditGoalDialog> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    // กำหนดค่าของ TextEditingController ด้วยค่าที่ได้รับจาก widget
+    titleController.text = widget.initialTitle;
+    descriptionController.text = widget.initialDescription;
+  }
 
   @override
   void dispose() {
@@ -38,7 +55,7 @@ class _NewGoalDialogState extends State<NewGoalDialog> {
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.white,
-            title: const Text('New Goal'),
+            title: const Text('Edit Goal'),
             automaticallyImplyLeading: false,
             actions: [
               IconButton(
@@ -100,15 +117,15 @@ class _NewGoalDialogState extends State<NewGoalDialog> {
                     onPressed: () {
                       String goalTitle = titleController.text;
                       String description = descriptionController.text;
-                      context
-                          .read<GoalBloc>()
-                          .add(AddGoalEvent(goalTitle, description));
+
+                      // ส่งเหตุการณ์การแก้ไขไปยัง Bloc
+                      // context.read<GoalBloc>().add(EditGoalEvent(widget.goalId, goalTitle, description));
 
                       context.read<GoalBloc>().add(LoadGoalEvent());
                       Navigator.pop(context);
                     },
                     child: const Text(
-                      'Create',
+                      'Save',
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
