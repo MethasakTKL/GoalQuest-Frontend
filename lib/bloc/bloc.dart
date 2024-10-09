@@ -18,3 +18,8 @@ export './goal/goal_state.dart';
 export './point/point_bloc.dart';
 export './point/point_event.dart';
 export './point/point_state.dart';
+
+//Reward Bloc
+export './reward/reward_bloc.dart';
+export './reward/reward_event.dart';
+export './reward/reward_state.dart';

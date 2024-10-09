@@ -16,3 +16,7 @@ export './goal/goal_repository.dart';
 //Point
 export './point/point_mock_repo.dart';
 export './point/point_repository.dart';
+
+//Reward
+export './reward/reward_mock_repo.dart';
+export './reward/reward_repository.dart';
