@@ -58,7 +58,7 @@ class RedeemHistoryTable extends StatelessWidget {
                         (history) => DataRow(
                           cells: [
                             DataCell(Text(DateFormat('dd/MM/yyyy').format(history
-                                .historyDate))), // จัดรูปแบบวันที่เป็น "วัน/เดือน/ปี"
+                                .redeemDate))), // จัดรูปแบบวันที่เป็น "วัน/เดือน/ปี"
                             DataCell(Text(truncateReward(history
                                 .historyTitle))), // แสดงชื่อประวัติการใช้งาน
                             DataCell(Text(history.historyPoint.toString())),

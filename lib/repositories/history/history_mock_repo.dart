@@ -7,13 +7,13 @@ class HistoryMockRepository extends HistoryRepository{
       historyId: 1,
       historyPoint: 100,
       historyTitle: 'Test1',
-      historyDate: DateTime(2023,10,8)
+      redeemDate: DateTime(2023,10,8)
     ),
    HistoryModel(
       historyId: 2,
       historyPoint: 200,
       historyTitle: 'Test2',
-      historyDate: DateTime(2023,10,9),
+      redeemDate: DateTime(2023,10,9),
     ),
   ];
   @override
