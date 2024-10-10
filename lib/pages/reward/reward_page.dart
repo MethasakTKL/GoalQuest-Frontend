@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:goal_quest/bloc/bloc.dart';
 import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RewardPage extends StatelessWidget {
   const RewardPage({super.key});
@@ -35,6 +37,7 @@ class RewardPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final rewards = context.select((RewardBloc bloc) => bloc.state.rewards);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -158,8 +161,9 @@ class RewardPage extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: ListView.builder(
-                itemCount: 5,
+                itemCount: rewards.length,
                 itemBuilder: (context, index) {
+                  final reward = rewards[index];  //ดึงข้อมูลแต่ละรายการ
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10.0),
                     child: Container(
@@ -178,7 +182,7 @@ class RewardPage extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    'Reward ${index + 1}',
+                                    reward.rewardTitle,
                                     style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
@@ -186,7 +190,7 @@ class RewardPage extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 4),
                                   Text(
-                                    'Description for Reward ${index + 1}',
+                                    reward.rewardDescription,
                                     style: TextStyle(
                                       fontSize: 14,
                                       color: Colors.grey[600],

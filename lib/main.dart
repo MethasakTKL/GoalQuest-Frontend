@@ -61,6 +61,13 @@ class MyApp extends StatelessWidget {
             return bloc;
           },
         ),
+        BlocProvider<RewardBloc>(
+          create: (context) {
+            final bloc = RewardBloc(RewardMockRepository());
+            bloc.add(LoadRewardEvent());
+            return bloc;
+          },
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
