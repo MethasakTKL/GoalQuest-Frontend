@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:goal_quest/bloc/bloc.dart';
 import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
 import 'package:goal_quest/pages/profile/table/earn_point_table.dart';
 import 'package:goal_quest/pages/profile/table/redeem_history_table.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RedeemHistoryPage extends StatefulWidget {
   const RedeemHistoryPage({super.key});
@@ -24,20 +26,20 @@ class _RedeemHistoryPageState extends State<RedeemHistoryPage> {
 
   bool isEarnPointVisible = true;
 
-  final List<Map<String, dynamic>> redeemHistory = const [
-    {'date': '04/09/2024', 'Name': 'Godiigozill44444', 'point': 1000},
-    {'date': '13/08/2024', 'Name': 'Frogie', 'point': 2500},
-    {'date': '12/07/2024', 'Name': 'Fire Cat', 'point': 1500},
-    {'date': '10/07/2024', 'Name': 'Godji', 'point': 1000},
-    {'date': '5/07/2024', 'Name': 'Frogie', 'point': 2500},
-    {'date': '1/07/2024', 'Name': 'Fire Cat', 'point': 1500},
-    {'date': '30/06/2024', 'Name': 'Frogie', 'point': 2500},
-  ];
-
+  // final List<Map<String, dynamic>> redeemHistory = const [
+  //   {'date': '04/09/2024', 'Name': 'Godiigozill44444', 'point': 1000},
+  //   {'date': '13/08/2024', 'Name': 'Frogie', 'point': 2500},
+  //   {'date': '12/07/2024', 'Name': 'Fire Cat', 'point': 1500},
+  //   {'date': '10/07/2024', 'Name': 'Godji', 'point': 1000},
+  //   {'date': '5/07/2024', 'Name': 'Frogie', 'point': 2500},
+  //   {'date': '1/07/2024', 'Name': 'Fire Cat', 'point': 1500},
+  //   {'date': '30/06/2024', 'Name': 'Frogie', 'point': 2500},
+  // ];
   bool isRedeemVisible = false;
 
   @override
   Widget build(BuildContext context) {
+    final redeemHistory = context.select((HistoryBloc bloc) => bloc.state.histories);
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(

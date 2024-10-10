@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:goal_quest/models/history_model.dart';
+import 'package:intl/intl.dart';
 
 class RedeemHistoryTable extends StatelessWidget {
   final bool isRedeemVisible;
-  final List<Map<String, dynamic>> redeemHistory;
+  final List<HistoryModel> redeemHistory;
 
   const RedeemHistoryTable({
     super.key,
@@ -10,7 +12,8 @@ class RedeemHistoryTable extends StatelessWidget {
     required this.redeemHistory,
   });
 
-    String truncateReward(String reward) {   // ฟังก์ชันสำหรับตัดข้อความที่ยาวเกินไป
+  String truncateReward(String reward) {
+    // ฟังก์ชันสำหรับตัดข้อความที่ยาวเกินไป
     if (reward.length > 10) {
       return '${reward.substring(0, 10)}...';
     }
@@ -54,9 +57,11 @@ class RedeemHistoryTable extends StatelessWidget {
                       .map(
                         (history) => DataRow(
                           cells: [
-                            DataCell(Text(history['date'])),
-                            DataCell(Text(truncateReward(history['Name']))),
-                            DataCell(Text(history['point'].toString())),
+                            DataCell(Text(DateFormat('dd/MM/yyyy').format(history
+                                .historyDate))), // จัดรูปแบบวันที่เป็น "วัน/เดือน/ปี"
+                            DataCell(Text(truncateReward(history
+                                .historyTitle))), // แสดงชื่อประวัติการใช้งาน
+                            DataCell(Text(history.historyPoint.toString())),
                           ],
                         ),
                       )

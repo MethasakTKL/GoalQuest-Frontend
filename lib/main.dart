@@ -54,6 +54,13 @@ class MyApp extends StatelessWidget {
             return bloc;
           },
         ),
+        BlocProvider<HistoryBloc>(
+          create: (context) {
+            final bloc = HistoryBloc(HistoryMockRepository());
+            bloc.add(LoadHistoryEvent());
+            return bloc;
+          },
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
