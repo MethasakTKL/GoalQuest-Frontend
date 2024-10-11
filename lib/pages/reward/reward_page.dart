@@ -2,18 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:goal_quest/bloc/bloc.dart';
 import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:goal_quest/models/history_model.dart';
 
 class RewardPage extends StatelessWidget {
   const RewardPage({super.key});
 
-  void _showRedeemConfirmationDialog(BuildContext context, int rewardIndex) {
+  void _showRedeemConfirmationDialog(
+      BuildContext context, String rewardTitle, int rewardId, int rewardPoint) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Confirm Redemption'),
-          content: Text(
-              'Are you sure you want to redeem Reward ${rewardIndex + 1}?'),
+          content: Text('Are you sure you want to redeem $rewardTitle ?'),
           actions: <Widget>[
             TextButton(
               child: const Text('Cancel'),
@@ -25,7 +26,17 @@ class RewardPage extends StatelessWidget {
               child: const Text('Confirm'),
               onPressed: () {
                 // Add the actual redemption logic here
-                print('Confirmed: Redeeming Reward ${rewardIndex + 1}');
+                int historyId = context.read<HistoryBloc>().state.histories.length + 1;
+                context
+                    .read<RewardBloc>()
+                    .add(RedeemRewardEvent(rewardId: rewardId));
+                context.read<HistoryBloc>().add(AddHistoryEvent(
+                    history: HistoryModel(
+                        historyId: historyId,
+                        historyPoint: rewardPoint,
+                        historyTitle: rewardTitle,
+                        redeemDate: DateTime.now())));
+                print('Confirmed: Redeeming Reward $rewardTitle ');
                 Navigator.of(context).pop();
               },
             ),
@@ -37,7 +48,7 @@ class RewardPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final rewards = context.select((RewardBloc bloc) => bloc.state.rewards);
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -160,72 +171,92 @@ class RewardPage extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: ListView.builder(
-                itemCount: rewards.length,
-                itemBuilder: (context, index) {
-                  final reward = rewards[index];  //ดึงข้อมูลแต่ละรายการ
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10.0),
-                    child: Container(
-                      height: 100,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    reward.rewardTitle,
-                                    style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    reward.rewardDescription,
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.grey[600],
-                                    ),
-                                  ),
-                                ],
-                              ),
+              child: BlocBuilder<RewardBloc, RewardState>(
+                builder: (context, state) {
+                  debugPrint("Reward State: $state");
+                  if (state is LodingRewardState) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state is ReadyRewardState) {
+                    final rewards = state.rewards;
+                    return ListView.builder(
+                      itemCount: rewards.length,
+                      itemBuilder: (context, index) {
+                        final reward = rewards[index]; //ดึงข้อมูลแต่ละรายการ
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10.0),
+                          child: Container(
+                            height: 100,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[300],
+                              borderRadius: BorderRadius.circular(10),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                _showRedeemConfirmationDialog(context, index);
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF6A00F4),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          reward.rewardTitle,
+                                          style: const TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                          reward.rewardDescription,
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.grey[600],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                              ),
-                              child: const Text(
-                                'Redeem',
-                                style: TextStyle(color: Colors.white),
-                              ),
+                                Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      _showRedeemConfirmationDialog(context,
+                                          reward.rewardTitle, reward.rewardId, reward.rewardPoints);
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color(0xFF6A00F4),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                    ),
+                                    child: const Text(
+                                      'Redeem',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                  );
+                        );
+                      },
+                    );
+                  } else if (state is ErrorRewardState) {
+                    return const Center(
+                      child: Text('Failed to load rewards'),
+                    );
+                  }
+                  return const SizedBox.shrink();
                 },
               ),
             ),
-          )
+          ),
         ],
       ),
     );

@@ -22,4 +22,12 @@ class RewardMockRepository extends RewardRepository{
     await Future.delayed(const Duration(seconds: 0));
     return rewards;
   }
+
+  @override
+  Future<RewardModel> redeemReward({required int rewardId}) async{
+    final reward = rewards.firstWhere((reward) => reward.rewardId == rewardId);
+    return reward;
+  }
+  
+
 }

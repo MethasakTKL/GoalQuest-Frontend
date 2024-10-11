@@ -39,7 +39,8 @@ class _RedeemHistoryPageState extends State<RedeemHistoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    final redeemHistory = context.select((HistoryBloc bloc) => bloc.state.histories);
+    final redeemHistory =
+        context.select((HistoryBloc bloc) => bloc.state.histories);
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
@@ -154,9 +155,25 @@ class _RedeemHistoryPageState extends State<RedeemHistoryPage> {
                     ],
                   ),
                 ),
-                RedeemHistoryTable(
-                    isRedeemVisible: isRedeemVisible,
-                    redeemHistory: redeemHistory)
+                BlocBuilder<HistoryBloc, HistoryState>(
+                    builder: (context, state) {
+                  debugPrint("redeem State: $state");
+                  if (state is LoadingHistoryState) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state is ReadyHistoryState) {
+                    return RedeemHistoryTable(
+                        isRedeemVisible: isRedeemVisible,
+                        redeemHistory: redeemHistory);
+                  } else if (state is ErrorHistoryState) {
+                    return const Center(
+                      child: Text('Failed to load history'),
+                    );
+                  } else {
+                    return const SizedBox.shrink();
+                  }
+                })
               ],
             ),
           ),

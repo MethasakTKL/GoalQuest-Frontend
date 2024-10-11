@@ -19,3 +19,8 @@ class ReadyRewardState extends RewardState{
 class ErrorRewardState extends RewardState{
   ErrorRewardState({required super.error}) : super(rewards: emptyRewards);
 }
+
+class RewardRedeemedState extends RewardState{
+  final int rewardId;
+  RewardRedeemedState({required super.rewards, required this.rewardId});
+}
