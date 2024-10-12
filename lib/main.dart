@@ -86,9 +86,10 @@ class MyApp extends StatelessWidget {
           '/changee_password': (context) => const ChangePasswordPage(),
           '/redeem_history': (context) => const RedeemHistoryPage(),
           '/focustimer': (context) {
-            final int duration =
-                60; // Set this to whatever duration you need (in seconds)
-            return FocusTimerPage(taskDuration: duration);
+            return const FocusTimerPage(
+              taskDuration: 0,
+              taskName: "name",
+            );
           },
           '/tasks': (context) => const TasksPage(),
           '/profilepage': (context) => const ProfilePage(),

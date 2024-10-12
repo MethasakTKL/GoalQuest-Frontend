@@ -4,9 +4,11 @@ import 'giveup_dialog.dart';
 import 'complete_dialog.dart';
 
 class FocusTimerPage extends StatefulWidget {
-  final int taskDuration; // เพิ่มตัวแปรสำหรับรับค่า duration จาก task
+  final int taskDuration; // ตัวแปร duration
+  final String taskName; // ตัวแปร task name
 
-  const FocusTimerPage({super.key, required this.taskDuration});
+  const FocusTimerPage(
+      {super.key, required this.taskDuration, required this.taskName});
 
   @override
   State<FocusTimerPage> createState() => _FocusTimerPageState();
@@ -17,7 +19,7 @@ class _FocusTimerPageState extends State<FocusTimerPage> {
   late int totalSeconds;
   late int static_timer;
   late Timer timer;
-  Timer? cancelTimer; // เปลี่ยนเป็น nullable
+  Timer? cancelTimer;
   int points = 500;
   bool showGiveUp = false;
   bool isCancelable = true;
@@ -38,7 +40,7 @@ class _FocusTimerPageState extends State<FocusTimerPage> {
     if (isPlaying) {
       timer.cancel();
     }
-    cancelTimer?.cancel(); // เช็คก่อนเข้าถึง cancelTimer
+    cancelTimer?.cancel();
     super.dispose();
   }
 
@@ -72,19 +74,17 @@ class _FocusTimerPageState extends State<FocusTimerPage> {
       timer.cancel();
       isPlaying = false;
       if (totalSeconds == 0) {
-        showCompleteDialog(
-            context); // เรียก Complete Dialog เมื่อเวลาเป็น 00:00
+        showCompleteDialog(context);
       }
     });
   }
 
   void resetTimer() {
     setState(() {
-      timer.cancel(); // หยุดการนับเวลา
-      totalSeconds =
-          initialSeconds ?? totalSeconds; // รีเซ็ตเวลาไปยังค่าเริ่มต้น
-      isPlaying = false; // หยุดการเล่น
-      showGiveUp = false; // ซ่อนปุ่ม Give Up หลังจากการรีเซ็ต
+      timer.cancel();
+      totalSeconds = initialSeconds ?? totalSeconds;
+      isPlaying = false;
+      showGiveUp = false;
     });
   }
 
@@ -102,10 +102,9 @@ class _FocusTimerPageState extends State<FocusTimerPage> {
   void handleGiveUp() {
     stopTimer();
     setState(() {
-      totalSeconds =
-          initialSeconds ?? totalSeconds; // รีเซ็ตเวลาเป็นเวลาเริ่มต้น
+      totalSeconds = initialSeconds ?? totalSeconds;
       updatePoints();
-      showGiveUp = false; // ซ่อนปุ่ม Give Up
+      showGiveUp = false;
     });
   }
 
@@ -152,9 +151,9 @@ class _FocusTimerPageState extends State<FocusTimerPage> {
               height: 50,
             ),
             const Spacer(),
-            const Text(
-              'เรียนพื้นฐาน Python',
-              style: TextStyle(
+            Text(
+              widget.taskName, // แสดงชื่อ task แทนที่ข้อความเดิม
+              style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
@@ -286,7 +285,6 @@ class _FocusTimerPageState extends State<FocusTimerPage> {
                     OutlinedButton(
                       onPressed:
                           isCancelable ? resetTimer : showConfirmationDialog,
-                      // กด Cancel จะหยุดจับเวลาในช่วง 10 วินาทีแรก, กด Give Up จะแสดง dialog
                       style: OutlinedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 25, vertical: 11),

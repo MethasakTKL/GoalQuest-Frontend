@@ -34,13 +34,14 @@ class FocusTimerList extends StatelessWidget {
                         points: calculatePoints(
                             task.duration ?? 0), // คำนวณคะแนนจากระยะเวลา
                         onStart: () {
-                          // Navigate to FocusTimerPage with taskDuration
+                          // Navigate to FocusTimerPage with taskDuration and taskName
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => FocusTimerPage(
-                                  taskDuration: task.duration ??
-                                      0), // Provide taskDuration
+                                taskDuration: task.duration ?? 0,
+                                taskName: task.title, // ส่ง taskName ไปด้วย
+                              ),
                             ),
                           );
                         },
