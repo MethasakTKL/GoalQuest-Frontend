@@ -7,16 +7,17 @@ class EditGoalDialog extends StatefulWidget {
   final String initialTitle; // ชื่อเป้าหมายเริ่มต้น
   final String initialDescription; // คำอธิบายเริ่มต้น
   final int goalId; // ID ของเป้าหมายที่ต้องการแก้ไข
+  final Function(String, String) onSave; // ฟังก์ชัน callback
 
   const EditGoalDialog({
     super.key,
     required this.initialTitle,
     required this.initialDescription,
     required this.goalId,
+    required this.onSave, // รับฟังก์ชัน onSave
   });
 
   @override
-  // ignore: library_private_types_in_public_api
   _EditGoalDialogState createState() => _EditGoalDialogState();
 }
 
@@ -118,10 +119,10 @@ class _EditGoalDialogState extends State<EditGoalDialog> {
                       String goalTitle = titleController.text;
                       String description = descriptionController.text;
 
-                      // ส่งเหตุการณ์การแก้ไขไปยัง Bloc
-                      // context.read<GoalBloc>().add(EditGoalEvent(widget.goalId, goalTitle, description));
+                      // เรียกใช้งานฟังก์ชัน onSave เมื่อบันทึก
+                      widget.onSave(goalTitle, description);
 
-                      context.read<GoalBloc>().add(LoadGoalEvent());
+                      // ปิด Dialog เมื่อบันทึกเสร็จ
                       Navigator.pop(context);
                     },
                     child: const Text(

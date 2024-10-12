@@ -8,6 +8,8 @@ class GoalBloc extends Bloc<GoalEvent, GoalState> {
   GoalBloc(this.goalRepository) : super(LodingGoalState()) {
     on<LoadGoalEvent>(_onLoadGoalEvent);
     on<AddGoalEvent>(_onAddGoalEvent);
+    on<DeleteGoalEvent>(_onDeleteGoalEvent);
+    on<EditGoalEvent>(_onEditGoalEvent); // สำหรับแก้ไข
   }
   _onLoadGoalEvent(LoadGoalEvent event, Emitter<GoalState> emit) async {
     emit(LodingGoalState());
@@ -26,6 +28,28 @@ class GoalBloc extends Bloc<GoalEvent, GoalState> {
         goalDescription: event.goalDescription,
       );
       add(LoadGoalEvent());
+    } catch (e) {
+      emit(ErrorGoalState(error: e.toString()));
+    }
+  }
+
+  _onDeleteGoalEvent(DeleteGoalEvent event, Emitter<GoalState> emit) async {
+    try {
+      await goalRepository.deleteGoal(event.goalId);
+      add(LoadGoalEvent()); // โหลดข้อมูลใหม่หลังจากลบ
+    } catch (e) {
+      emit(ErrorGoalState(error: e.toString()));
+    }
+  }
+
+  _onEditGoalEvent(EditGoalEvent event, Emitter<GoalState> emit) async {
+    try {
+      await goalRepository.updateGoal(
+        goalId: event.goalId,
+        newTitle: event.updatedTitle,
+        newDescription: event.updatedDescription,
+      );
+      add(LoadGoalEvent()); // โหลดข้อมูลใหม่หลังจากแก้ไข
     } catch (e) {
       emit(ErrorGoalState(error: e.toString()));
     }

@@ -3,24 +3,32 @@ import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:goal_quest/pages/goals/goals_list.dart';
 import 'package:goal_quest/pages/goals/new_goal_dialog.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:goal_quest/bloc/bloc.dart'; // นำเข้า bloc ที่จำเป็น
 
 class GoalsPage extends StatelessWidget {
   const GoalsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // ดึงสถานะ Goals จาก GoalBloc
+    final goals = context.select((GoalBloc bloc) => bloc.state.goals.toList());
+
+    // นับจำนวน Goals ที่เสร็จสิ้นและกำลังดำเนินการ
+    final completedGoals = goals.where((goal) => goal.isCompleted).length;
+    final inProgressGoals = goals.where((goal) => !goal.isCompleted).length;
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-
         title: Row(
           children: [
             Image.asset(
               'assets/logo_black.png',
               height: 50,
             ),
-            const Spacer(), // ใช้ Spacer เพื่อจัดตำแหน่ง
+            const Spacer(),
             const Text(
               'Goals',
               style: TextStyle(
@@ -28,7 +36,7 @@ class GoalsPage extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const Spacer(), // ใช้ Spacer เพื่อจัดตำแหน่ง
+            const Spacer(),
             IconButton(
               icon: const Icon(Icons.account_circle),
               onPressed: () {
@@ -37,8 +45,7 @@ class GoalsPage extends StatelessWidget {
                   PageRouteBuilder(
                     pageBuilder: (context, animation1, animation2) =>
                         const BottomNavigationPage(initialIndex: 3),
-                    transitionDuration: const Duration(
-                        seconds: 0), // กำหนดเวลาของการเปลี่ยนหน้า
+                    transitionDuration: const Duration(seconds: 0),
                   ),
                 );
               },
@@ -46,7 +53,7 @@ class GoalsPage extends StatelessWidget {
             ),
           ],
         ),
-        automaticallyImplyLeading: false, // ปิดปุ่ม Back
+        automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -57,22 +64,20 @@ class GoalsPage extends StatelessWidget {
                 child: Column(
                   children: [
                     const Text("Track your Goals"),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    const SizedBox(height: 10),
                     Container(
                       width: double.infinity,
                       height: 160,
                       decoration: BoxDecoration(
                         gradient: const LinearGradient(
-                          begin: Alignment.topLeft, // จุดเริ่มต้นของการไล่สี
-                          end: Alignment.bottomRight, // จุดสิ้นสุดของการไล่สี
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
                           colors: [
-                            Color.fromARGB(255, 108, 187, 75), // สีแรก
-                            Color.fromARGB(255, 58, 90, 47), // สีที่สอง
+                            Color.fromARGB(255, 108, 187, 75),
+                            Color.fromARGB(255, 58, 90, 47),
                           ],
                         ),
-                        borderRadius: BorderRadius.circular(20), // ปรับขอบให้มน
+                        borderRadius: BorderRadius.circular(20),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
@@ -82,17 +87,13 @@ class GoalsPage extends StatelessWidget {
                               'assets/goal_image.png',
                               height: 110,
                             ),
-                            const SizedBox(
-                              width: 0,
-                            ),
+                            const SizedBox(width: 0),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Row(
                                   children: [
-                                    SizedBox(
-                                      height: 60,
-                                    ),
+                                    SizedBox(height: 60),
                                     Text(
                                       "Goal Achievement",
                                       style: TextStyle(
@@ -102,40 +103,32 @@ class GoalsPage extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                const Row(
+                                Row(
                                   children: [
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Icon(
+                                    const SizedBox(width: 5),
+                                    const Icon(
                                       Icons.hourglass_bottom,
                                       size: 15,
                                       color: Color.fromARGB(255, 255, 255, 255),
                                     ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
+                                    const SizedBox(width: 5),
+                                    const Text(
                                       "Completed",
                                       style: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white),
                                     ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
+                                    const SizedBox(width: 10),
                                     Text(
-                                      "1",
-                                      style: TextStyle(
+                                      completedGoals.toString(),
+                                      style: const TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white),
                                     ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
+                                    const SizedBox(width: 10),
+                                    const Text(
                                       "Goals",
                                       style: TextStyle(
                                           fontSize: 12,
@@ -144,40 +137,32 @@ class GoalsPage extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                const Row(
+                                Row(
                                   children: [
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Icon(
+                                    const SizedBox(width: 5),
+                                    const Icon(
                                       Icons.hourglass_top,
                                       size: 15,
                                       color: Color.fromARGB(255, 255, 255, 255),
                                     ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
+                                    const SizedBox(width: 5),
+                                    const Text(
                                       "In Progress",
                                       style: TextStyle(
                                           fontSize: 13,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white),
                                     ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
+                                    const SizedBox(width: 10),
                                     Text(
-                                      "3",
-                                      style: TextStyle(
+                                      inProgressGoals.toString(),
+                                      style: const TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white),
                                     ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
+                                    const SizedBox(width: 10),
+                                    const Text(
                                       "Goals",
                                       style: TextStyle(
                                           fontSize: 12,
@@ -186,13 +171,15 @@ class GoalsPage extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                const SizedBox(
-                                  height: 20,
-                                ),
+                                const SizedBox(height: 20),
                                 LinearPercentIndicator(
                                   width: 230.0,
                                   lineHeight: 30.0,
-                                  percent: 0.5,
+                                  percent:
+                                      (completedGoals + inProgressGoals > 0)
+                                          ? completedGoals /
+                                              (completedGoals + inProgressGoals)
+                                          : 0.0,
                                   center: const Align(
                                     alignment: Alignment.centerLeft,
                                     child: Padding(
@@ -214,9 +201,7 @@ class GoalsPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                    const SizedBox(height: 20),
                     Row(
                       children: [
                         const Text(
