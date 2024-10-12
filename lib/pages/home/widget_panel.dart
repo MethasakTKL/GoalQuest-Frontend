@@ -3,9 +3,10 @@ import 'package:goal_quest/bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeWidgetPanel extends StatefulWidget {
-  const HomeWidgetPanel({Key? key}) : super(key: key);
+  const HomeWidgetPanel({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _HomeWidgetPanelState createState() => _HomeWidgetPanelState();
 }
 
@@ -131,8 +132,6 @@ class _HomeWidgetPanelState extends State<HomeWidgetPanel> {
                       return const CircularProgressIndicator(); // แสดง loading indicator ถ้าข้อมูลยังไม่โหลดเสร็จ
                     },
                   );
-                
-                return Container();
               },
             ),
           ),
