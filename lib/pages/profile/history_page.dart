@@ -39,9 +39,6 @@ class _RedeemHistoryPageState extends State<RedeemHistoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    final redeemHistory =
-        context.select((HistoryBloc bloc) => bloc.state.histories);
-    final rewards = context.select((RewardBloc bloc) => bloc.state.rewards);
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
@@ -167,16 +164,19 @@ class _RedeemHistoryPageState extends State<RedeemHistoryPage> {
                             child: CircularProgressIndicator(),
                           );
                         } else if (historyState is ReadyHistoryState &&
-                            rewardState is ReadyRewardState) {
-                          // ถ้ามีข้อมูลจาก History และ Reward
+                            (rewardState is ReadyRewardState ||
+                                rewardState is RewardRedeemedState)) {
+                          // ถ้ามีข้อมูลจาก History และ Reward หรือมีการ redeem reward สำเร็จ
                           final redeemHistory = historyState.histories;
                           final rewards = rewardState.rewards;
+
                           if (redeemHistory.isEmpty || rewards.isEmpty) {
                             return const Center(
                               child: Text(
                                   'No redeem history or rewards available'),
                             );
                           }
+
                           return RedeemHistoryTable(
                             isRedeemVisible: isRedeemVisible,
                             redeemHistory: redeemHistory,

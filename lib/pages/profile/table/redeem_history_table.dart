@@ -6,6 +6,7 @@ class RedeemHistoryTable extends StatelessWidget {
   final bool isRedeemVisible;
   final List<HistoryModel> redeemHistory;
   final List<RewardModel> rewards;
+  
 
   const RedeemHistoryTable({
     super.key,
@@ -29,6 +30,8 @@ class RedeemHistoryTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<HistoryModel> sortedRedeemHistory = List.from(redeemHistory);
+    sortedRedeemHistory.sort((a, b) => b.redeemedDate.compareTo(a.redeemedDate));
     return isRedeemVisible
         ? Padding(
             padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
@@ -60,7 +63,7 @@ class RedeemHistoryTable extends StatelessWidget {
                       ),
                     ),
                   ],
-                  rows: redeemHistory
+                  rows: sortedRedeemHistory
                       .map(
                         (history) =>  DataRow(
                           cells: [

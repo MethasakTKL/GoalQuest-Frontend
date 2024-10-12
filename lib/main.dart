@@ -63,10 +63,12 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<RewardBloc>(
           create: (context) {
-            final bloc =
-                RewardBloc(RewardRepoFromDb());
-            bloc.add(LoadRewardEvent());
-            return bloc;
+            final historyBloc =
+                context.read<HistoryBloc>(); // อ่าน HistoryBloc จาก context
+            final rewardBloc = RewardBloc(RewardRepoFromDb(),
+                historyBloc); // ส่ง HistoryBloc เข้า RewardBloc
+            rewardBloc.add(LoadRewardEvent()); // โหลด reward เมื่อเริ่มต้น
+            return rewardBloc;
           },
         ),
       ],

@@ -5,10 +5,9 @@ import 'package:goal_quest/repositories/repositories.dart';
 
 class RewardBloc extends Bloc<RewardEvent, RewardState> {
   final RewardRepository rewardRepository;
+  final HistoryBloc historyBloc;
 
-  RewardBloc(
-    this.rewardRepository,
-  ) : super(LodingRewardState()) {
+  RewardBloc(this.rewardRepository, this.historyBloc) : super(LodingRewardState()) {
     on<LoadRewardEvent>(_onLoadRewardEvent);
     on<RedeemRewardEvent>(_onRedeemRewardEvent);
   }
@@ -32,6 +31,7 @@ class RewardBloc extends Bloc<RewardEvent, RewardState> {
 
     // ส่ง State พร้อมกับรายการ rewards ที่อัพเดต
     emit(RewardRedeemedState(rewards: state.rewards, rewardId: event.rewardId));
+    historyBloc.add(LoadHistoryEvent());  // เรียกให้โหลดประวัติใหม่หลังจาก redeem สำเร็จ
   } catch (e) {
     debugPrint('Failed to redeem reward: $e');
     emit(ErrorRewardState(error: "Failed to redeem reward."));
