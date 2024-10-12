@@ -55,8 +55,8 @@ class GoalsList extends StatelessWidget {
                         actions: [
                           TextButton(
                             onPressed: () {
-                              // ปิด dialog
-                              Navigator.of(context).pop();
+                              Navigator.of(context)
+                                  .pop(); // ปิด Dialog ถ้ากด Cancel
                             },
                             child: const Text(
                               'Cancel',
@@ -66,9 +66,12 @@ class GoalsList extends StatelessWidget {
                           ),
                           TextButton(
                             onPressed: () {
-                              // ลบเป้าหมาย (ทำการลบที่นี่)
-                              // หลังจากนั้นปิด dialog
-                              Navigator.of(context).pop();
+                              // ส่ง Event DeleteGoalEvent ไปที่ GoalBloc พร้อม goalId ที่จะลบ
+                              context
+                                  .read<GoalBloc>()
+                                  .add(DeleteGoalEvent(goal.goalId));
+                              Navigator.of(context)
+                                  .pop(); // ปิด Dialog หลังจากลบ
                             },
                             style: TextButton.styleFrom(
                               backgroundColor:
@@ -90,11 +93,9 @@ class GoalsList extends StatelessWidget {
                 },
 
                 onEdit: () {
-                  // สมมุติว่าคุณมีข้อมูลของเป้าหมายที่ต้องการแก้ไข
-                  String goalTitle = "Current Goal Title"; // เปลี่ยนเป็นค่าจริง
-                  String goalDescription =
-                      "Current Goal Description"; // เปลี่ยนเป็นค่าจริง
-                  int goalId = 1; // เปลี่ยนเป็น ID ของเป้าหมายที่ต้องการแก้ไข
+                  String goalTitle = goal.goalTitle;
+                  String goalDescription = goal.goalDescription;
+                  int goalId = goal.goalId;
 
                   showDialog(
                     context: context,
@@ -103,6 +104,13 @@ class GoalsList extends StatelessWidget {
                         initialTitle: goalTitle,
                         initialDescription: goalDescription,
                         goalId: goalId,
+                        onSave: (updatedTitle, updatedDescription) {
+                          context.read<GoalBloc>().add(EditGoalEvent(
+                                goalId: goalId,
+                                updatedTitle: updatedTitle,
+                                updatedDescription: updatedDescription,
+                              )); // เรียกใช้ Edit Event
+                        },
                       );
                     },
                   );
