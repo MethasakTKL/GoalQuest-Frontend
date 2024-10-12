@@ -1,5 +1,6 @@
 import 'package:goal_quest/models/models.dart';
 
 abstract class PointRepository {
-  Future<List<PointModel>> loadPoint();
+  Future<PointModel> getCurrentUserPoint();
+  Future<List<PointModel>> getAllPoints();
 }

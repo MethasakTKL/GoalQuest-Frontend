@@ -26,15 +26,6 @@ class _RedeemHistoryPageState extends State<RedeemHistoryPage> {
 
   bool isEarnPointVisible = true;
 
-  // final List<Map<String, dynamic>> redeemHistory = const [
-  //   {'date': '04/09/2024', 'Name': 'Godiigozill44444', 'point': 1000},
-  //   {'date': '13/08/2024', 'Name': 'Frogie', 'point': 2500},
-  //   {'date': '12/07/2024', 'Name': 'Fire Cat', 'point': 1500},
-  //   {'date': '10/07/2024', 'Name': 'Godji', 'point': 1000},
-  //   {'date': '5/07/2024', 'Name': 'Frogie', 'point': 2500},
-  //   {'date': '1/07/2024', 'Name': 'Fire Cat', 'point': 1500},
-  //   {'date': '30/06/2024', 'Name': 'Frogie', 'point': 2500},
-  // ];
   bool isRedeemVisible = false;
 
   @override
@@ -159,14 +150,14 @@ class _RedeemHistoryPageState extends State<RedeemHistoryPage> {
                       builder: (context, rewardState) {
                         if (historyState is LoadingHistoryState ||
                             rewardState is LodingRewardState) {
-                          // ถ้ากำลังโหลดข้อมูลอยู่ ให้แสดง loading indicator
+                          
                           return const Center(
                             child: CircularProgressIndicator(),
                           );
                         } else if (historyState is ReadyHistoryState &&
                             (rewardState is ReadyRewardState ||
                                 rewardState is RewardRedeemedState)) {
-                          // ถ้ามีข้อมูลจาก History และ Reward หรือมีการ redeem reward สำเร็จ
+                         
                           final redeemHistory = historyState.histories;
                           final rewards = rewardState.rewards;
 
@@ -195,7 +186,6 @@ class _RedeemHistoryPageState extends State<RedeemHistoryPage> {
                                 )
                               : const SizedBox.shrink();
                         } else {
-                          // กรณีอื่นๆ ที่ไม่ตรงเงื่อนไข ให้แสดงพื้นที่ว่าง
                           return const SizedBox.shrink();
                         }
                       },

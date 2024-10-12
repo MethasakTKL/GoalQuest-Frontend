@@ -161,46 +161,59 @@ class ProfilePage extends StatelessWidget {
                                         ),
                                       ),
                                       const SizedBox(width: 10),
-                                      Container(
-                                        width: 120,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                          gradient: const LinearGradient(
-                                            begin: Alignment.topLeft,
-                                            end: Alignment.bottomRight,
-                                            colors: [
-                                              Color.fromARGB(255, 141, 66,
-                                                  245), // สีฟ้าจางๆ
-                                              Color(0xFF0D47A1), // สีฟ้าเข้ม
-                                            ],
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        child: Center(
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              const Icon(
-                                                Icons.savings_outlined,
-                                                size: 15,
-                                                color: Color.fromARGB(
-                                                    255, 222, 222, 222),
+                                      BlocBuilder<PointBloc, PointState>(
+                                          builder: (context, pointState) {
+                                        if (pointState is ReadyPointState) {
+                                          final currentUserPoint =
+                                              pointState.points.firstWhere(
+                                            (point) =>
+                                                point.userId == state.user.id,
+                                          );
+                                          return Container(
+                                            width: 120,
+                                            height: 40,
+                                            decoration: BoxDecoration(
+                                              gradient: const LinearGradient(
+                                                begin: Alignment.topLeft,
+                                                end: Alignment.bottomRight,
+                                                colors: [
+                                                  Color.fromARGB(255, 141, 66,
+                                                      245), // สีฟ้าจางๆ
+                                                  Color(
+                                                      0xFF0D47A1), // สีฟ้าเข้ม
+                                                ],
                                               ),
-                                              const SizedBox(width: 5),
-                                              Text(
-                                                '${currentUser.point} Points',
-                                                style: const TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 13,
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            child: Center(
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  const Icon(
+                                                    Icons.savings_outlined,
+                                                    size: 15,
+                                                    color: Color.fromARGB(
+                                                        255, 222, 222, 222),
+                                                  ),
+                                                  const SizedBox(width: 5),
+                                                  Text(
+                                                    '${currentUserPoint.totalPoint} Points',
+                                                    style: const TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 13,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ],
                                               ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
+                                            ),
+                                          );
+                                        } else {
+                                          return const CircularProgressIndicator();
+                                        }
+                                      }),
                                     ],
                                   ),
                                 ),

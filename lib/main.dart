@@ -49,8 +49,8 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<PointBloc>(
           create: (context) {
-            final bloc = PointBloc(PointMockRepository());
-            bloc.add(LoadPointEvent());
+            final bloc = PointBloc(PointRepoFromDb());
+            bloc.add(LoadAllPointsEvent());
             return bloc;
           },
         ),

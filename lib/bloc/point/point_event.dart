@@ -1,3 +1,4 @@
 sealed class PointEvent {}
 
-class LoadPointEvent extends PointEvent {}
+class LoadCurrentUserPointEvent extends PointEvent {}
+class LoadAllPointsEvent extends PointEvent {}

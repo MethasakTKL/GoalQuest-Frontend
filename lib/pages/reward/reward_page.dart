@@ -127,33 +127,46 @@ class RewardPage extends StatelessWidget {
                     end: Alignment.bottomCenter,
                   ),
                 ),
-                child: const Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.savings_outlined,
-                      size: 40,
-                      color: Colors.white,
-                    ),
-                    Text(
-                      '1000',
-                      style: TextStyle(
-                        fontFamily: 'Barlow',
-                        fontSize: 50,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    Text(
-                      'TOTAL POINT',
-                      style: TextStyle(
-                        fontFamily: 'Barlow',
-                        fontSize: 18,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
+                child:
+                    BlocBuilder<UserBloc, UserState>(builder: (context, state) {
+                  return BlocBuilder<PointBloc, PointState>(
+                      builder: (context, pointState) {
+                    if (pointState is ReadyPointState) {
+                      final currentUserPoint = pointState.points.firstWhere(
+                        (point) => point.userId == state.user.id,
+                      );
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(
+                            Icons.savings_outlined,
+                            size: 40,
+                            color: Colors.white,
+                          ),
+                          Text(
+                            '${currentUserPoint.totalPoint}',
+                            style: const TextStyle(
+                              fontFamily: 'Barlow',
+                              fontSize: 50,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                          const Text(
+                            'TOTAL POINT',
+                            style: TextStyle(
+                              fontFamily: 'Barlow',
+                              fontSize: 18,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      );
+                    } else {
+                      return const CircularProgressIndicator();
+                    }
+                  });
+                }),
               ),
             ),
           ),
