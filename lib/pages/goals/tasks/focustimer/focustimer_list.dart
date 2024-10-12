@@ -16,6 +16,12 @@ class FocusTimerList extends StatelessWidget {
         .where((task) => task.goalId == goalId && task.taskType == 'FocusTimer')
         .toList());
 
+    // เรียงลำดับ tasks ตามคะแนนจากน้อยไปมาก
+    tasks.sort((a, b) {
+      return calculatePoints(a.duration ?? 0)
+          .compareTo(calculatePoints(b.duration ?? 0));
+    });
+
     return SingleChildScrollView(
       child: Column(
         children: tasks.isNotEmpty
@@ -24,7 +30,7 @@ class FocusTimerList extends StatelessWidget {
                       const SizedBox(height: 10),
                       FocusTimerItem(
                         title: task.title,
-                        duration: '${task.duration ?? 0} Minutes',
+                        duration: '${task.duration ?? 0} Min',
                         points: calculatePoints(
                             task.duration ?? 0), // คำนวณคะแนนจากระยะเวลา
                         onStart: () {

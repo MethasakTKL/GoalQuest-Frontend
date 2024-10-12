@@ -19,14 +19,14 @@ class FocusTimerItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 122,
+      height: 132,
       decoration: BoxDecoration(
         color: Colors.grey[300],
         borderRadius: BorderRadius.circular(10),
       ),
       child: Center(
         child: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: const EdgeInsets.all(15.0),
           child: Column(
             crossAxisAlignment:
                 CrossAxisAlignment.start, // Align text to the start
@@ -74,6 +74,13 @@ class FocusTimerItem extends StatelessWidget {
               ),
               Row(
                 children: [
+                  const Icon(
+                    Icons.timer_outlined,
+                    size: 15,
+                  ),
+                  const SizedBox(
+                    width: 2,
+                  ),
                   Text(
                     duration,
                     style: const TextStyle(fontSize: 13),
