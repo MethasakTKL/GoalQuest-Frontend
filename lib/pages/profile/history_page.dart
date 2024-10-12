@@ -184,10 +184,16 @@ class _RedeemHistoryPageState extends State<RedeemHistoryPage> {
                           );
                         } else if (historyState is ErrorHistoryState ||
                             rewardState is ErrorRewardState) {
-                          // ถ้ามีข้อผิดพลาดในการโหลดข้อมูล
-                          return const Center(
-                            child: Text('Failed to load history or rewards'),
-                          );
+                          return isRedeemVisible
+                              ? const Center(
+                                  child: Text(
+                                    'No history of reward redemption.',
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                )
+                              : const SizedBox.shrink();
                         } else {
                           // กรณีอื่นๆ ที่ไม่ตรงเงื่อนไข ให้แสดงพื้นที่ว่าง
                           return const SizedBox.shrink();
