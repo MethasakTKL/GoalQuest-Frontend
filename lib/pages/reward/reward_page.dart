@@ -63,6 +63,17 @@ class RewardPage extends StatelessWidget {
             const Spacer(),
             IconButton(
               icon: const Icon(
+                Icons.refresh, // เพิ่มไอคอนรีเฟรช
+                color: Colors.black,
+              ),
+              onPressed: () {
+                // ส่ง event เพื่อโหลดข้อมูลใหม่
+                context.read<RewardBloc>().add(LoadRewardEvent());
+              },
+              iconSize: 23,
+            ),
+            IconButton(
+              icon: const Icon(
                 Icons.account_circle,
                 color: Colors.black,
               ),
@@ -146,13 +157,32 @@ class RewardPage extends StatelessWidget {
               ),
             ),
           ),
-          const Row(
+          Row(
             children: [
-              Padding(
+              const Padding(
                 padding: EdgeInsets.only(left: 20),
                 child: Text(
                   "Reward",
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                ),
+              ),
+              const Spacer(),
+              const Text(
+                "Refresh",
+                style: TextStyle(fontSize: 12),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 10.0),
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.refresh, // เพิ่มไอคอนรีเฟรช
+                    color: Colors.black,
+                  ),
+                  onPressed: () {
+                    // ส่ง event เพื่อโหลดข้อมูลใหม่
+                    context.read<RewardBloc>().add(LoadRewardEvent());
+                  },
+                  iconSize: 23,
                 ),
               ),
             ],
@@ -161,104 +191,139 @@ class RewardPage extends StatelessWidget {
             height: 5,
           ),
           Expanded(
-  child: Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 20),
-    child: BlocBuilder<RewardBloc, RewardState>(
-      builder: (context, state) {
-        debugPrint("Reward State: $state");
-        
-        if (state is LodingRewardState) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        } else if (state is ReadyRewardState || state is RewardRedeemedState) {
-          // ถ้า state เป็น Ready หรือ Redeemed ก็ให้แสดงผล list ของ rewards
-          final rewards = state.rewards;
-          
-          return ListView.builder(
-            itemCount: rewards.length,
-            itemBuilder: (context, index) {
-              final reward = rewards[index]; // ดึงข้อมูลแต่ละรายการ
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                child: Container(
-                  height: 100,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                reward.rewardTitle,
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: BlocBuilder<RewardBloc, RewardState>(
+                builder: (context, state) {
+                  debugPrint("Reward State: $state");
+
+                  if (state is LodingRewardState) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state is ReadyRewardState ||
+                      state is RewardRedeemedState) {
+                    // ถ้า state เป็น Ready หรือ Redeemed ก็ให้แสดงผล list ของ rewards
+                    final rewards = state.rewards;
+
+                    return ListView.builder(
+                      itemCount: rewards.length,
+                      itemBuilder: (context, index) {
+                        final reward = rewards[index]; // ดึงข้อมูลแต่ละรายการ
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10.0),
+                          child: Container(
+                            height: 120,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[300],
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          reward.rewardTitle,
+                                          style: const TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 12, vertical: 7),
+                                          decoration: BoxDecoration(
+                                            color: const Color.fromARGB(
+                                                255, 251, 251, 251),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                          ),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              const Icon(
+                                                Icons.redeem,
+                                                size: 15,
+                                                color: Color.fromARGB(
+                                                    255, 137, 137, 137),
+                                              ),
+                                              const SizedBox(width: 5),
+                                              Text(
+                                                '${reward.rewardPoints} Points',
+                                                style: const TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Color.fromARGB(
+                                                      255, 137, 137, 137),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                          reward.rewardDescription,
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.grey[600],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                reward.rewardDescription,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.grey[600],
+                                Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      if (reward.rewardId != null) {
+                                        _showRedeemConfirmationDialog(
+                                          context,
+                                          reward.rewardTitle,
+                                          reward.rewardId!,
+                                          reward.rewardPoints,
+                                        );
+                                      } else {
+                                        debugPrint("Reward ID is null");
+                                      }
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color(0xFF6A00F4),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                    ),
+                                    child: const Text(
+                                      'Redeem',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            if (reward.rewardId != null) {
-                              _showRedeemConfirmationDialog(
-                                context,
-                                reward.rewardTitle,
-                                reward.rewardId!,
-                                reward.rewardPoints,
-                              );
-                            } else {
-                              debugPrint("Reward ID is null");
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF6A00F4),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
+                              ],
                             ),
                           ),
-                          child: const Text(
-                            'Redeem',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            },
-          );
-        } else if (state is ErrorRewardState) {
-          return const Center(
-            child: Text('Failed to load rewards'),
-          );
-        }
-        
-        return const SizedBox.shrink();
-      },
-    ),
-  ),
-),
+                        );
+                      },
+                    );
+                  } else if (state is ErrorRewardState) {
+                    return const Center(
+                      child: Text('Failed to load rewards'),
+                    );
+                  }
+
+                  return const SizedBox.shrink();
+                },
+              ),
+            ),
+          ),
         ],
       ),
     );
