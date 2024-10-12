@@ -56,14 +56,14 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<HistoryBloc>(
           create: (context) {
-            final bloc = HistoryBloc(HistoryMockRepository());
+            final bloc = HistoryBloc(HistoryRepoFromDb());
             bloc.add(LoadHistoryEvent());
             return bloc;
           },
         ),
         BlocProvider<RewardBloc>(
           create: (context) {
-            final bloc = RewardBloc(RewardMockRepository(), HistoryMockRepository());
+            final bloc = RewardBloc(RewardRepoFromDb());
             bloc.add(LoadRewardEvent());
             return bloc;
           },

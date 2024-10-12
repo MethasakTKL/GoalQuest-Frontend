@@ -1,20 +1,21 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:goal_quest/bloc/bloc.dart';
-import 'package:goal_quest/models/history_model.dart';
+import 'package:flutter/widgets.dart';
 import 'package:goal_quest/repositories/repositories.dart';
 
 class RewardBloc extends Bloc<RewardEvent, RewardState> {
   final RewardRepository rewardRepository;
-  final HistoryRepository historyRepository;
-  RewardBloc(this.rewardRepository, this.historyRepository)
-      : super(LodingRewardState()) {
+
+  RewardBloc(
+    this.rewardRepository,
+  ) : super(LodingRewardState()) {
     on<LoadRewardEvent>(_onLoadRewardEvent);
     on<RedeemRewardEvent>(_onRedeemRewardEvent);
   }
   _onLoadRewardEvent(LoadRewardEvent event, Emitter<RewardState> emit) async {
     emit(LodingRewardState());
     try {
-      final rewards = await rewardRepository.getAlllRewards();
+      final rewards = await rewardRepository.getAllRewards();
       emit(ReadyRewardState(rewards: rewards));
     } catch (e) {
       emit(ErrorRewardState(error: e.toString()));
@@ -23,18 +24,17 @@ class RewardBloc extends Bloc<RewardEvent, RewardState> {
 
   _onRedeemRewardEvent(
       RedeemRewardEvent event, Emitter<RewardState> emit) async {
-    try {
-      final reward =
-          await rewardRepository.redeemReward(rewardId: event.rewardId);
-      historyRepository.addHistory(HistoryModel(
-        historyId:
-            DateTime.now().millisecondsSinceEpoch, // สร้าง ID ประวัติการแลกใหม่
-        historyPoint: reward.rewardPoints,
-        historyTitle: reward.rewardTitle,
-        redeemDate: DateTime.now(),
-      ));
-    } catch (e) {
-      emit(ErrorRewardState(error: e.toString()));
-    }
+     try {
+    final reward = await rewardRepository.redeemReward(rewardId: event.rewardId);
+
+    debugPrint('Reward redeemed: ${reward.rewardTitle}');
+    debugPrint('Reward redeemed: ${reward.rewardId}');
+
+    // ส่ง State พร้อมกับรายการ rewards ที่อัพเดต
+    emit(RewardRedeemedState(rewards: state.rewards, rewardId: event.rewardId));
+  } catch (e) {
+    debugPrint('Failed to redeem reward: $e');
+    emit(ErrorRewardState(error: "Failed to redeem reward."));
+  }
   }
 }

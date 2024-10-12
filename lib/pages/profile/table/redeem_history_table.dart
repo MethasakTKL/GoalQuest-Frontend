@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:goal_quest/models/history_model.dart';
+import 'package:goal_quest/models/models.dart';
 import 'package:intl/intl.dart';
 
 class RedeemHistoryTable extends StatelessWidget {
   final bool isRedeemVisible;
   final List<HistoryModel> redeemHistory;
+  final List<RewardModel> rewards;
 
   const RedeemHistoryTable({
     super.key,
     required this.isRedeemVisible,
     required this.redeemHistory,
+    required this.rewards,
   });
 
   String truncateReward(String reward) {
@@ -18,6 +20,11 @@ class RedeemHistoryTable extends StatelessWidget {
       return '${reward.substring(0, 10)}...';
     }
     return reward;
+  }
+
+  String getRewardTitle(int rewardId){
+    final reward = rewards.firstWhere((reward) => reward.rewardId == rewardId);
+    return reward.rewardTitle;
   }
 
   @override
@@ -55,13 +62,12 @@ class RedeemHistoryTable extends StatelessWidget {
                   ],
                   rows: redeemHistory
                       .map(
-                        (history) => DataRow(
+                        (history) =>  DataRow(
                           cells: [
                             DataCell(Text(DateFormat('dd/MM/yyyy').format(history
-                                .redeemDate))), // จัดรูปแบบวันที่เป็น "วัน/เดือน/ปี"
-                            DataCell(Text(truncateReward(history
-                                .historyTitle))), // แสดงชื่อประวัติการใช้งาน
-                            DataCell(Text(history.historyPoint.toString())),
+                                .redeemedDate))), // จัดรูปแบบวันที่เป็น "วัน/เดือน/ปี"
+                            DataCell(Text(truncateReward(getRewardTitle(history.rewardId)))), // แสดงชื่อประวัติการใช้งาน
+                            DataCell(Text(history.pointsSpent.toString())),
                           ],
                         ),
                       )

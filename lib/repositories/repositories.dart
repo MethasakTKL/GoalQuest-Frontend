@@ -20,7 +20,9 @@ export './point/point_repository.dart';
 //Reward
 export './reward/reward_mock_repo.dart';
 export './reward/reward_repository.dart';
+export './reward/reward_repo_from_db.dart';
 
 //History
 export './history/history_mock_repo.dart';
 export './history/history_repository.dart';
+export './history/history_repo_from_db.dart';

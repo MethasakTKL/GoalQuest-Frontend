@@ -41,6 +41,7 @@ class _RedeemHistoryPageState extends State<RedeemHistoryPage> {
   Widget build(BuildContext context) {
     final redeemHistory =
         context.select((HistoryBloc bloc) => bloc.state.histories);
+    final rewards = context.select((RewardBloc bloc) => bloc.state.rewards);
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
@@ -156,24 +157,45 @@ class _RedeemHistoryPageState extends State<RedeemHistoryPage> {
                   ),
                 ),
                 BlocBuilder<HistoryBloc, HistoryState>(
-                    builder: (context, state) {
-                  debugPrint("redeem State: $state");
-                  if (state is LoadingHistoryState) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
+                  builder: (context, historyState) {
+                    return BlocBuilder<RewardBloc, RewardState>(
+                      builder: (context, rewardState) {
+                        if (historyState is LoadingHistoryState ||
+                            rewardState is LodingRewardState) {
+                          // ถ้ากำลังโหลดข้อมูลอยู่ ให้แสดง loading indicator
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else if (historyState is ReadyHistoryState &&
+                            rewardState is ReadyRewardState) {
+                          // ถ้ามีข้อมูลจาก History และ Reward
+                          final redeemHistory = historyState.histories;
+                          final rewards = rewardState.rewards;
+                          if (redeemHistory.isEmpty || rewards.isEmpty) {
+                            return const Center(
+                              child: Text(
+                                  'No redeem history or rewards available'),
+                            );
+                          }
+                          return RedeemHistoryTable(
+                            isRedeemVisible: isRedeemVisible,
+                            redeemHistory: redeemHistory,
+                            rewards: rewards,
+                          );
+                        } else if (historyState is ErrorHistoryState ||
+                            rewardState is ErrorRewardState) {
+                          // ถ้ามีข้อผิดพลาดในการโหลดข้อมูล
+                          return const Center(
+                            child: Text('Failed to load history or rewards'),
+                          );
+                        } else {
+                          // กรณีอื่นๆ ที่ไม่ตรงเงื่อนไข ให้แสดงพื้นที่ว่าง
+                          return const SizedBox.shrink();
+                        }
+                      },
                     );
-                  } else if (state is ReadyHistoryState) {
-                    return RedeemHistoryTable(
-                        isRedeemVisible: isRedeemVisible,
-                        redeemHistory: redeemHistory);
-                  } else if (state is ErrorHistoryState) {
-                    return const Center(
-                      child: Text('Failed to load history'),
-                    );
-                  } else {
-                    return const SizedBox.shrink();
-                  }
-                })
+                  },
+                ),
               ],
             ),
           ),
