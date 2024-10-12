@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:goal_quest/bloc/bloc.dart';
 import 'package:goal_quest/pages/goals/tasks/focustimer/focustimer_item.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import './focustimer_timer.dart';
 
 class FocusTimerList extends StatelessWidget {
   final int goalId;
+
   const FocusTimerList({super.key, required this.goalId});
 
   @override
@@ -14,6 +16,12 @@ class FocusTimerList extends StatelessWidget {
         .where((task) => task.goalId == goalId && task.taskType == 'FocusTimer')
         .toList());
 
+    // เรียงลำดับ tasks ตามคะแนนจากน้อยไปมาก
+    tasks.sort((a, b) {
+      return calculatePoints(a.duration ?? 0)
+          .compareTo(calculatePoints(b.duration ?? 0));
+    });
+
     return SingleChildScrollView(
       child: Column(
         children: tasks.isNotEmpty
@@ -22,10 +30,20 @@ class FocusTimerList extends StatelessWidget {
                       const SizedBox(height: 10),
                       FocusTimerItem(
                         title: task.title,
-                        duration: '${task.duration} Minutes',
-                        points: 100,
+                        duration: '${task.duration ?? 0} Min',
+                        points: calculatePoints(
+                            task.duration ?? 0), // คำนวณคะแนนจากระยะเวลา
                         onStart: () {
-                          Navigator.pushNamed(context, '/focustimer');
+                          // Navigate to FocusTimerPage with taskDuration and taskName
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => FocusTimerPage(
+                                taskDuration: task.duration ?? 0,
+                                taskName: task.title, // ส่ง taskName ไปด้วย
+                              ),
+                            ),
+                          );
                         },
                       ),
                     ])
@@ -42,5 +60,24 @@ class FocusTimerList extends StatelessWidget {
               ],
       ),
     );
+  }
+
+  // ฟังก์ชันสำหรับคำนวณคะแนนจาก duration
+  int calculatePoints(int duration) {
+    int points = 0;
+    if (duration >= 120) {
+      points = 500;
+    } else if (duration >= 90) {
+      points = 400;
+    } else if (duration >= 60) {
+      points = 300;
+    } else if (duration >= 45) {
+      points = 200;
+    } else if (duration >= 30) {
+      points = 100;
+    } else if (duration >= 1) {
+      points = 50;
+    }
+    return points;
   }
 }

@@ -4,7 +4,11 @@ import 'giveup_dialog.dart';
 import 'complete_dialog.dart';
 
 class FocusTimerPage extends StatefulWidget {
-  const FocusTimerPage({super.key});
+  final int taskDuration; // ตัวแปร duration
+  final String taskName; // ตัวแปร task name
+
+  const FocusTimerPage(
+      {super.key, required this.taskDuration, required this.taskName});
 
   @override
   State<FocusTimerPage> createState() => _FocusTimerPageState();
@@ -12,18 +16,22 @@ class FocusTimerPage extends StatefulWidget {
 
 class _FocusTimerPageState extends State<FocusTimerPage> {
   bool isPlaying = false;
-  int totalSeconds = 1 * 60; // เวลาเริ่มต้นในหน่วยวินาที
-  int static_timer = 1 * 60;
+  late int totalSeconds;
+  late int static_timer;
   late Timer timer;
-  late Timer cancelTimer;
+  Timer? cancelTimer;
   int points = 500;
   bool showGiveUp = false;
   bool isCancelable = true;
-  int? initialSeconds; // เก็บค่าเวลาเริ่มต้นในแต่ละรอบ
+  int? initialSeconds;
 
   @override
   void initState() {
     super.initState();
+
+    totalSeconds = widget.taskDuration * 60;
+    static_timer = widget.taskDuration * 60;
+
     updatePoints();
   }
 
@@ -32,28 +40,23 @@ class _FocusTimerPageState extends State<FocusTimerPage> {
     if (isPlaying) {
       timer.cancel();
     }
-    if (cancelTimer.isActive) {
-      cancelTimer.cancel();
-    }
+    cancelTimer?.cancel();
     super.dispose();
   }
 
   void startTimer() {
     setState(() {
       initialSeconds ??= totalSeconds;
+      isCancelable = true;
+      showGiveUp = true;
 
-      isCancelable = true; // รีเซ็ตสถานะการ cancel
-      showGiveUp = true; // แสดงปุ่ม give up เมื่อเริ่มจับเวลาใหม่
-
-      // ตั้งเวลาสำหรับให้ Cancel ได้ใน 10 วินาทีแรก
       cancelTimer = Timer(const Duration(seconds: 10), () {
         setState(() {
-          isCancelable = false; // เมื่อครบ 10 วินาทีแล้วจะไม่สามารถ Cancel ได้
+          isCancelable = false;
         });
       });
     });
 
-    // เริ่มต้นการนับเวลา
     timer = Timer.periodic(const Duration(seconds: 1), (_) {
       setState(() {
         if (totalSeconds > 0) {
@@ -71,19 +74,17 @@ class _FocusTimerPageState extends State<FocusTimerPage> {
       timer.cancel();
       isPlaying = false;
       if (totalSeconds == 0) {
-        showCompleteDialog(
-            context); // เรียก Complete Dialog เมื่อเวลาเป็น 00:00
+        showCompleteDialog(context);
       }
     });
   }
 
   void resetTimer() {
     setState(() {
-      timer.cancel(); // หยุดการนับเวลา
-      totalSeconds =
-          initialSeconds ?? totalSeconds; // รีเซ็ตเวลาไปยังค่าเริ่มต้น
-      isPlaying = false; // หยุดการเล่น
-      showGiveUp = false; // ซ่อนปุ่ม Give Up หลังจากการรีเซ็ต
+      timer.cancel();
+      totalSeconds = initialSeconds ?? totalSeconds;
+      isPlaying = false;
+      showGiveUp = false;
     });
   }
 
@@ -101,10 +102,9 @@ class _FocusTimerPageState extends State<FocusTimerPage> {
   void handleGiveUp() {
     stopTimer();
     setState(() {
-      totalSeconds =
-          initialSeconds ?? totalSeconds; // รีเซ็ตเวลาเป็นเวลาเริ่มต้น
+      totalSeconds = initialSeconds ?? totalSeconds;
       updatePoints();
-      showGiveUp = false; // ซ่อนปุ่ม Give Up
+      showGiveUp = false;
     });
   }
 
@@ -151,9 +151,9 @@ class _FocusTimerPageState extends State<FocusTimerPage> {
               height: 50,
             ),
             const Spacer(),
-            const Text(
-              'เรียนพื้นฐาน Python',
-              style: TextStyle(
+            Text(
+              widget.taskName, // แสดงชื่อ task แทนที่ข้อความเดิม
+              style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
@@ -285,7 +285,6 @@ class _FocusTimerPageState extends State<FocusTimerPage> {
                     OutlinedButton(
                       onPressed:
                           isCancelable ? resetTimer : showConfirmationDialog,
-                      // กด Cancel จะหยุดจับเวลาในช่วง 10 วินาทีแรก, กด Give Up จะแสดง dialog
                       style: OutlinedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 25, vertical: 11),

@@ -63,7 +63,8 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<RewardBloc>(
           create: (context) {
-            final bloc = RewardBloc(RewardRepoFromDb());
+            final bloc =
+                RewardBloc(RewardRepoFromDb());
             bloc.add(LoadRewardEvent());
             return bloc;
           },
@@ -84,7 +85,12 @@ class MyApp extends StatelessWidget {
           '/edit_profile': (context) => const EditProfilePage(),
           '/changee_password': (context) => const ChangePasswordPage(),
           '/redeem_history': (context) => const RedeemHistoryPage(),
-          '/focustimer': (context) => const FocusTimerPage(),
+          '/focustimer': (context) {
+            return const FocusTimerPage(
+              taskDuration: 0,
+              taskName: "name",
+            );
+          },
           '/tasks': (context) => const TasksPage(),
           '/profilepage': (context) => const ProfilePage(),
         },

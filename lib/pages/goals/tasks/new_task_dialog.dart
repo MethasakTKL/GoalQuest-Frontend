@@ -78,6 +78,8 @@ class _NewTaskDialogState extends State<NewTaskDialog> {
                   const SizedBox(height: 20),
                   DropdownButtonFormField<String>(
                     value: selectedTaskType,
+                    dropdownColor: const Color.fromARGB(
+                        255, 255, 255, 255), // เปลี่ยนสีพื้นหลังของ Dropdown
                     items: ['TodoQuest', 'FocusTimer'].map((String taskType) {
                       return DropdownMenuItem<String>(
                         value: taskType,
@@ -161,9 +163,14 @@ class _NewTaskDialogState extends State<NewTaskDialog> {
                       int duration = durationInput;
                       DateTime startDate = startDateTime ?? DateTime.now();
                       DateTime endDate = endDateTime ?? DateTime.now();
-                      context.read<TaskBloc>().add(AddTaskEvent(widget.goalId,
-                        title, taskType,
-                          repeatDays, duration, startDate, endDate));
+                      context.read<TaskBloc>().add(AddTaskEvent(
+                          widget.goalId,
+                          title,
+                          taskType,
+                          repeatDays,
+                          duration,
+                          startDate,
+                          endDate));
                       context.read<TaskBloc>().add(LoadTaskEvent());
 
                       Navigator.pop(context);
@@ -189,10 +196,16 @@ class _NewTaskDialogState extends State<NewTaskDialog> {
         const Text('Repeat Every:'),
         DropdownButton<int>(
           value: repeatDaysInput,
+          dropdownColor: const Color.fromARGB(
+              255, 255, 255, 255), // เปลี่ยนสีพื้นหลังของ Dropdown
           items: [1, 2, 3, 7, 14].map((int day) {
             return DropdownMenuItem<int>(
               value: day,
-              child: Text('$day days'),
+              child: Text(
+                '$day days',
+                style: const TextStyle(
+                    color: Colors.black), // กำหนดสีของข้อความใน Dropdown
+              ),
             );
           }).toList(),
           onChanged: (int? newValue) {
@@ -200,6 +213,8 @@ class _NewTaskDialogState extends State<NewTaskDialog> {
               repeatDaysInput = newValue!;
             });
           },
+          style: const TextStyle(
+              color: Colors.black), // กำหนดสีของข้อความใน DropdownButton
         ),
         const SizedBox(height: 10),
       ],
@@ -213,10 +228,16 @@ class _NewTaskDialogState extends State<NewTaskDialog> {
         const Text('Set Duration (minutes):'),
         DropdownButton<int>(
           value: durationInput,
-          items: [15, 30, 45, 60, 90].map((int duration) {
+          dropdownColor: const Color.fromARGB(
+              255, 255, 255, 255), // เปลี่ยนสีพื้นหลังของ Dropdown
+          items: [5, 10, 15, 30, 45, 60, 90, 100, 120, 150].map((int duration) {
             return DropdownMenuItem<int>(
               value: duration,
-              child: Text('$duration minutes'),
+              child: Text(
+                '$duration minutes',
+                style: const TextStyle(
+                    color: Colors.black), // กำหนดสีของข้อความใน Dropdown
+              ),
             );
           }).toList(),
           onChanged: (int? newValue) {
@@ -224,6 +245,8 @@ class _NewTaskDialogState extends State<NewTaskDialog> {
               durationInput = newValue!;
             });
           },
+          style: const TextStyle(
+              color: Colors.black), // กำหนดสีของข้อความใน DropdownButton
         ),
       ],
     );
@@ -235,7 +258,24 @@ class _NewTaskDialogState extends State<NewTaskDialog> {
       initialDate: DateTime.now(),
       firstDate: DateTime(2020),
       lastDate: DateTime(2100),
+      // ใช้ ThemeData เพื่อปรับแต่งสี
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            primaryColor: const Color.fromARGB(255, 96, 137, 52), // สีหลัก
+            hintColor: const Color.fromARGB(255, 96, 137, 52), // สีของปุ่ม
+            colorScheme: ColorScheme.light(
+                primary: const Color.fromARGB(255, 96, 137, 52)), // สีปุ่ม
+            buttonTheme: const ButtonThemeData(
+                textTheme: ButtonTextTheme.primary), // ปรับปุ่มให้เป็นสีหลัก
+            // เปลี่ยนสีวันปัจจุบัน
+            dialogBackgroundColor: Colors.white, // พื้นหลังของ Dialog
+          ),
+          child: child!,
+        );
+      },
     );
+
     if (picked != null) {
       setState(() {
         if (isStartDate) {
