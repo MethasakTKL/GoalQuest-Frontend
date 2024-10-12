@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'edit_task_dialog.dart';
 
 class TodoQuestItem extends StatelessWidget {
   final bool isChecked;
@@ -46,7 +47,7 @@ class TodoQuestItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             GestureDetector(
-              onTap: isComplete ||  DateTime.now().isBefore(nextDueDate)
+              onTap: isComplete || DateTime.now().isBefore(nextDueDate)
                   ? null
                   : () {
                       if (onChanged != null) {
@@ -63,56 +64,70 @@ class TodoQuestItem extends StatelessWidget {
               width: 10,
             ),
             Expanded(
-              child: Container(
-                padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
-                decoration: BoxDecoration(
-                  color: cardColor,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
+              child: Stack(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
+                    decoration: BoxDecoration(
+                      color: cardColor,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          title,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        Row(
+                          children: [
+                            Text(
+                              title,
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const Spacer(),
+                            Text('$taskCount/${repeatCount.toString()}',
+                                style: const TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                            if (isComplete) ...[
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              const Icon(
+                                Icons.check_circle,
+                                color: Colors.black,
+                                size: 18,
+                              ),
+                            ]
+                          ],
                         ),
-                        const Spacer(),
-                        Text('$taskCount/${repeatCount.toString()}',
-                            style: const TextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold,
-                            )),
-                        if (isComplete) ...[
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          const Icon(
-                            Icons.check_circle,
-                            color: Colors.black,
-                            size: 18,
-                          ),
-                        ]
+                        Text(
+                          frequency,
+                          style: const TextStyle(fontSize: 13),
+                        ),
+                        Text(
+                          'Last: $lastDone',
+                          style: const TextStyle(fontSize: 13),
+                        ),
+                        Text(
+                          'Next: $nextDue',
+                          style: const TextStyle(fontSize: 13),
+                        ),
                       ],
                     ),
-                    Text(
-                      frequency,
-                      style: const TextStyle(fontSize: 13),
+                  ),
+                  Positioned(
+                    right: 0,
+                    bottom: 0,
+                    child: IconButton(
+                      onPressed: () {
+                        showEditTaskDialog(context);
+                      },
+                      icon: const Icon(Icons.more_horiz),
                     ),
-                    Text(
-                      'Last: $lastDone',
-                      style: const TextStyle(fontSize: 13),
-                    ),
-                    Text(
-                      'Next: $nextDue',
-                      style: const TextStyle(fontSize: 13),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ],

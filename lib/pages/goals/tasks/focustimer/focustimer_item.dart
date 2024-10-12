@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../todoquest/edit_task_dialog.dart';
 
 class FocusTimerItem extends StatelessWidget {
   final String title;
@@ -78,6 +79,13 @@ class FocusTimerItem extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
+                  IconButton(
+                    onPressed: () {
+                      showEditTaskDialog(context);
+                    },
+                    icon: const Icon(Icons.more_horiz),
+                  ),
+                  Spacer(),
                   ElevatedButton(
                     onPressed: onStart,
                     style: ElevatedButton.styleFrom(
