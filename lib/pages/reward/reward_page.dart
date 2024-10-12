@@ -314,6 +314,16 @@ class RewardPage extends StatelessWidget {
                       },
                     );
                   } else if (state is ErrorRewardState) {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Error: ${state.error}'),
+                        ),
+                      );
+
+                      // พยายาม Reload อัตโนมัติ
+                      context.read<RewardBloc>().add(LoadRewardEvent());
+                    });
                     return const Center(
                       child: Text('Failed to load rewards'),
                     );
