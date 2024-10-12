@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:goal_quest/bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:goal_quest/mockup/user_models_list.dart';
 
 class HomeWidgetPanel extends StatelessWidget {
@@ -6,7 +8,11 @@ class HomeWidgetPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentuser = usersList[0];
+    final currentUser = usersList[0];
+
+    // นับจำนวน Goals จาก Bloc
+    final goalsCount =
+        context.select((GoalBloc bloc) => bloc.state.goals.length);
 
     return Row(
       children: [
@@ -20,16 +26,16 @@ class HomeWidgetPanel extends StatelessWidget {
               color: const Color.fromARGB(255, 213, 69, 69),
               borderRadius: BorderRadius.circular(20), // Add rounded corners
             ),
-            child: const Center(
+            child: Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(bottom: 5),
+                    padding: const EdgeInsets.only(bottom: 5),
                     child: Text(
-                      '4',
-                      style: TextStyle(
+                      '$goalsCount', // ใช้จำนวน Goals ที่ได้จาก Bloc
+                      style: const TextStyle(
                         fontFamily: 'Barlow',
                         fontSize: 55, // Larger size for points
                         fontWeight: FontWeight.bold,
@@ -37,10 +43,8 @@ class HomeWidgetPanel extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Text(
+                  const SizedBox(width: 5),
+                  const Text(
                     'GOALS',
                     style: TextStyle(
                       fontFamily: 'Barlow',
@@ -88,7 +92,7 @@ class HomeWidgetPanel extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '${currentuser.point}',
+                  '${currentUser.point}',
                   style: const TextStyle(
                     fontFamily: 'Barlow',
                     fontSize: 45, // Larger size for points
