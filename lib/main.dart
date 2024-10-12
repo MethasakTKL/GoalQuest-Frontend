@@ -63,7 +63,8 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<RewardBloc>(
           create: (context) {
-            final bloc = RewardBloc(RewardMockRepository(), HistoryMockRepository());
+            final bloc =
+                RewardBloc(RewardMockRepository(), HistoryMockRepository());
             bloc.add(LoadRewardEvent());
             return bloc;
           },
@@ -84,7 +85,11 @@ class MyApp extends StatelessWidget {
           '/edit_profile': (context) => const EditProfilePage(),
           '/changee_password': (context) => const ChangePasswordPage(),
           '/redeem_history': (context) => const RedeemHistoryPage(),
-          '/focustimer': (context) => const FocusTimerPage(),
+          '/focustimer': (context) {
+            final int duration =
+                60; // Set this to whatever duration you need (in seconds)
+            return FocusTimerPage(taskDuration: duration);
+          },
           '/tasks': (context) => const TasksPage(),
           '/profilepage': (context) => const ProfilePage(),
         },

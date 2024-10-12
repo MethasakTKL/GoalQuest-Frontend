@@ -4,7 +4,9 @@ import 'giveup_dialog.dart';
 import 'complete_dialog.dart';
 
 class FocusTimerPage extends StatefulWidget {
-  const FocusTimerPage({super.key});
+  final int taskDuration; // เพิ่มตัวแปรสำหรับรับค่า duration จาก task
+
+  const FocusTimerPage({super.key, required this.taskDuration});
 
   @override
   State<FocusTimerPage> createState() => _FocusTimerPageState();
@@ -12,18 +14,22 @@ class FocusTimerPage extends StatefulWidget {
 
 class _FocusTimerPageState extends State<FocusTimerPage> {
   bool isPlaying = false;
-  int totalSeconds = 1 * 60; // เวลาเริ่มต้นในหน่วยวินาที
-  int static_timer = 1 * 60;
+  late int totalSeconds;
+  late int static_timer;
   late Timer timer;
-  late Timer cancelTimer;
+  Timer? cancelTimer; // เปลี่ยนเป็น nullable
   int points = 500;
   bool showGiveUp = false;
   bool isCancelable = true;
-  int? initialSeconds; // เก็บค่าเวลาเริ่มต้นในแต่ละรอบ
+  int? initialSeconds;
 
   @override
   void initState() {
     super.initState();
+
+    totalSeconds = widget.taskDuration * 60;
+    static_timer = widget.taskDuration * 60;
+
     updatePoints();
   }
 
@@ -32,28 +38,23 @@ class _FocusTimerPageState extends State<FocusTimerPage> {
     if (isPlaying) {
       timer.cancel();
     }
-    if (cancelTimer.isActive) {
-      cancelTimer.cancel();
-    }
+    cancelTimer?.cancel(); // เช็คก่อนเข้าถึง cancelTimer
     super.dispose();
   }
 
   void startTimer() {
     setState(() {
       initialSeconds ??= totalSeconds;
+      isCancelable = true;
+      showGiveUp = true;
 
-      isCancelable = true; // รีเซ็ตสถานะการ cancel
-      showGiveUp = true; // แสดงปุ่ม give up เมื่อเริ่มจับเวลาใหม่
-
-      // ตั้งเวลาสำหรับให้ Cancel ได้ใน 10 วินาทีแรก
       cancelTimer = Timer(const Duration(seconds: 10), () {
         setState(() {
-          isCancelable = false; // เมื่อครบ 10 วินาทีแล้วจะไม่สามารถ Cancel ได้
+          isCancelable = false;
         });
       });
     });
 
-    // เริ่มต้นการนับเวลา
     timer = Timer.periodic(const Duration(seconds: 1), (_) {
       setState(() {
         if (totalSeconds > 0) {
