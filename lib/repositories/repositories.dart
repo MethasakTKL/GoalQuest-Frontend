@@ -11,6 +11,7 @@ export './user/user_repository.dart';
 //Goal
 export './goal/goal_mock_repo.dart';
 export './goal/goal_repository.dart';
+export './goal/goal_repo_from_db.dart';
 
 
 //Point

@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<GoalBloc>(
           create: (context) {
-            final bloc = GoalBloc(GoalMockRepository());
+            final bloc = GoalBloc(GoalRepoFromDb());
             bloc.add(LoadGoalEvent());
             return bloc;
           },

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:goal_quest/bloc/goal/goal_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:goal_quest/bloc/bloc.dart';
 
@@ -119,9 +118,11 @@ class _EditGoalDialogState extends State<EditGoalDialog> {
                       String goalTitle = titleController.text;
                       String description = descriptionController.text;
 
-                      // เรียกใช้งานฟังก์ชัน onSave เมื่อบันทึก
-                      widget.onSave(goalTitle, description);
-
+                      context.read<GoalBloc>().add(EditGoalEvent(
+                            goalId: widget.goalId,
+                            updatedTitle: goalTitle,
+                            updatedDescription: description,
+                          ));
                       // ปิด Dialog เมื่อบันทึกเสร็จ
                       Navigator.pop(context);
                     },

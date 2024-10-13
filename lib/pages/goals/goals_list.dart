@@ -9,7 +9,10 @@ class GoalsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final goals = context.select((GoalBloc bloc) => bloc.state.goals.toList());
+    // ดึง currentUserId จาก UserBloc
+    final currentUserId = context.select((UserBloc bloc) => bloc.state.user.id);
+
+    final goals = context.select((GoalBloc bloc) => bloc.state.goals.where((goal) => goal.userId == currentUserId).toList());
     final tasks = context.select((TaskBloc bloc) => bloc.state.tasks.toList());
 
     return SingleChildScrollView(
