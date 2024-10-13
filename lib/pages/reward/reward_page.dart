@@ -22,10 +22,17 @@ class RewardPage extends StatelessWidget {
               },
             ),
             TextButton(
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: const Color.fromARGB(
+                    255, 107, 73, 145), // กำหนดสีของตัวอักษรให้เป็นสีขาว
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10), // ปรับมุมให้โค้งมน
+                ),
+              ),
               child: const Text('Confirm'),
               onPressed: () {
-                debugPrint(
-                    'Redeeming Reward $rewardTitle with ID: $rewardId'); // ตรวจสอบว่ามี rewardId ถูกต้องหรือไม่
+                debugPrint('Redeeming Reward $rewardTitle with ID: $rewardId');
                 context.read<RewardBloc>().add(RedeemRewardEvent(
                     rewardId: rewardId)); // ส่ง event พร้อม rewardId
 
