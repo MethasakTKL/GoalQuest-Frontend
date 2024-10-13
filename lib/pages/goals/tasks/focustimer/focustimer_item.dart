@@ -6,6 +6,7 @@ class FocusTimerItem extends StatelessWidget {
   final String duration;
   final int points;
   final VoidCallback onStart;
+  final int taskIndex;
 
   const FocusTimerItem({
     super.key,
@@ -13,6 +14,7 @@ class FocusTimerItem extends StatelessWidget {
     required this.duration,
     required this.points,
     required this.onStart,
+    required this.taskIndex,
   });
 
   @override
@@ -92,7 +94,7 @@ class FocusTimerItem extends StatelessWidget {
                 children: [
                   IconButton(
                     onPressed: () {
-                      showEditTaskDialog(context);
+                      showEditTaskDialog(context, taskIndex);
                     },
                     icon: const Icon(Icons.more_horiz),
                     tooltip: 'Edit Task', // Accessibility tooltip

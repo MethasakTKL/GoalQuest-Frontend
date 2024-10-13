@@ -14,6 +14,7 @@ class TodoQuestItem extends StatelessWidget {
   final int taskCount;
   final Color cardColor;
   final ValueChanged<bool?>? onChanged;
+  final int taskId;
 
   const TodoQuestItem({
     super.key,
@@ -28,6 +29,7 @@ class TodoQuestItem extends StatelessWidget {
     required this.endDate,
     required this.taskCount,
     this.onChanged,
+    required this.taskId,
   });
 
   @override
@@ -122,7 +124,7 @@ class TodoQuestItem extends StatelessWidget {
                     bottom: 0,
                     child: IconButton(
                       onPressed: () {
-                        showEditTaskDialog(context);
+                        showEditTaskDialog(context, taskId);
                       },
                       icon: const Icon(Icons.more_horiz),
                     ),

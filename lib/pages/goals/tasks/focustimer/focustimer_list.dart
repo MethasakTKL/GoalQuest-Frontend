@@ -29,6 +29,7 @@ class FocusTimerList extends StatelessWidget {
                 .expand((task) => [
                       const SizedBox(height: 10),
                       FocusTimerItem(
+                        taskIndex: task.id,
                         title: task.title,
                         duration: '${task.duration ?? 0} Min',
                         points: calculatePoints(

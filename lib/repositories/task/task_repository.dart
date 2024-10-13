@@ -2,7 +2,7 @@ import 'package:goal_quest/models/models.dart';
 
 abstract class TaskRepository{
   Future<List<TaskModel>> loadTask();
-  Future<List<TaskModel>> searchTask(String key);
+  // Future<List<TaskModel>> searchTask(String key);
   Future<void> addTask({
     required int goalId,
     required String title,
@@ -11,9 +11,15 @@ abstract class TaskRepository{
     required int duration,
     required DateTime startDate,
     required DateTime endDate,});
-  Future<void> actionTask({
+  Future<void> deleteTask({required int id});
+  Future<void> updateTask({
     required int id,
-    required DateTime lastAction,
-    required int taskCount,
+    required String newTitle,
   });
+  Future<TaskModel> getTaskId({required int id});
+  // Future<void> actionTask({
+  //   required int id,
+  //   required DateTime lastAction,
+  //   required int taskCount,
+  // });
 }

@@ -187,7 +187,6 @@ class GoalRepoFromDb extends GoalRepository {
     }
 
     debugPrint('Attempting to delete goal with id: $goalId');
-    debugPrint('Access Token: $accessToken');
 
     final url = Uri.parse('http://$baseUrl:8000/goals/$goalId');
     try {

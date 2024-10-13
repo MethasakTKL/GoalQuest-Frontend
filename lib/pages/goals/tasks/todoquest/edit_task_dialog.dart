@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:goal_quest/bloc/bloc.dart';
 
-Future<void> showEditTaskDialog(BuildContext context) async {
+Future<void> showEditTaskDialog(BuildContext context, int taskId) async {
   final TextEditingController goalTitleController = TextEditingController();
-
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -21,7 +22,7 @@ Future<void> showEditTaskDialog(BuildContext context) async {
               onPressed: () {
                 Navigator.of(context).pop(); // ปิด Dialog
                 showDeleteConfirmationDialog(
-                    context); // แสดง Dialog ยืนยันการลบ
+                    context, taskId); // แสดง Dialog ยืนยันการลบ
               },
             ),
           ],
@@ -38,7 +39,7 @@ Future<void> showEditTaskDialog(BuildContext context) async {
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             )
           ],
@@ -66,6 +67,9 @@ Future<void> showEditTaskDialog(BuildContext context) async {
                   goalTitleController.text; // Get the updated title
               if (updatedGoalTitle.isNotEmpty) {
                 // Perform your edit logic here, e.g., updating the task name
+                context
+                    .read<TaskBloc>()
+                    .add(EditTaskEvent(taskId, updatedGoalTitle));
               }
               Navigator.of(context).pop(); // Close the dialog
             },
@@ -80,7 +84,18 @@ Future<void> showEditTaskDialog(BuildContext context) async {
   );
 }
 
-Future<void> showDeleteConfirmationDialog(BuildContext context) async {
+Future<void> showDeleteConfirmationDialog(
+    BuildContext context, int taskId) async {
+  final tasks = context.read<TaskBloc>().state.tasks.toList();
+
+  // Debug task list and ID
+  debugPrint("Total tasks: ${tasks.length}");
+  debugPrint("Task ID: $taskId");
+
+  final selectedTask = tasks.firstWhere((task) => task.id == taskId);
+
+  debugPrint("Selected task ID: ${selectedTask.id}");
+
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -91,8 +106,12 @@ Future<void> showDeleteConfirmationDialog(BuildContext context) async {
         actions: <Widget>[
           TextButton(
             onPressed: () {
-              // Add your delete logic here
+              debugPrint("Deleting task with ID: ${selectedTask.id}");
+              context.read<TaskBloc>().add(DeleteTaskEvent(selectedTask.id));
               Navigator.of(context).pop(); // Close the confirmation dialog
+
+              // เรียก LoadTaskEvent เพื่อรีเฟรชรายการ tasks
+              context.read<TaskBloc>().add(LoadTaskEvent());
             },
             child: const Text(
               'Yes',

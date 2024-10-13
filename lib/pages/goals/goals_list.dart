@@ -38,8 +38,8 @@ class GoalsList extends StatelessWidget {
 
               // นับจำนวน Task ที่เสร็จแล้ว
               final completedTasks = goalTasks.where((task) {
-                final duration = task.endDate.difference(task.startDate);
-                final repeatCount = duration.inDays ~/ (task.repeatDays ?? 1);
+                final duration = task.endDate?.difference(task.startDate);
+                final repeatCount = duration!.inDays ~/ (task.repeatDays ?? 1);
                 return task.taskCount >= repeatCount;
               }).length;
 

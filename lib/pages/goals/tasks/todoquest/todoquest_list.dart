@@ -50,8 +50,8 @@ class _TodoQuestListState extends State<TodoQuestList> {
           nextActionDate.month == today.month &&
           nextActionDate.day == today.day;
 
-      final duration = task.endDate.difference(task.startDate);
-      final repeatCount = duration.inDays ~/ task.repeatDays!;
+      final duration = task.endDate?.difference(task.startDate);
+      final repeatCount = duration!.inDays ~/ task.repeatDays!;
       return isTodayTask &&
           task.taskCount < repeatCount; // ต้องอยู่ในวันนี้และยังทำไม่ครบ
     }).toList();
@@ -59,16 +59,16 @@ class _TodoQuestListState extends State<TodoQuestList> {
     final nextTasks = tasks.where((task) {
       // ตรวจสอบว่ามันไม่ได้อยู่ใน todayTasks และ task นั้นยังไม่เสร็จ
       if (todayTasks.contains(task)) return false;
-      final duration = task.endDate.difference(task.startDate);
-      final repeatCount = duration.inDays ~/ task.repeatDays!;
+      final duration = task.endDate?.difference(task.startDate);
+      final repeatCount = duration!.inDays ~/ task.repeatDays!;
       return task.taskCount <
           repeatCount; // taskCount ยังไม่ครบตาม repeatCount แปลว่ายังไม่เสร็จ
     }).toList();
 
     final completeTasks = tasks.where((task) {
       // คำนวณ repeatCount จากระยะเวลา (duration) ระหว่าง startDate และ endDate
-      final duration = task.endDate.difference(task.startDate);
-      final repeatCount = duration.inDays ~/
+      final duration = task.endDate?.difference(task.startDate);
+      final repeatCount = duration!.inDays ~/
           task.repeatDays!; // จำนวนครั้งที่ต้องทำตาม repeatDays
       // ตรวจสอบว่า taskCount ถึง repeatCount หรือไม่
       return task.taskCount >= repeatCount;
@@ -101,7 +101,12 @@ class _TodoQuestListState extends State<TodoQuestList> {
                   itemBuilder: (context, index) {
                     final task = todayTasks[index];
                     final isChecked = isCheckedMap[task.id] ?? false;
+                    // Debug print task ID
+                    debugPrint(
+                        'Rendering TodoQuestItem with task ID: ${task.id}');
                     return TodoQuestItem(
+                      key: ValueKey(task.id),
+                      taskId: task.id,
                       cardColor: const Color.fromARGB(255, 173, 217, 98),
                       isChecked: isChecked,
                       title: task.title,
@@ -115,7 +120,7 @@ class _TodoQuestListState extends State<TodoQuestList> {
                       repeatDays: task.repeatDays ?? 1,
                       startDate: task.startDate,
                       taskCount: task.taskCount,
-                      endDate: task.endDate,
+                      endDate: task.endDate!,
                       onChanged: (bool? newValue) {
                         if (newValue != null) {
                           toggleCheckBox(newValue, task.id);
@@ -148,7 +153,11 @@ class _TodoQuestListState extends State<TodoQuestList> {
               itemBuilder: (context, index) {
                 final task = nextTasks[index];
                 final isChecked = isCheckedMap[task.id] ?? false;
+                // Debug print task ID
+                debugPrint('Rendering TodoQuestItem with task ID: ${task.id}');
                 return TodoQuestItem(
+                  key: ValueKey(task.id),
+                  taskId: task.id,
                   cardColor: Colors.grey[300]!,
                   isChecked: isChecked,
                   title: task.title,
@@ -161,7 +170,7 @@ class _TodoQuestListState extends State<TodoQuestList> {
                       : '-',
                   repeatDays: task.repeatDays ?? 1,
                   startDate: task.startDate,
-                  endDate: task.endDate,
+                  endDate: task.endDate!,
                   taskCount: task.taskCount,
                   onChanged: (bool? newValue) {
                     toggleCheckBox(newValue, task.id);
@@ -219,7 +228,11 @@ class _TodoQuestListState extends State<TodoQuestList> {
               itemBuilder: (context, index) {
                 final task = completeTasks[index];
                 final isChecked = isCheckedMap[task.id] ?? false;
+                // Debug print task ID
+                debugPrint('Rendering TodoQuestItem with task ID: ${task.id}');
                 return TodoQuestItem(
+                  key: ValueKey(task.id),
+                  taskId: task.id,
                   cardColor: Colors.grey[300]!,
                   isChecked: isChecked,
                   title: task.title,
@@ -232,7 +245,7 @@ class _TodoQuestListState extends State<TodoQuestList> {
                       : '-',
                   repeatDays: task.repeatDays ?? 1,
                   startDate: task.startDate,
-                  endDate: task.endDate,
+                  endDate: task.endDate!,
                   taskCount: task.taskCount,
                   onChanged: (bool? newValue) {
                     toggleCheckBox(newValue, task.id);

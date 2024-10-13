@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<TaskBloc>(
           create: (context) {
-            final bloc = TaskBloc(TaskMockRepository());
+            final bloc = TaskBloc(TaskRepoFromDb());
             bloc.add(LoadTaskEvent());
             return bloc;
           },

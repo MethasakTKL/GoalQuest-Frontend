@@ -1,6 +1,7 @@
 //Task
 export './task/task_mock_repo.dart';
 export './task/task_repository.dart';
+export './task/task_repo_from_db.dart';
 
 
 //User
