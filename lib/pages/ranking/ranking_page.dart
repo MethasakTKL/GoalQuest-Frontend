@@ -168,7 +168,7 @@ class RankingPage extends StatelessWidget {
                                     const CircleAvatar(
                                       radius: 40,
                                       backgroundImage: AssetImage(
-                                          'assets/user_image.png'), // สามารถเปลี่ยนเป็นรูปของผู้ใช้ได้
+                                          'assets/mockup/rank_1.png'), // สามารถเปลี่ยนเป็นรูปของผู้ใช้ได้
                                     ),
                                     Text(
                                       (top3Users[0]['user'] as UserModel)
@@ -208,8 +208,8 @@ class RankingPage extends StatelessWidget {
                                   children: [
                                     const CircleAvatar(
                                       radius: 30,
-                                      backgroundImage:
-                                          AssetImage('assets/user_image.png'),
+                                      backgroundImage: AssetImage(
+                                          'assets/mockup/rank_2.png'),
                                     ),
                                     const SizedBox(width: 5),
                                     Column(
@@ -291,8 +291,8 @@ class RankingPage extends StatelessWidget {
                                     const SizedBox(width: 5),
                                     const CircleAvatar(
                                       radius: 30,
-                                      backgroundImage:
-                                          AssetImage('assets/user_image.png'),
+                                      backgroundImage: AssetImage(
+                                          'assets/mockup/rank_3.png'),
                                     ),
                                   ],
                                 ),
@@ -316,7 +316,9 @@ class RankingPage extends StatelessWidget {
                                 child: Padding(
                                   padding: const EdgeInsets.only(top: 10),
                                   child: ListView.builder(
-                                     itemCount: remainingUsers.length > 7 ? 7 : remainingUsers.length,
+                                    itemCount: remainingUsers.length > 7
+                                        ? 7
+                                        : remainingUsers.length,
                                     padding: const EdgeInsets.only(bottom: 80),
                                     itemBuilder: (context, index) {
                                       int rank = index + 4;
