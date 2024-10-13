@@ -186,8 +186,11 @@ class GoalRepoFromDb extends GoalRepository {
       throw Exception('No access token found');
     }
 
-    final url = Uri.parse('http://your_backend_url/goals/$goalId');
-    try{
+    debugPrint('Attempting to delete goal with id: $goalId');
+    debugPrint('Access Token: $accessToken');
+
+    final url = Uri.parse('http://$baseUrl:8000/goals/$goalId');
+    try {
       final response = await http.delete(
         url,
         headers: {
@@ -196,12 +199,16 @@ class GoalRepoFromDb extends GoalRepository {
         },
       );
 
-      if (response.statusCode == 200){
+      if (response.statusCode == 200) {
         debugPrint('Goal deleted successfully');
       } else {
-        throw Exception('Failed to delete goal. Status code: ${response.statusCode}');
+        debugPrint(
+            'Failed to delete goal. Status code: ${response.statusCode}');
+        throw Exception(
+            'Failed to delete goal. Status code: ${response.statusCode}');
       }
     } catch (e) {
+      debugPrint('Error: Failed to delete goal: $e');
       throw Exception('Failed to delete goal: $e');
     }
   }

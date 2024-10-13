@@ -34,10 +34,19 @@ class GoalBloc extends Bloc<GoalEvent, GoalState> {
   }
 
   _onDeleteGoalEvent(DeleteGoalEvent event, Emitter<GoalState> emit) async {
+    emit(LodingGoalState());
+
     try {
+      // ส่ง request ไปที่ goalRepository เพื่อลบ goal
       await goalRepository.deleteGoal(goalId: event.goalId);
-      add(LoadGoalEvent()); // โหลดข้อมูลใหม่หลังจากลบ
+
+      // โหลดข้อมูล goal ใหม่หลังจากลบสำเร็จ
+      final goals = await goalRepository.loadGoal();
+
+      // ส่งสถานะ Ready พร้อมกับข้อมูล goal ที่อัปเดตกลับไปที่ UI
+      emit(ReadyGoalState(goals: goals));
     } catch (e) {
+      // จับข้อผิดพลาดและส่ง error state กลับไปที่ UI
       emit(ErrorGoalState(error: e.toString()));
     }
   }
