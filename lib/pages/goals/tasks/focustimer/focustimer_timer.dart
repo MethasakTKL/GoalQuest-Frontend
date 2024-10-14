@@ -4,11 +4,15 @@ import 'giveup_dialog.dart';
 import 'complete_dialog.dart';
 
 class FocusTimerPage extends StatefulWidget {
+  final int taskId;
   final int taskDuration; // ตัวแปร duration
   final String taskName; // ตัวแปร task name
 
   const FocusTimerPage(
-      {super.key, required this.taskDuration, required this.taskName});
+      {super.key,
+      required this.taskDuration,
+      required this.taskName,
+      required this.taskId});
 
   @override
   State<FocusTimerPage> createState() => _FocusTimerPageState();
@@ -74,7 +78,7 @@ class _FocusTimerPageState extends State<FocusTimerPage> {
       timer.cancel();
       isPlaying = false;
       if (totalSeconds == 0) {
-        showCompleteDialog(context);
+        showCompleteDialog(context, widget.taskId);
       }
     });
   }
@@ -114,18 +118,28 @@ class _FocusTimerPageState extends State<FocusTimerPage> {
 
   void updatePoints() {
     setState(() {
-      if (static_timer >= 120 * 60) {
-        points = 500;
+      if (static_timer >= 150 * 60) {
+        points = 800;
+      } else if (static_timer >= 120 * 60) {
+        points = 700;
+      } else if (static_timer >= 100 * 60) {
+        points = 600;
       } else if (static_timer >= 90 * 60) {
-        points = 400;
+        points = 520;
       } else if (static_timer >= 60 * 60) {
-        points = 300;
+        points = 430;
       } else if (static_timer >= 45 * 60) {
-        points = 200;
+        points = 350;
       } else if (static_timer >= 30 * 60) {
-        points = 100;
+        points = 270;
+      } else if (static_timer >= 15 * 60) {
+        points = 190;
+      } else if (static_timer >= 10 * 60) {
+        points = 130;
+      } else if (static_timer >= 5 * 60) {
+        points = 60;
       } else if (static_timer >= 1 * 60) {
-        points = 50;
+        points = 10;
       } else {
         points = 0;
       }

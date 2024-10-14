@@ -209,6 +209,45 @@ class TaskRepoFromDb extends TaskRepository {
       throw Exception('Failed to update task: $e');
     }
   }
+
+  
+  @override
+  Future<void> completeTask({
+    required int id,
+  }) async {
+    final accessToken = await storage.read(key: 'access_token');
+
+    if (accessToken == null) {
+      throw Exception('No access token found');
+    }
+
+    final url = Uri.parse('http://$baseUrl:8000/action_task/complete/?task_id=$id');
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $accessToken',
+        },
+      );
+      if (response.statusCode == 200) {
+        debugPrint('Task Completed');
+        debugPrint('Response: ${response.body}'); // Debug print body ถ้าต้องการ
+      } else {
+        // แสดงข้อมูลเมื่อ status code ไม่ใช่ 200
+        debugPrint(
+            'Failed to complete task. Status code: ${response.statusCode}');
+        debugPrint('Response body: ${response.body}');
+        throw Exception(
+            'Failed to complete task. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      // จัดการข้อผิดพลาด
+      debugPrint('Error: Failed to complete task: $e');
+      throw Exception('Failed to complete task: $e');
+    }
+  }
+
   // @override
   // Future<List<TaskModel>> searchTask(String key) async {
   //   await Future.delayed(const Duration(seconds: 0));

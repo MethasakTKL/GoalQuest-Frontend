@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:goal_quest/bloc/bloc.dart';
 
-void showCompleteDialog(BuildContext context) {
+void showCompleteDialog(BuildContext context, int taskId) {
   showDialog(
     context: context,
     barrierDismissible: false, // ไม่ให้ปิด dialog โดยคลิกด้านนอก
@@ -11,6 +13,7 @@ void showCompleteDialog(BuildContext context) {
         actions: <Widget>[
           TextButton(
             onPressed: () {
+              context.read<TaskBloc>().add(CompleteTaskEvent(taskId));
               Navigator.of(context).pop(); // ปิด dialog
               Navigator.of(context).pop(); // กลับไปหน้าก่อนหน้า
             },

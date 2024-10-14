@@ -45,4 +45,9 @@ class EditTaskEvent extends TaskEvent {
   EditTaskEvent(this.id, this.newTitle);
 }
 
+class CompleteTaskEvent extends TaskEvent{
+  final int id;
+  CompleteTaskEvent(this.id);
+}
+
 class SearchTaskClearEvent extends TaskEvent {}

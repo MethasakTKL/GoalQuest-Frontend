@@ -90,6 +90,7 @@ class MyApp extends StatelessWidget {
           '/redeem_history': (context) => const RedeemHistoryPage(),
           '/focustimer': (context) {
             return const FocusTimerPage(
+              taskId: 0,
               taskDuration: 0,
               taskName: "name",
             );

@@ -17,6 +17,11 @@ abstract class TaskRepository{
     required String newTitle,
   });
   Future<TaskModel> getTaskId({required int id});
+
+  Future<void> completeTask({
+    required int id,
+  });
+
   // Future<void> actionTask({
   //   required int id,
   //   required DateTime lastAction,

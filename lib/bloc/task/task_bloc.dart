@@ -11,6 +11,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     on<AddTaskEvent>(_onAddTaskEvent);
     on<DeleteTaskEvent>(_onDeleteTaskEvent);
     on<EditTaskEvent>(_onEditTaskEvent);
+    on<CompleteTaskEvent>(_onCompleteTaskEvent);
     // on<ActionTaskEvent>(_onActionTaskEvent);
     // on<SearchTaskEvent>(_onSearchTaskEvent);
   }
@@ -90,6 +91,31 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       final tasks = await taskRepository.loadTask();
       emit(ReadyTaskState(tasks: tasks));
     } catch (e) {
+      emit(ErrorTaskState(error: e.toString()));
+    }
+  }
+
+  _onCompleteTaskEvent(CompleteTaskEvent event, Emitter<TaskState> emit) async {
+    debugPrint("CompleteTaskEvent started with task ID: ${event.id}");
+
+    emit(LodingTaskState());
+    debugPrint("Emitted LodingTaskState");
+
+    try {
+      // เรียกใช้งาน completeTask จาก taskRepository
+      await taskRepository.completeTask(id: event.id);
+      debugPrint("Task ID: ${event.id} completed successfully");
+
+      // โหลดรายการ tasks หลังจากทำ task เสร็จแล้ว
+      final tasks = await taskRepository.loadTask();
+      debugPrint("Loaded ${tasks.length} tasks after task completion");
+
+      emit(ReadyTaskState(tasks: tasks));
+      debugPrint("Emitted ReadyTaskState with updated task list");
+    } catch (e) {
+      // เมื่อเกิดข้อผิดพลาด
+      debugPrint(
+          "Error occurred while completing task ID: ${event.id}, Error: $e");
       emit(ErrorTaskState(error: e.toString()));
     }
   }

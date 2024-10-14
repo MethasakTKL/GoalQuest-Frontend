@@ -40,6 +40,7 @@ class FocusTimerList extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                               builder: (context) => FocusTimerPage(
+                                taskId: task.id,
                                 taskDuration: task.duration ?? 0,
                                 taskName: task.title, // ส่ง taskName ไปด้วย
                               ),
@@ -66,19 +67,31 @@ class FocusTimerList extends StatelessWidget {
   // ฟังก์ชันสำหรับคำนวณคะแนนจาก duration
   int calculatePoints(int duration) {
     int points = 0;
-    if (duration >= 120) {
-      points = 500;
+
+    if (duration >= 150) {
+      points = 800;
+    } else if (duration >= 120) {
+      points = 700;
+    } else if (duration >= 100) {
+      points = 600;
     } else if (duration >= 90) {
-      points = 400;
+      points = 520;
     } else if (duration >= 60) {
-      points = 300;
+      points = 430;
     } else if (duration >= 45) {
-      points = 200;
+      points = 350;
     } else if (duration >= 30) {
-      points = 100;
+      points = 270;
+    } else if (duration >= 15) {
+      points = 190;
+    } else if (duration >= 10) {
+      points = 130;
+    } else if (duration >= 5) {
+      points = 60;
     } else if (duration >= 1) {
-      points = 50;
+      points = 10;
     }
+
     return points;
   }
 }
