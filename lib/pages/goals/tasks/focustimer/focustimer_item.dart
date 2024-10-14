@@ -7,6 +7,7 @@ class FocusTimerItem extends StatelessWidget {
   final int points;
   final VoidCallback onStart;
   final int taskIndex;
+  final bool taskCompleted;
 
   const FocusTimerItem({
     super.key,
@@ -15,6 +16,7 @@ class FocusTimerItem extends StatelessWidget {
     required this.points,
     required this.onStart,
     required this.taskIndex,
+    required this.taskCompleted,
   });
 
   @override
@@ -93,7 +95,9 @@ class FocusTimerItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   IconButton(
-                    onPressed: () {
+                    onPressed: 
+                    taskCompleted ? null :
+                    () {
                       showEditTaskDialog(context, taskIndex);
                     },
                     icon: const Icon(Icons.more_horiz),
@@ -101,33 +105,38 @@ class FocusTimerItem extends StatelessWidget {
                   ),
                   const SizedBox(width: 10), // Spacing for better UI
                   ElevatedButton(
-                    onPressed: () {
-                      try {
-                        onStart(); // Execute onStart and catch potential errors
-                      } catch (e) {
-                        // Handle errors gracefully (e.g., show a SnackBar)
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Error starting timer: $e')),
-                        );
-                      }
-                    },
+                    onPressed: taskCompleted
+                        ? null
+                        : () {
+                            try {
+                              onStart(); // Execute onStart and catch potential errors
+                            } catch (e) {
+                              // Handle errors gracefully (e.g., show a SnackBar)
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                    content: Text('Error starting timer: $e')),
+                              );
+                            }
+                          },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 96, 137, 52),
+                      backgroundColor: taskCompleted
+                          ? Colors.grey
+                          : const Color.fromARGB(255, 96, 137, 52),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
                     ),
-                    child: const Row(
+                    child: Row(
                       children: [
                         Icon(
-                          Icons.hourglass_top,
+                          taskCompleted ? Icons.check : Icons.hourglass_top,
                           size: 19,
                           color: Colors.white,
                         ),
-                        SizedBox(width: 5),
+                        const SizedBox(width: 5),
                         Text(
-                          'Start',
-                          style: TextStyle(
+                          taskCompleted ? 'Completed' : 'Start',
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 14,
                           ),

@@ -18,6 +18,11 @@ class FocusTimerList extends StatelessWidget {
 
     // เรียงลำดับ tasks ตามคะแนนจากน้อยไปมาก
     tasks.sort((a, b) {
+      // First, sort by completion status
+      if (a.taskisDone != b.taskisDone) {
+        return a.taskisDone ? 1 : -1; // Completed tasks go to the bottom
+      }
+      // If both tasks have the same completion status, sort by points (duration)
       return calculatePoints(a.duration ?? 0)
           .compareTo(calculatePoints(b.duration ?? 0));
     });
@@ -29,6 +34,7 @@ class FocusTimerList extends StatelessWidget {
                 .expand((task) => [
                       const SizedBox(height: 10),
                       FocusTimerItem(
+                        taskCompleted: task.taskisDone,
                         taskIndex: task.id,
                         title: task.title,
                         duration: '${task.duration ?? 0} Min',

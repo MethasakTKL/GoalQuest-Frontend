@@ -3,6 +3,7 @@ import 'package:goal_quest/bloc/bloc.dart';
 import 'package:goal_quest/pages/goals/goal_card.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:goal_quest/pages/goals/edit_goal_dialog.dart';
+import 'dart:math';
 
 class GoalsList extends StatelessWidget {
   const GoalsList({super.key});
@@ -12,7 +13,9 @@ class GoalsList extends StatelessWidget {
     // ดึง currentUserId จาก UserBloc
     final currentUserId = context.select((UserBloc bloc) => bloc.state.user.id);
 
-    final goals = context.select((GoalBloc bloc) => bloc.state.goals.where((goal) => goal.userId == currentUserId).toList());
+    final goals = context.select((GoalBloc bloc) => bloc.state.goals
+        .where((goal) => goal.userId == currentUserId)
+        .toList());
     final tasks = context.select((TaskBloc bloc) => bloc.state.tasks.toList());
 
     return SingleChildScrollView(
@@ -37,15 +40,13 @@ class GoalsList extends StatelessWidget {
               final totalTasks = goalTasks.length;
 
               // นับจำนวน Task ที่เสร็จแล้ว
-              final completedTasks = goalTasks.where((task) {
-                final duration = task.endDate?.difference(task.startDate);
-                final repeatCount = duration!.inDays ~/ (task.repeatDays ?? 1);
-                return task.taskCount >= repeatCount;
-              }).length;
+              final completedTasks =
+                  goalTasks.where((task) => task.taskisDone).length;
 
               // คำนวณ progressPercentage และแปลงเป็น double
               final progressPercentage = totalTasks > 0
-                  ? (completedTasks / totalTasks).toDouble()
+                  ? min((completedTasks / totalTasks).toDouble(),
+                      1.0) // จำกัดค่าให้ไม่เกิน 1.0
                   : 0.0;
 
               return Padding(
