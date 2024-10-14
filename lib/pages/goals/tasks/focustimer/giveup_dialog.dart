@@ -61,6 +61,7 @@ void showGiveUpDialog(BuildContext context, VoidCallback onConfirm, int taskId) 
                   TextButton(
                     onPressed: () {
                       context.read<TaskBloc>().add(GiveUpTaskEvent(taskId));
+                      context.read<PointBloc>().add(LoadAllPointsEvent());
                       Navigator.of(context).pop(); // ปิด dialog
                       Navigator.of(context).pop(); // กลับไปหน้าก่อนหน้า
                       onConfirm(); // เรียก callback เมื่อยืนยันการยอมแพ้

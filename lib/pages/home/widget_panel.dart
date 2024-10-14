@@ -14,16 +14,14 @@ class _HomeWidgetPanelState extends State<HomeWidgetPanel> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final pointState = context.read<PointBloc>().state;
-    if (pointState is! ReadyPointState) {
-      context.read<PointBloc>().add(LoadAllPointsEvent());
-    }
+
+    context.read<PointBloc>().add(LoadAllPointsEvent());
 
     // ตรวจสอบว่า UserState ไม่ใช่ ReadyUserState เพื่อป้องกันการโหลดข้อมูลซ้ำ
-    final userState = context.read<UserBloc>().state;
-    if (userState is! ReadyUserState) {
-      context.read<UserBloc>().add(GetAllUsersEvent());
-    }
+    // final userState = context.read<UserBloc>().state;
+    // if (userState is! ReadyUserState) {
+    //   context.read<UserBloc>().add(GetAllUsersEvent());
+    // }
   }
 
   @override
@@ -96,42 +94,42 @@ class _HomeWidgetPanelState extends State<HomeWidgetPanel> {
             ),
             child: BlocBuilder<UserBloc, UserState>(
               builder: (context, state) {
-                  return BlocBuilder<PointBloc, PointState>(
-                    builder: (context, pointState) {
-                      if (pointState is ReadyPointState) {
-                        final currentUserPoint = pointState.points.firstWhere(
+                return BlocBuilder<PointBloc, PointState>(
+                  builder: (context, pointState) {
+                    if (pointState is ReadyPointState) {
+                      final currentUserPoint = pointState.points.firstWhere(
                         (point) => point.userId == state.user.id,
-                        );
-                        return Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.only(bottom: 45),
-                              child: Text(
-                                'TOTAL POINT',
-                                style: TextStyle(
-                                  fontFamily: 'Barlow',
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color.fromARGB(255, 233, 233, 233),
-                                ),
-                              ),
-                            ),
-                            Text(
-                              '${currentUserPoint.totalPoint}',
-                              style: const TextStyle(
+                      );
+                      return Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(bottom: 45),
+                            child: Text(
+                              'TOTAL POINT',
+                              style: TextStyle(
                                 fontFamily: 'Barlow',
-                                fontSize: 45,
+                                fontSize: 12,
                                 fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 255, 255, 255),
+                                color: Color.fromARGB(255, 233, 233, 233),
                               ),
                             ),
-                          ],
-                        );
-                      }
-                      return const CircularProgressIndicator(); // แสดง loading indicator ถ้าข้อมูลยังไม่โหลดเสร็จ
-                    },
-                  );
+                          ),
+                          Text(
+                            '${currentUserPoint.totalPoint}',
+                            style: const TextStyle(
+                              fontFamily: 'Barlow',
+                              fontSize: 45,
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(255, 255, 255, 255),
+                            ),
+                          ),
+                        ],
+                      );
+                    }
+                    return const CircularProgressIndicator(); // แสดง loading indicator ถ้าข้อมูลยังไม่โหลดเสร็จ
+                  },
+                );
               },
             ),
           ),

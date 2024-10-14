@@ -13,8 +13,8 @@ class PointBloc extends Bloc<PointEvent, PointState>{
   _onLoadPointEvent(LoadCurrentUserPointEvent event, Emitter<PointState> emit) async {
     emit(LodingPointState());
     try {
-       final currentUserPoints = await pointRepository.getCurrentUserPoint();
-      emit(ReadyPointState(points: [currentUserPoints]));
+      final currentUserPoints = await pointRepository.getCurrentUserPoint();
+      emit(ReadyPointState(points: [currentUserPoints]));    
     } catch (e) {
       emit(ErrorPointState(error: e.toString()));
     }
@@ -23,7 +23,7 @@ class PointBloc extends Bloc<PointEvent, PointState>{
   _onLoadAllPoints(LoadAllPointsEvent event, Emitter<PointState> emit) async {
     emit(LodingPointState());
     try {
-       final allPoints = await pointRepository.getAllPoints();
+      final allPoints = await pointRepository.getAllPoints();
       emit(ReadyPointState(points: allPoints));
     } catch (e) {
       emit(ErrorPointState(error: e.toString()));

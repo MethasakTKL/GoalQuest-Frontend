@@ -14,6 +14,7 @@ void showCompleteDialog(BuildContext context, int taskId) {
           TextButton(
             onPressed: () {
               context.read<TaskBloc>().add(CompleteTaskEvent(taskId));
+              context.read<PointBloc>().add(LoadAllPointsEvent());
               Navigator.of(context).pop(); // ปิด dialog
               Navigator.of(context).pop(); // กลับไปหน้าก่อนหน้า
             },

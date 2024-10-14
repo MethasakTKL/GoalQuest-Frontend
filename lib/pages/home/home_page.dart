@@ -13,6 +13,7 @@ class HomePage extends StatelessWidget {
   Future<void> _refreshHome(BuildContext context) async {
     context.read<UserBloc>().add(LoadUserEvent());
     context.read<GoalBloc>().add(LoadGoalEvent());
+    context.read<PointBloc>().add(LoadAllPointsEvent());
   }
 
   @override
