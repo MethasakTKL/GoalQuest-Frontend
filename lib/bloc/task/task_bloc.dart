@@ -5,7 +5,6 @@ import 'package:flutter/widgets.dart';
 
 class TaskBloc extends Bloc<TaskEvent, TaskState> {
   final TaskRepository taskRepository;
-  
 
   TaskBloc(this.taskRepository) : super(LodingTaskState()) {
     on<LoadTaskEvent>(_onLoadTaskEvent);
@@ -14,6 +13,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     on<EditTaskEvent>(_onEditTaskEvent);
     on<CompleteTaskEvent>(_onCompleteTaskEvent);
     on<ClickTaskEvent>(_onClickTaskEvent);
+    on<GiveUpTaskEvent>(_onGiveUpTaskEvent);
     // on<SearchTaskEvent>(_onSearchTaskEvent);
   }
 
@@ -132,10 +132,24 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   // }
 
   _onClickTaskEvent(ClickTaskEvent event, Emitter<TaskState> emit) async {
+    emit(LodingTaskState());
     try {
       await taskRepository.clickTask(
         id: event.id,
         lastAction: event.lastAction,
+      );
+      emit(LodingTaskState());
+      add(LoadTaskEvent());
+    } catch (e) {
+      emit(ErrorTaskState(error: e.toString()));
+    }
+  }
+
+  _onGiveUpTaskEvent(GiveUpTaskEvent event, Emitter<TaskState> emit) async {
+    emit(LodingTaskState());
+    try {
+      await taskRepository.giveUpTask(
+        id: event.id,
       );
       emit(LodingTaskState());
       add(LoadTaskEvent());

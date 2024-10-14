@@ -113,7 +113,7 @@ class _FocusTimerPageState extends State<FocusTimerPage> {
   }
 
   void showConfirmationDialog() {
-    showGiveUpDialog(context, handleGiveUp);
+    showGiveUpDialog(context, handleGiveUp, widget.taskId);
   }
 
   void updatePoints() {

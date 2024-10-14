@@ -3,6 +3,7 @@ import 'package:goal_quest/models/models.dart';
 abstract class TaskRepository{
   Future<List<TaskModel>> loadTask();
   // Future<List<TaskModel>> searchTask(String key);
+  Future<void> giveUpTask({required int id});
   Future<void> addTask({
     required int goalId,
     required String title,

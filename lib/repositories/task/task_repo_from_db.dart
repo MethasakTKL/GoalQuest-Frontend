@@ -288,6 +288,42 @@ class TaskRepoFromDb extends TaskRepository {
     }
   }
 
+  @override
+  Future<void> giveUpTask({required int id}) async {
+    final accessToken = await storage.read(key: 'access_token');
+
+    if (accessToken == null) {
+      throw Exception('No access token found');
+    }
+
+    final url =
+        Uri.parse('http://$baseUrl:8000/action_task/give_up_task/?task_id=$id');
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $accessToken',
+        },
+      );
+      if (response.statusCode == 200) {
+        debugPrint('Give Up Completed');
+        debugPrint('Response: ${response.body}'); // Debug print body ถ้าต้องการ
+      } else {
+        // แสดงข้อมูลเมื่อ status code ไม่ใช่ 200
+        debugPrint(
+            'Failed to give up task. Status code: ${response.statusCode}');
+        debugPrint('Response body: ${response.body}');
+        throw Exception(
+            'Failed to give up task. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      // จัดการข้อผิดพลาด
+      debugPrint('Error: Failed to give up task: $e');
+      throw Exception('Failed to give up task: $e');
+    }
+  }
+
   // @override
   // Future<List<TaskModel>> searchTask(String key) async {
   //   await Future.delayed(const Duration(seconds: 0));

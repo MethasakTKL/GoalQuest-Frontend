@@ -50,4 +50,9 @@ class CompleteTaskEvent extends TaskEvent{
   CompleteTaskEvent(this.id);
 }
 
+class GiveUpTaskEvent extends TaskEvent {
+  final int id;
+  GiveUpTaskEvent(this.id);
+}
+
 class SearchTaskClearEvent extends TaskEvent {}

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:goal_quest/bloc/bloc.dart';
 
-void showGiveUpDialog(BuildContext context, VoidCallback onConfirm) {
+void showGiveUpDialog(BuildContext context, VoidCallback onConfirm, int taskId) {
   showDialog(
     context: context,
     builder: (context) => Dialog(
@@ -58,6 +60,7 @@ void showGiveUpDialog(BuildContext context, VoidCallback onConfirm) {
                   const SizedBox(width: 10),
                   TextButton(
                     onPressed: () {
+                      context.read<TaskBloc>().add(GiveUpTaskEvent(taskId));
                       Navigator.of(context).pop(); // ปิด dialog
                       Navigator.of(context).pop(); // กลับไปหน้าก่อนหน้า
                       onConfirm(); // เรียก callback เมื่อยืนยันการยอมแพ้
