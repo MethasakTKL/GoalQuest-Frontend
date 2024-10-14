@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 
 class TaskBloc extends Bloc<TaskEvent, TaskState> {
   final TaskRepository taskRepository;
+  
 
   TaskBloc(this.taskRepository) : super(LodingTaskState()) {
     on<LoadTaskEvent>(_onLoadTaskEvent);

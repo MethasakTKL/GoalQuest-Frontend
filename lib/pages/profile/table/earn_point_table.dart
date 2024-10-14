@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:goal_quest/models/models.dart';
+import 'package:intl/intl.dart';
 
 class EarnPointTable extends StatelessWidget {
   final bool isEarnPointVisible;
-  final List<Map<String, dynamic>> earnPointHistory;
+  final List<EarnedModel> earnedPoints;
+  final List<TaskModel> tasks;
 
   const EarnPointTable({
     super.key,
+    required this.earnedPoints,
+    required this.tasks,
     required this.isEarnPointVisible,
-    required this.earnPointHistory,
   });
 
   String truncateTask(String taskName) {   // ฟังก์ชันสำหรับตัดข้อความที่ยาวเกินไป
@@ -15,6 +19,11 @@ class EarnPointTable extends StatelessWidget {
       return '${taskName.substring(0, 10)}...';
     }
     return taskName;
+  }
+
+  String getTaskTitle(int taskId){
+    final task = tasks.firstWhere((task) => task.id == taskId);
+    return task.title;
   }
 
   @override
@@ -50,13 +59,14 @@ class EarnPointTable extends StatelessWidget {
                       ),
                     ),
                   ],
-                  rows: earnPointHistory
+                  rows: earnedPoints
                       .map(
                         (history) => DataRow(
                           cells: [
-                            DataCell(Text(history['date'])),
-                            DataCell(Text(truncateTask(history['taskName']))),
-                            DataCell(Text(history['point'].toString())),
+                            DataCell(Text(DateFormat('dd/MM/yyyy').format(history
+                                .earnedDate))),
+                            DataCell(Text(truncateTask(getTaskTitle(history.taskId)))),
+                            DataCell(Text(history.earnedPoint.toString())),
                           ],
                         ),
                       )

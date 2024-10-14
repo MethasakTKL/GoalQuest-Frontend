@@ -29,3 +29,7 @@ export './reward/reward_repo_from_db.dart';
 export './history/history_mock_repo.dart';
 export './history/history_repository.dart';
 export './history/history_repo_from_db.dart';
+
+//Earned
+export './earned/earned_repo_from_db.dart';
+export './earned/earned_repository.dart';

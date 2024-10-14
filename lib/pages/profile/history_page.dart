@@ -40,7 +40,7 @@ class _RedeemHistoryPageState extends State<RedeemHistoryPage> {
               'assets/logo_black.png',
               height: 50,
             ),
-            const Spacer(), // ใช้ Spacer เพื่อจัดตำแหน่ง
+            const Spacer(),
             IconButton(
               icon: const Icon(Icons.account_circle),
               onPressed: () {
@@ -49,8 +49,7 @@ class _RedeemHistoryPageState extends State<RedeemHistoryPage> {
                   PageRouteBuilder(
                     pageBuilder: (context, animation1, animation2) =>
                         const BottomNavigationPage(initialIndex: 3),
-                    transitionDuration: const Duration(
-                        seconds: 0), // กำหนดเวลาของการเปลี่ยนหน้า
+                    transitionDuration: const Duration(seconds: 0),
                   ),
                 );
               },
@@ -58,7 +57,7 @@ class _RedeemHistoryPageState extends State<RedeemHistoryPage> {
             ),
           ],
         ),
-        automaticallyImplyLeading: false, // ปิดปุ่ม Back
+        automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -114,9 +113,57 @@ class _RedeemHistoryPageState extends State<RedeemHistoryPage> {
                     ],
                   ),
                 ),
-                EarnPointTable(
-                    isEarnPointVisible: isEarnPointVisible,
-                    earnPointHistory: earnPointHistory),
+                BlocBuilder<EarnedBloc, EarnedState>(
+                    builder: (context, earnedState) {
+                  return BlocBuilder<TaskBloc, TaskState>(
+                      builder: (context, taskState) {
+                    if (taskState is LodingTaskState ||
+                        earnedState is LoadingEarnedState) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (earnedState is ReadyEarnedState &&
+                        taskState is ReadyTaskState) {
+                      final earned = earnedState.earneds;
+                      final tasks = taskState.tasks;
+
+                      // Debugging: print earned and tasks list length
+                      debugPrint('Earned length: ${earned.length}');
+                      debugPrint('Tasks length: ${tasks.length}');
+
+                      if (earned.isEmpty || tasks.isEmpty) {
+                        return isEarnPointVisible
+                            ? const Center(
+                                child: Text(
+                                  'No data available',
+                                ),
+                              )
+                            : const SizedBox.shrink();
+                      }
+
+                      // ถ้ามีข้อมูลจะไปแสดงในตาราง EarnPointTable
+                      return EarnPointTable(
+                        isEarnPointVisible: isEarnPointVisible,
+                        earnedPoints: earned,
+                        tasks: tasks,
+                      );
+                    } else if (earnedState is ErrorEarnedState ||
+                        taskState is ErrorTaskState) {
+                      return isEarnPointVisible
+                          ? const Center(
+                              child: Text(
+                                'No point earned.',
+                                style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            )
+                          : const SizedBox.shrink();
+                    } else {
+                      return const SizedBox.shrink();
+                    }
+                  });
+                }),
                 const SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
@@ -150,22 +197,22 @@ class _RedeemHistoryPageState extends State<RedeemHistoryPage> {
                       builder: (context, rewardState) {
                         if (historyState is LoadingHistoryState ||
                             rewardState is LodingRewardState) {
-                          
                           return const Center(
                             child: CircularProgressIndicator(),
                           );
                         } else if (historyState is ReadyHistoryState &&
                             (rewardState is ReadyRewardState ||
                                 rewardState is RewardRedeemedState)) {
-                         
                           final redeemHistory = historyState.histories;
                           final rewards = rewardState.rewards;
 
                           if (redeemHistory.isEmpty || rewards.isEmpty) {
-                            return const Center(
-                              child: Text(
-                                  'No redeem history or rewards available'),
-                            );
+                            return isRedeemVisible
+                                ? const Center(
+                                    child: Text(
+                                        'No redeem history or rewards available'),
+                                  )
+                                : const SizedBox.shrink();
                           }
 
                           return RedeemHistoryTable(

@@ -28,3 +28,8 @@ export './reward/reward_state.dart';
 export './history/history_bloc.dart';
 export './history/history_event.dart';
 export './history/history_state.dart';
+
+//Earned Bloc
+export './earned/earned_bloc.dart';
+export './earned/earned_event.dart';
+export './earned/earned_state.dart';

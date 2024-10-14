@@ -61,6 +61,13 @@ class MyApp extends StatelessWidget {
             return bloc;
           },
         ),
+        BlocProvider<EarnedBloc>(
+          create: (context) {
+            final bloc = EarnedBloc(EarnedRepoFromDb());
+            bloc.add(LoadEarnedEvent());
+            return bloc;
+          },
+        ),
         BlocProvider<RewardBloc>(
           create: (context) {
             final historyBloc =

@@ -4,3 +4,4 @@ export './goal_model.dart';
 export './point_model.dart';
 export './reward_model.dart';
 export './history_model.dart';
+export './earned_model.dart';
