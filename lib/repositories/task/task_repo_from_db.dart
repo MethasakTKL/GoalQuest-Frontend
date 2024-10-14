@@ -210,7 +210,6 @@ class TaskRepoFromDb extends TaskRepository {
     }
   }
 
-  
   @override
   Future<void> completeTask({
     required int id,
@@ -221,7 +220,8 @@ class TaskRepoFromDb extends TaskRepository {
       throw Exception('No access token found');
     }
 
-    final url = Uri.parse('http://$baseUrl:8000/action_task/complete/?task_id=$id');
+    final url =
+        Uri.parse('http://$baseUrl:8000/action_task/complete/?task_id=$id');
     try {
       final response = await http.post(
         url,
@@ -245,6 +245,46 @@ class TaskRepoFromDb extends TaskRepository {
       // จัดการข้อผิดพลาด
       debugPrint('Error: Failed to complete task: $e');
       throw Exception('Failed to complete task: $e');
+    }
+  }
+
+  @override
+  Future<void> clickTask({
+    required int id,
+    required DateTime lastAction,
+  }) async {
+    final accessToken = await storage.read(key: 'access_token');
+
+    if (accessToken == null) {
+      throw Exception('No access token found');
+    }
+
+    final url = Uri.parse('http://$baseUrl:8000/action_task/click_task/')
+        .replace(queryParameters: {
+      'task_id': id.toString(),
+      'last_action': lastAction.toIso8601String(),
+    });
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $accessToken',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        debugPrint('Task Clicked');
+        final data = jsonDecode(response.body);
+        debugPrint('Task clicked successfully: $data');
+      } else {
+        debugPrint('Failed to click task. Status code: ${response.statusCode}');
+        debugPrint('Response body: ${response.body}');
+      }
+    } catch (e) {
+      debugPrint('Error: Failed to click task: $e');
+      throw Exception('Failed to click task: $e');
     }
   }
 

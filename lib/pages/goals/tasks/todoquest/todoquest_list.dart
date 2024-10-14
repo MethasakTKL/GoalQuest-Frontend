@@ -124,8 +124,8 @@ class _TodoQuestListState extends State<TodoQuestList> {
                       onChanged: (bool? newValue) {
                         if (newValue != null) {
                           toggleCheckBox(newValue, task.id);
-                          context.read<TaskBloc>().add(ActionTaskEvent(
-                              task.id, DateTime.now(), task.taskCount));
+                          context.read<TaskBloc>().add(ClickTaskEvent(
+                              task.id, DateTime.now()));
                         }
                       },
                     );
@@ -174,8 +174,8 @@ class _TodoQuestListState extends State<TodoQuestList> {
                   taskCount: task.taskCount,
                   onChanged: (bool? newValue) {
                     toggleCheckBox(newValue, task.id);
-                    context.read<TaskBloc>().add(ActionTaskEvent(
-                        task.id, DateTime.now(), task.taskCount));
+                    context.read<TaskBloc>().add(ClickTaskEvent(
+                        task.id, DateTime.now()));
                   },
                 );
               },
@@ -249,8 +249,8 @@ class _TodoQuestListState extends State<TodoQuestList> {
                   taskCount: task.taskCount,
                   onChanged: (bool? newValue) {
                     toggleCheckBox(newValue, task.id);
-                    context.read<TaskBloc>().add(ActionTaskEvent(
-                        task.id, DateTime.now(), task.taskCount));
+                    context.read<TaskBloc>().add(ClickTaskEvent(
+                        task.id, DateTime.now()));
                   },
                 );
               },

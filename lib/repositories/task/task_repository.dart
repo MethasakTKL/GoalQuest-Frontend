@@ -22,9 +22,8 @@ abstract class TaskRepository{
     required int id,
   });
 
-  // Future<void> actionTask({
-  //   required int id,
-  //   required DateTime lastAction,
-  //   required int taskCount,
-  // });
+  Future<void> clickTask({
+    required int id,
+    required DateTime lastAction,
+  });
 }

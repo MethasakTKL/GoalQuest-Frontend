@@ -12,7 +12,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     on<DeleteTaskEvent>(_onDeleteTaskEvent);
     on<EditTaskEvent>(_onEditTaskEvent);
     on<CompleteTaskEvent>(_onCompleteTaskEvent);
-    // on<ActionTaskEvent>(_onActionTaskEvent);
+    on<ClickTaskEvent>(_onClickTaskEvent);
     // on<SearchTaskEvent>(_onSearchTaskEvent);
   }
 
@@ -130,16 +130,16 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   //   }
   // }
 
-  // _onActionTaskEvent(ActionTaskEvent event, Emitter<TaskState> emit) async {
-  //   try {
-  //     await taskRepository.actionTask(
-  //         id: event.id,
-  //         lastAction: event.lastAction,
-  //         taskCount: event.taskCount);
-  //     emit(LodingTaskState());
-  //     add(LoadTaskEvent());
-  //   } catch (e) {
-  //     emit(ErrorTaskState(error: e.toString()));
-  //   }
-  // }
+  _onClickTaskEvent(ClickTaskEvent event, Emitter<TaskState> emit) async {
+    try {
+      await taskRepository.clickTask(
+        id: event.id,
+        lastAction: event.lastAction,
+      );
+      emit(LodingTaskState());
+      add(LoadTaskEvent());
+    } catch (e) {
+      emit(ErrorTaskState(error: e.toString()));
+    }
+  }
 }
