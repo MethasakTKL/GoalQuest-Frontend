@@ -7,6 +7,7 @@ class RewardModel extends Equatable {
   final int rewardPoints;
   final DateTime rewardUpdateAt;
   final DateTime rewardCreatedAt;
+  final bool rewardIsRedeemed;
 
   const RewardModel({
     required this.rewardId,
@@ -15,6 +16,7 @@ class RewardModel extends Equatable {
     required this.rewardPoints,
     required this.rewardUpdateAt,
     required this.rewardCreatedAt,
+    required this.rewardIsRedeemed,
   });
 
   factory RewardModel.fromJson(Map<String, dynamic> json) {
@@ -25,6 +27,7 @@ class RewardModel extends Equatable {
       rewardPoints: json['points_required'] ?? 0,
       rewardUpdateAt: json['updated_at'] != null ? DateTime.parse(json['updated_at']) : DateTime.now(),
       rewardCreatedAt: json['created_at'] != null ? DateTime.parse(json['created_at']) : DateTime.now(),
+      rewardIsRedeemed: json['is_redeemed'] ?? false,
     );
   }
 
@@ -36,6 +39,7 @@ class RewardModel extends Equatable {
       'points_required': rewardPoints,
       'updated_at': rewardUpdateAt.toIso8601String(),
       'created_at': rewardCreatedAt.toIso8601String(),
+      'is_redeemed': rewardIsRedeemed,
     };
   }
 
@@ -47,6 +51,7 @@ class RewardModel extends Equatable {
       rewardPoints: 0,
       rewardUpdateAt: DateTime.now(),
       rewardCreatedAt: DateTime.now(),
+      rewardIsRedeemed: false,
     );
   }
 
@@ -58,6 +63,7 @@ class RewardModel extends Equatable {
         rewardPoints,
         rewardUpdateAt,
         rewardCreatedAt,
+        rewardIsRedeemed,
       ];
 }
 

@@ -320,14 +320,14 @@ class RewardPage extends StatelessWidget {
                                       }
                                     },
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: const Color(0xFF6A00F4),
+                                      backgroundColor: reward.rewardIsRedeemed ? Colors.grey : const Color(0xFF6A00F4),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(8),
                                       ),
                                     ),
-                                    child: const Text(
-                                      'Redeem',
-                                      style: TextStyle(color: Colors.white),
+                                    child: Text(
+                                     reward.rewardIsRedeemed ? 'Redeemed' : 'Redeem',
+                                      style: const TextStyle(color: Colors.white),
                                     ),
                                   ),
                                 ),
