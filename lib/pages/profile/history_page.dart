@@ -13,18 +13,7 @@ class RedeemHistoryPage extends StatefulWidget {
 }
 
 class _RedeemHistoryPageState extends State<RedeemHistoryPage> {
-  final List<Map<String, dynamic>> earnPointHistory = const [
-    {'date': '02/09/2024', 'taskName': 'adadadasdadadadadad', 'point': 200},
-    {'date': '20/08/2024', 'taskName': 'Task Title', 'point': 300},
-    {'date': '17/07/2024', 'taskName': 'Task Title', 'point': 400},
-    {'date': '17/07/2024', 'taskName': 'Task Title', 'point': 200},
-    {'date': '17/07/2024', 'taskName': 'Task Title', 'point': 200},
-    {'date': '17/07/2024', 'taskName': 'Task Title', 'point': 200},
-    {'date': '17/07/2024', 'taskName': 'Task Title', 'point': 200},
-    {'date': '17/07/2024', 'taskName': 'Task Title', 'point': 200},
-  ];
-
-  bool isEarnPointVisible = true;
+  bool isEarnPointVisible = false;
 
   bool isRedeemVisible = false;
 

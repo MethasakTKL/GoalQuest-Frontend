@@ -49,6 +49,8 @@ class GoalsList extends StatelessWidget {
                       1.0) // จำกัดค่าให้ไม่เกิน 1.0
                   : 0.0;
 
+              
+
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 5.0),
                 child: GoalCard(

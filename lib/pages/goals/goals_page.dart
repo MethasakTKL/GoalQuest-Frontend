@@ -17,6 +17,8 @@ class GoalsPage extends StatelessWidget {
     // นับจำนวน Goals ที่เสร็จสิ้นและกำลังดำเนินการ
     final completedGoals = goals.where((goal) => goal.isCompleted).length;
     final inProgressGoals = goals.where((goal) => !goal.isCompleted).length;
+    debugPrint('Completed Goals: $completedGoals');
+    debugPrint('In Progress Goals: $inProgressGoals');
 
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),

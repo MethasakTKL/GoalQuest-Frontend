@@ -4,7 +4,7 @@ void showGiveUpDialog(BuildContext context, VoidCallback onConfirm) {
   showDialog(
     context: context,
     builder: (context) => Dialog(
-      child: Container(
+      child: SizedBox(
         width: 400, // กำหนดความกว้าง
         height: 200, // กำหนดความสูง
         child: Column(
