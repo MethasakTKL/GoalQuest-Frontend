@@ -109,24 +109,30 @@ class GoalCard extends StatelessWidget {
                         ],
                       ),
                     ),
-                    LinearPercentIndicator(
-                      width: 350,
-                      lineHeight: 30.0,
-                      percent: progressPercentage,
-                      center: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Text(
-                            "${(progressPercentage * 100).toStringAsFixed(0)}%",
-                            style: const TextStyle(color: Colors.white),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        LinearPercentIndicator(
+                          width: 335,
+                          lineHeight: 30.0,
+                          percent: progressPercentage,
+                          center: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: Text(
+                                "${(progressPercentage * 100).toStringAsFixed(0)}%",
+                                style: const TextStyle(color: Colors.white),
+                              ),
+                            ),
                           ),
+                          barRadius: const Radius.circular(20),
+                          backgroundColor:
+                              const Color.fromARGB(255, 255, 255, 255),
+                          linearGradient:
+                              _getGradientByPercentage(progressPercentage),
                         ),
-                      ),
-                      barRadius: const Radius.circular(20),
-                      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-                      linearGradient:
-                          _getGradientByPercentage(progressPercentage),
+                      ],
                     ),
                   ],
                 ),

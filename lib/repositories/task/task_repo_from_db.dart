@@ -14,8 +14,8 @@ class TaskRepoFromDb extends TaskRepository {
 
   // กำหนดค่า baseUrl
   //RewardRepoFromDb({this.baseUrl = '127.0.0.1'}); // iOS Simulator
-  TaskRepoFromDb({this.baseUrl = '10.0.2.2'}); // Android Simulator
-
+  // TaskRepoFromDb({this.baseUrl = '10.0.2.2'}); // Android Simulator
+  TaskRepoFromDb({this.baseUrl = 'https://goalquest-backend.onrender.com'});
   @override
   Future<List<TaskModel>> loadTask() async {
     final accessToken = await storage.read(key: 'access_token');
@@ -23,7 +23,7 @@ class TaskRepoFromDb extends TaskRepository {
     if (accessToken == null) {
       throw Exception('No access token found');
     }
-    final url = Uri.parse('http://$baseUrl:8000/tasks/all_task');
+    final url = Uri.parse('$baseUrl/tasks/all_task');
 
     try {
       final response = await http.get(
@@ -65,7 +65,7 @@ class TaskRepoFromDb extends TaskRepository {
       throw Exception('No access token found');
     }
 
-    final url = Uri.parse('http://$baseUrl:8000/tasks/');
+    final url = Uri.parse('$baseUrl/tasks/');
     try {
       final response = await http.post(url,
           headers: {
@@ -106,7 +106,7 @@ class TaskRepoFromDb extends TaskRepository {
 
     debugPrint('Attempting to delete task with id: $id');
 
-    final url = Uri.parse('http://$baseUrl:8000/tasks/$id');
+    final url = Uri.parse('$baseUrl/tasks/$id');
     try {
       final response = await http.delete(
         url,
@@ -137,7 +137,7 @@ class TaskRepoFromDb extends TaskRepository {
       throw Exception('No access token found');
     }
 
-    final url = Uri.parse('http://$baseUrl:8000/tasks/$id');
+    final url = Uri.parse('$baseUrl/tasks/$id');
     try {
       final response = await http.get(
         url,
@@ -178,7 +178,7 @@ class TaskRepoFromDb extends TaskRepository {
 
     final existingTask = await getTaskId(id: id);
 
-    final url = Uri.parse('http://$baseUrl:8000/tasks/$id');
+    final url = Uri.parse('$baseUrl/tasks/$id');
     try {
       final response = await http.put(
         url,
@@ -220,8 +220,7 @@ class TaskRepoFromDb extends TaskRepository {
       throw Exception('No access token found');
     }
 
-    final url =
-        Uri.parse('http://$baseUrl:8000/action_task/complete/?task_id=$id');
+    final url = Uri.parse('$baseUrl/action_task/complete/?task_id=$id');
     try {
       final response = await http.post(
         url,
@@ -259,8 +258,8 @@ class TaskRepoFromDb extends TaskRepository {
       throw Exception('No access token found');
     }
 
-    final url = Uri.parse('http://$baseUrl:8000/action_task/click_task/')
-        .replace(queryParameters: {
+    final url =
+        Uri.parse('$baseUrl/action_task/click_task/').replace(queryParameters: {
       'task_id': id.toString(),
       'last_action': lastAction.toIso8601String(),
     });

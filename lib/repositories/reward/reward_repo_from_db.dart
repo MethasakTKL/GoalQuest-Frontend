@@ -13,8 +13,10 @@ class RewardRepoFromDb extends RewardRepository {
   final String baseUrl;
 
   // กำหนดค่า baseUrl
-  //RewardRepoFromDb({this.baseUrl = '127.0.0.1'}); // iOS Simulator
-  RewardRepoFromDb({this.baseUrl = '10.0.2.2'}); // Android Simulator
+  // RewardRepoFromDb({this.baseUrl = '127.0.0.1'}); // iOS Simulator
+  // RewardRepoFromDb({this.baseUrl = '10.0.2.2'}); // Android Simulator
+//
+  RewardRepoFromDb({this.baseUrl = 'https://goalquest-backend.onrender.com'});
 
   @override
   Future<List<RewardModel>> getAllRewards() async {
@@ -24,7 +26,7 @@ class RewardRepoFromDb extends RewardRepository {
       throw Exception('No access token found');
     }
 
-    final url = Uri.parse('http://$baseUrl:8000/rewards/allreward');
+    final url = Uri.parse('$baseUrl/rewards/allreward');
 
     try {
       final response = await http.get(
@@ -66,7 +68,7 @@ class RewardRepoFromDb extends RewardRepository {
       throw Exception('No access token found');
     }
 
-    final url = Uri.parse('http://$baseUrl:8000/redeems/');
+    final url = Uri.parse('$baseUrl/redeems/');
 
     try {
       final response = await http.post(
