@@ -129,6 +129,7 @@ class _TodoQuestListState extends State<TodoQuestList> {
                         }
                       },
                       isReadOnly: false,
+                      isCompleteTask: false,
                     );
                   },
                 ),
@@ -178,6 +179,7 @@ class _TodoQuestListState extends State<TodoQuestList> {
                         task.id, DateTime.now()));
                   },
                   isReadOnly: true,
+                  isCompleteTask: false,
                 );
               },
             ),
@@ -247,6 +249,7 @@ class _TodoQuestListState extends State<TodoQuestList> {
                         task.id, DateTime.now()));
                   },
                   isReadOnly: true,
+                  isCompleteTask: true,
                 );
               },
             ),

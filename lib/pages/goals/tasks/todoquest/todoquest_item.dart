@@ -15,7 +15,8 @@ class TodoQuestItem extends StatelessWidget {
   final Color cardColor;
   final ValueChanged<bool?>? onChanged;
   final int taskId;
-  final bool isReadOnly;  // เพิ่ม isReadOnly
+  final bool isReadOnly;
+  final bool isCompleteTask;  // ตัวแปรใหม่เพื่อบอกว่าเป็น Task ที่อยู่ใน Completed หรือไม่
 
   const TodoQuestItem({
     super.key,
@@ -31,7 +32,8 @@ class TodoQuestItem extends StatelessWidget {
     required this.taskCount,
     this.onChanged,
     required this.taskId,
-    required this.isReadOnly,  // รับค่าจากภายนอก
+    required this.isReadOnly,
+    required this.isCompleteTask,  // รับค่าเพื่อบอกว่าสถานะคือ Completed หรือไม่
   });
 
   @override
@@ -52,8 +54,8 @@ class TodoQuestItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             GestureDetector(
-              onTap: isReadOnly || isComplete || DateTime.now().isBefore(nextDueDate) 
-                  ? null  // ถ้าเป็น ReadOnly จะไม่ให้กด
+              onTap: isComplete || DateTime.now().isBefore(nextDueDate) || isReadOnly
+                  ? null  // ถ้าเป็น Completed หรือ ReadOnly จะไม่ให้กด
                   : () {
                       if (onChanged != null) {
                         onChanged!(!isChecked);
@@ -126,13 +128,13 @@ class TodoQuestItem extends StatelessWidget {
                     right: 0,
                     bottom: 0,
                     child: IconButton(
-                      onPressed: () {
-                        // ตรวจสอบว่าไม่ให้แก้ไข task ถ้าเป็น ReadOnly
-                        if (!isReadOnly) {
-                          showEditTaskDialog(context, taskId);
-                        }
-                      },
+                      onPressed: isCompleteTask
+                          ? null // ถ้าเป็น Completed จะไม่ให้กดปุ่มนี้
+                          : () {
+                              showEditTaskDialog(context, taskId);
+                            },
                       icon: const Icon(Icons.more_horiz),
+                      tooltip: 'Edit Task', // เพิ่ม tooltip เพื่อบอกการทำงาน
                     ),
                   ),
                 ],
@@ -144,4 +146,3 @@ class TodoQuestItem extends StatelessWidget {
     );
   }
 }
-
