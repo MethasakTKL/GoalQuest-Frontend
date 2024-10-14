@@ -6,7 +6,6 @@ class RedeemHistoryTable extends StatelessWidget {
   final bool isRedeemVisible;
   final List<HistoryModel> redeemHistory;
   final List<RewardModel> rewards;
-  
 
   const RedeemHistoryTable({
     super.key,
@@ -23,7 +22,7 @@ class RedeemHistoryTable extends StatelessWidget {
     return reward;
   }
 
-  String getRewardTitle(int rewardId){
+  String getRewardTitle(int rewardId) {
     final reward = rewards.firstWhere((reward) => reward.rewardId == rewardId);
     return reward.rewardTitle;
   }
@@ -31,7 +30,8 @@ class RedeemHistoryTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<HistoryModel> sortedRedeemHistory = List.from(redeemHistory);
-    sortedRedeemHistory.sort((a, b) => b.redeemedDate.compareTo(a.redeemedDate));
+    sortedRedeemHistory
+        .sort((a, b) => b.redeemedDate.compareTo(a.redeemedDate));
     return isRedeemVisible
         ? Padding(
             padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
@@ -39,42 +39,58 @@ class RedeemHistoryTable extends StatelessWidget {
               height: 300,
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
-                child: DataTable(
-                  columns: const [
-                    DataColumn(
-                      label: Text(
-                        'Date',
-                        style: TextStyle(
-                            fontSize: 14.0, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    DataColumn(
-                      label: Text(
-                        'Reward',
-                        style: TextStyle(
-                            fontSize: 14.0, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    DataColumn(
-                      label: Text(
-                        'Spent',
-                        style: TextStyle(
-                            fontSize: 14.0, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ],
-                  rows: sortedRedeemHistory
-                      .map(
-                        (history) =>  DataRow(
-                          cells: [
-                            DataCell(Text(DateFormat('dd/MM/yyyy').format(history
-                                .redeemedDate))), // จัดรูปแบบวันที่เป็น "วัน/เดือน/ปี"
-                            DataCell(Text(truncateReward(getRewardTitle(history.rewardId)))), // แสดงชื่อประวัติการใช้งาน
-                            DataCell(Text(history.pointsSpent.toString())),
-                          ],
+                child: SizedBox(
+                  width: double.infinity,
+                  child: DataTable(
+                    columnSpacing: 40.0, // ปรับระยะห่างระหว่างคอลัมน์
+                    headingRowHeight: 40.0, // กำหนดความสูงของแถวหัวข้อ
+                    columns: const [
+                      DataColumn(
+                        label: Center(
+                          child: Text(
+                            'Date',
+                            style: TextStyle(
+                                fontSize: 14.0, fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.center,
+                          ),
                         ),
-                      )
-                      .toList(),
+                      ),
+                      DataColumn(
+                        label: Center(
+                          child: Text(
+                            'Reward',
+                            style: TextStyle(
+                                fontSize: 14.0, fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                      DataColumn(
+                        label: Center(
+                          child: Text(
+                            'Spent',
+                            style: TextStyle(
+                                fontSize: 14.0, fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    ],
+                    rows: sortedRedeemHistory
+                        .map(
+                          (history) => DataRow(
+                            cells: [
+                              DataCell(Text(DateFormat('dd/MM/yyyy').format(history
+                                  .redeemedDate))), // จัดรูปแบบวันที่เป็น "วัน/เดือน/ปี"
+                              DataCell(Text(truncateReward(getRewardTitle(
+                                  history
+                                      .rewardId)))), // แสดงชื่อประวัติการใช้งาน
+                              DataCell(Text(history.pointsSpent.toString())),
+                            ],
+                          ),
+                        )
+                        .toList(),
+                  ),
                 ),
               ),
             ),
