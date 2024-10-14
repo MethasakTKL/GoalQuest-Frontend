@@ -121,15 +121,22 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     }
   }
 
-  // _onSearchTaskEvent(SearchTaskEvent event, Emitter<TaskState> emit) async {
-  //   emit(LodingTaskState());
-  //   try {
-  //     final tasks = await taskRepository.searchTask(event.key);
-  //     emit(ReadyTaskState(tasks: tasks));
-  //   } catch (e) {
-  //     emit(ErrorTaskState(error: e.toString()));
-  //   }
-  // }
+//   _onSearchTaskEvent(SearchTaskEvent event, Emitter<TaskState> emit) async {
+//   try {
+//     // กรองรายการ tasks จาก state ที่มีอยู่แล้วตาม search query
+//     final filteredTasks = state.tasks.where((task) {
+//       return task.title.toLowerCase().contains(event..toLowerCase());
+//     }).toList();
+
+//     // ถ้าไม่มีอะไรค้นหา (searchQuery เป็นค่าว่าง) แสดง tasks ทั้งหมด
+//     final displayedTasks = event.searchQuery.isEmpty ? state.tasks : filteredTasks;
+
+//     // ส่งผลลัพธ์ไปให้ state
+//     emit(ReadyTaskState(tasks: displayedTasks));
+//   } catch (e) {
+//     emit(ErrorTaskState(error: e.toString()));
+//   }
+// }
 
   _onClickTaskEvent(ClickTaskEvent event, Emitter<TaskState> emit) async {
     emit(LodingTaskState());

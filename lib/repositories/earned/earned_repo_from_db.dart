@@ -10,9 +10,9 @@ class EarnedRepoFromDb extends EarnedRepository {
   final String baseUrl;
 
   // กำหนดค่า baseUrl
-  //HistoryRepoFromDb({this.baseUrl = '127.0.0.1'}); // iOS Simulator
-  // EarnedRepoFromDb({this.baseUrl = '10.0.2.2'}); // Android Simulator
-  EarnedRepoFromDb({this.baseUrl = 'https://goalquest-backend.onrender.com'});
+  // EarnedRepoFromDb({this.baseUrl = '127.0.0.1'}); // iOS Simulator
+  EarnedRepoFromDb({this.baseUrl = '10.0.2.2'}); // Android Simulator
+  // EarnedRepoFromDb({this.baseUrl = 'https://goalquest-backend.onrender.com'});
 
   @override
   Future<List<EarnedModel>> loadEarned() async {
@@ -21,8 +21,8 @@ class EarnedRepoFromDb extends EarnedRepository {
     if (accessToken == null) {
       throw Exception('No access token found');
     }
-
-    final url = Uri.parse('$baseUrl/earn_history/');
+    final url = Uri.parse('http://$baseUrl:8000/earn_history/');
+    // final url = Uri.parse('$baseUrl/earn_history/');
 
     try {
       final response = await http.get(

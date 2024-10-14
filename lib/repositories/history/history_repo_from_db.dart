@@ -10,8 +10,8 @@ class HistoryRepoFromDb extends HistoryRepository {
 
   // กำหนดค่า baseUrl
   // HistoryRepoFromDb({this.baseUrl = '127.0.0.1'}); // iOS Simulator
-  // HistoryRepoFromDb({this.baseUrl = '10.0.2.2'}); // Android Simulator
-  HistoryRepoFromDb({this.baseUrl = 'https://goalquest-backend.onrender.com'});
+  HistoryRepoFromDb({this.baseUrl = '10.0.2.2'}); // Android Simulator
+  // HistoryRepoFromDb({this.baseUrl = 'https://goalquest-backend.onrender.com'});
   @override
   Future<List<HistoryModel>> loadHistory() async {
     final accessToken = await storage.read(key: 'access_token');
@@ -19,8 +19,8 @@ class HistoryRepoFromDb extends HistoryRepository {
     if (accessToken == null) {
       throw Exception('No access token found');
     }
-
-    final url = Uri.parse('$baseUrl/redeems/history');
+    final url = Uri.parse('http://$baseUrl:8000/redeems/history');
+    // final url = Uri.parse('$baseUrl/redeems/history');
 
     try {
       final response = await http.get(

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:goal_quest/bloc/bloc.dart';
 import 'package:goal_quest/bottom_navigationbar/navigation_page.dart';
 import 'package:goal_quest/mockup/user_models_list.dart';
+import 'package:goal_quest/models/models.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -15,6 +16,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentUser = usersList[0];
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
@@ -75,12 +77,14 @@ class ProfilePage extends StatelessWidget {
                           child: Row(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(25, 15, 10, 10),
+                                padding:
+                                    const EdgeInsets.fromLTRB(25, 15, 10, 10),
                                 child: BlocBuilder<UserBloc, UserState>(
                                     builder: (context, state) {
                                   return Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         "${state.user.firstName} ${state.user.lastName}",
@@ -129,8 +133,8 @@ class ProfilePage extends StatelessWidget {
                                         ],
                                       ),
                                       Padding(
-                                        padding:
-                                            const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                        padding: const EdgeInsets.fromLTRB(
+                                            0, 10, 0, 0),
                                         child: Row(
                                           children: [
                                             ElevatedButton(
@@ -138,14 +142,16 @@ class ProfilePage extends StatelessWidget {
                                                 context
                                                     .read<UserBloc>()
                                                     .add(LogoutUserEvent());
-                                                Navigator.pushNamedAndRemoveUntil(
-                                                    context,
-                                                    '/login',
-                                                    (route) => false);
+                                                Navigator
+                                                    .pushNamedAndRemoveUntil(
+                                                        context,
+                                                        '/login',
+                                                        (route) => false);
                                               },
                                               style: ElevatedButton.styleFrom(
-                                                backgroundColor: const Color.fromARGB(
-                                                    156, 15, 15, 15),
+                                                backgroundColor:
+                                                    const Color.fromARGB(
+                                                        156, 15, 15, 15),
                                                 shape: RoundedRectangleBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(10),
@@ -173,58 +179,93 @@ class ProfilePage extends StatelessWidget {
                                             ),
                                             const SizedBox(width: 10),
                                             BlocBuilder<PointBloc, PointState>(
-                                                builder: (context, pointState) {
-                                              if (pointState is ReadyPointState) {
-                                                final currentUserPoint =
-                                                    pointState.points.firstWhere(
-                                                  (point) =>
-                                                      point.userId == state.user.id,
-                                                );
-                                                return Container(
-                                                  width: 120,
-                                                  height: 40,
-                                                  decoration: BoxDecoration(
-                                                    gradient: const LinearGradient(
-                                                      begin: Alignment.topLeft,
-                                                      end: Alignment.bottomRight,
-                                                      colors: [
-                                                        Color.fromARGB(255, 141, 66,
-                                                            245), // สีฟ้าจางๆ
-                                                        Color(
-                                                            0xFF0D47A1), // สีฟ้าเข้ม
-                                                      ],
+                                              builder: (context, pointState) {
+                                                if (pointState
+                                                    is ReadyPointState) {
+                                                  debugPrint(
+                                                      'Points list length: ${pointState.points.length}');
+                                                  debugPrint(
+                                                      'Current user ID: ${state.user.id}');
+                                                  final currentUserPoint =
+                                                      pointState.points
+                                                          .firstWhere(
+                                                    (point) =>
+                                                        point.userId ==
+                                                        state.user.id,
+                                                   
+                                                  );
+
+                                                  debugPrint(
+                                                      'Current user point: $currentUserPoint');
+
+                                                  return Container(
+                                                    width: 120,
+                                                    height: 40,
+                                                    decoration: BoxDecoration(
+                                                      gradient:
+                                                          const LinearGradient(
+                                                        begin:
+                                                            Alignment.topLeft,
+                                                        end: Alignment
+                                                            .bottomRight,
+                                                        colors: [
+                                                          Color.fromARGB(255,
+                                                              141, 66, 245),
+                                                          Color(0xFF0D47A1),
+                                                        ],
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
                                                     ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(10),
-                                                  ),
-                                                  child: Center(
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment.center,
-                                                      children: [
-                                                        const Icon(
-                                                          Icons.savings_outlined,
-                                                          size: 15,
-                                                          color: Color.fromARGB(
-                                                              255, 222, 222, 222),
-                                                        ),
-                                                        const SizedBox(width: 5),
-                                                        Text(
-                                                          '${currentUserPoint.totalPoint} Points',
-                                                          style: const TextStyle(
-                                                              color: Colors.white,
+                                                    child: Center(
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          const Icon(
+                                                            Icons
+                                                                .savings_outlined,
+                                                            size: 15,
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    222,
+                                                                    222,
+                                                                    222),
+                                                          ),
+                                                          const SizedBox(
+                                                              width: 5),
+                                                          Text(
+                                                            '${currentUserPoint.totalPoint} Points',
+                                                            style:
+                                                                const TextStyle(
+                                                              color:
+                                                                  Colors.white,
                                                               fontSize: 13,
                                                               fontWeight:
-                                                                  FontWeight.bold),
-                                                        ),
-                                                      ],
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
-                                                  ),
-                                                );
-                                              } else {
-                                                return const CircularProgressIndicator();
-                                              }
-                                            }),
+                                                  );
+                                                } else if (pointState
+                                                    is ErrorPointState) {
+                                                  debugPrint(
+                                                      'Error loading points: ${pointState.error}');
+                                                  return const Text(
+                                                      'Error loading points');
+                                                } else {
+                                                  debugPrint(
+                                                      'Loading points...');
+                                                  return const CircularProgressIndicator();
+                                                }
+                                              },
+                                            ),
                                           ],
                                         ),
                                       ),

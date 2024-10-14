@@ -66,35 +66,41 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }
 
   _onLogoutUser(LogoutUserEvent event, Emitter<UserState> emit) async {
-    emit(UserLoading()); // แสดงสถานะโหลด
+    emit(UserLoading()); // Show loading state
     try {
       await userRepository.logoutUser();
-      emit(UserInitial()); // ส่งสถานะเริ่มต้นหลังจากออกจากระบบ
+      emit(
+          UserInitial()); // Go back to the initial state after successful logout
     } catch (e) {
-      emit(UserFailure(error: e.toString())); // ส่งข้อผิดพลาด
+      emit(UserFailure(error: e.toString())); // Handle any errors during logout
     }
   }
 
   _onUpdateUser(UpdateUserEvent event, Emitter<UserState> emit) async {
-    if (state is AllUsersLoaded) {
-      try {
-        await userRepository.updateUser(
-          username: event.username,
-          firstName: event.firstName,
-          lastName: event.lastName,
-          email: event.email,
-        );
-        final updatedUser = await userRepository.getMeUser();
+  if (state is AllUsersLoaded) {
+    try {
+      await userRepository.updateUser(
+        username: event.username,
+        firstName: event.firstName,
+        lastName: event.lastName,
+        email: event.email,
+      );
+      final updatedUser = await userRepository.getMeUser();
 
-        emit(ReadyUserState(user: updatedUser));
+      emit(ReadyUserState(user: updatedUser));
+
+      // Ensure that the success state is emitted separately to avoid quick state transitions
+      Future.delayed(Duration.zero, () {
         emit(UserSuccess(message: 'User updated successfully'));
+      });
 
-        add(LoadUserEvent()); // เรียกโหลดผู้ใช้หลังจากกลับไปที่สถานะเริ่มต้น
-      } catch (e) {
-        emit(UserFailure(error: e.toString()));
-      }
+      // Refresh the user data by calling LoadUserEvent after the update
+      add(LoadUserEvent());
+    } catch (e) {
+      emit(UserFailure(error: e.toString()));
     }
   }
+}
 
   _onChangePassword(ChangePasswordEvent event, Emitter<UserState> emit) async {
     if (state is AllUsersLoaded) {

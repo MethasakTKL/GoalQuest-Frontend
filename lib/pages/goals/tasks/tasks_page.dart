@@ -130,9 +130,9 @@ class TasksPageState extends State<TasksPage> {
                               onTapOutside: (_) =>
                                   FocusScope.of(context).unfocus(),
                               onChanged: (key) {
-                                context
-                                    .read<TaskBloc>()
-                                    .add(SearchTaskEvent(key));
+                                // context
+                                //     .read<TaskBloc>()
+                                //     .add(SearchTaskEvent(key));
                               },
                               decoration: const InputDecoration(
                                 prefixIcon: Align(

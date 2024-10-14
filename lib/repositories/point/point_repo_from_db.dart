@@ -14,8 +14,8 @@ class PointRepoFromDb extends PointRepository {
 
   // กำหนดค่า baseUrl
   // PointRepoFromDb({this.baseUrl = '127.0.0.1'}); // iOS Simulator
-  // PointRepoFromDb({this.baseUrl = '10.0.2.2'}); // Android Simulator
-  PointRepoFromDb({this.baseUrl = 'https://goalquest-backend.onrender.com'});
+  PointRepoFromDb({this.baseUrl = '10.0.2.2'}); // Android Simulator
+  // PointRepoFromDb({this.baseUrl = 'https://goalquest-backend.onrender.com'});
 
   @override
   Future<PointModel> getCurrentUserPoint() async {
@@ -24,8 +24,8 @@ class PointRepoFromDb extends PointRepository {
     if (accessToken == null) {
       throw Exception('No access token found');
     }
-
-    final url = Uri.parse('$baseUrl/points/');
+    final url = Uri.parse('http://$baseUrl:8000/points/');
+    // final url = Uri.parse('$baseUrl/points/');
 
     try {
       final response = await http.get(
@@ -51,14 +51,15 @@ class PointRepoFromDb extends PointRepository {
     }
   }
 
+  @override
   Future<List<PointModel>> getAllPoints() async {
     final accessToken = await storage.read(key: 'access_token');
 
     if (accessToken == null) {
       throw Exception('No access token found');
     }
-
-    final url = Uri.parse('$baseUrl/points/all');
+    final url = Uri.parse('http://$baseUrl:8000/points/all');
+    // final url = Uri.parse('$baseUrl/points/all');
     try {
       final response = await http.get(
         url,
