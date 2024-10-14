@@ -12,9 +12,10 @@ class UserRepoFromDb extends UserRepository {
 
   final String baseUrl;
 
-  // กำหนดค่า baseUrl
-  //UserRepoFromDb({this.baseUrl = '127.0.0.1'}); // iOS Simulator
-  UserRepoFromDb({this.baseUrl = '10.0.2.2'}); // Android Simulator
+  // กำหนดค่า baseUrl ใหม่ให้เป็น URL ที่คุณต้องการ
+  UserRepoFromDb(
+      {this.baseUrl =
+          'https://goalquest-backend.onrender.com'}); // ใช้ URL ใหม่
 
   @override
   Future<String> createUser({
@@ -24,9 +25,9 @@ class UserRepoFromDb extends UserRepository {
     required String email,
     required String password,
   }) async {
-    final url = Uri.parse('http://$baseUrl:8000/users/');
+    final url = Uri.parse('$baseUrl/users/');
     final response = await http.post(url,
-        headers: {'Content-Type': 'application/json'},
+        headers: {'Content-Type': 'application/json;charset=utf-8'},
         body: json.encode({
           'username': username,
           'first_name': firstName,
@@ -46,7 +47,7 @@ class UserRepoFromDb extends UserRepository {
     required String username,
     required String password,
   }) async {
-    final url = Uri.parse('http://$baseUrl:8000/token');
+    final url = Uri.parse('$baseUrl/token');
     final response = await http.post(url,
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         body: ({
@@ -69,7 +70,7 @@ class UserRepoFromDb extends UserRepository {
 
   @override
   Future<UserModel> getMeUser() async {
-    final url = Uri.parse('http://$baseUrl:8000/users/me/');
+    final url = Uri.parse('$baseUrl/users/me/');
     final accessToken = await storage.read(key: 'access_token');
 
     if (accessToken == null) {
@@ -99,7 +100,7 @@ class UserRepoFromDb extends UserRepository {
     required String lastName,
     required String username,
   }) async {
-    final url = Uri.parse('http://$baseUrl:8000/users/edit-profile/');
+    final url = Uri.parse('$baseUrl/users/edit-profile/');
     final accessToken = await storage.read(key: 'access_token');
 
     if (accessToken == null) {
@@ -136,7 +137,7 @@ class UserRepoFromDb extends UserRepository {
     required String currentPassword,
     required String newPassword,
   }) async {
-    final url = Uri.parse('http://$baseUrl:8000/users/change-password/');
+    final url = Uri.parse('$baseUrl/users/change-password/');
     final accessToken = await storage.read(key: 'access_token');
 
     if (accessToken == null) {
@@ -187,7 +188,7 @@ class UserRepoFromDb extends UserRepository {
 
   @override
   Future<List<UserModel>> getAllUsers() async {
-    final url = Uri.parse('http://$baseUrl:8000/users/get-allUsers/');
+    final url = Uri.parse('$baseUrl/users/get-allUsers/');
 
     try {
       final response = await http.get(

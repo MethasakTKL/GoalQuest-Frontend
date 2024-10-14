@@ -13,8 +13,9 @@ class GoalRepoFromDb extends GoalRepository {
   final String baseUrl;
 
   // กำหนดค่า baseUrl
-  //RewardRepoFromDb({this.baseUrl = '127.0.0.1'}); // iOS Simulator
-  GoalRepoFromDb({this.baseUrl = '10.0.2.2'}); // Android Simulator
+  // GoalRepoFromDb({this.baseUrl = '127.0.0.1'}); // iOS Simulator
+  // GoalRepoFromDb({this.baseUrl = '10.0.2.2'}); // Android Simulator
+  GoalRepoFromDb({this.baseUrl = 'https://goalquest-backend.onrender.com'});
 
   @override
   Future<List<GoalModel>> loadGoal() async {
@@ -24,7 +25,7 @@ class GoalRepoFromDb extends GoalRepository {
       throw Exception('No access token found');
     }
 
-    final url = Uri.parse('http://$baseUrl:8000/goals/all_goal');
+    final url = Uri.parse('$baseUrl/goals/all_goal');
     try {
       final response = await http.get(
         url,
@@ -67,7 +68,7 @@ class GoalRepoFromDb extends GoalRepository {
       throw Exception('No access token found');
     }
 
-    final url = Uri.parse('http://$baseUrl:8000/goals/');
+    final url = Uri.parse('$baseUrl/goals/');
     final response = await http.post(url,
         headers: {
           'Content-Type': 'application/json',
@@ -102,7 +103,7 @@ class GoalRepoFromDb extends GoalRepository {
       throw Exception('No access token found');
     }
 
-    final url = Uri.parse('http://$baseUrl:8000/goals/$goalId');
+    final url = Uri.parse('$baseUrl/goals/$goalId');
     try {
       final response = await http.get(
         url,
@@ -148,7 +149,7 @@ class GoalRepoFromDb extends GoalRepository {
 
     final existingGoal = await getGoalId(goalId: goalId);
 
-    final url = Uri.parse('http://$baseUrl:8000/goals/$goalId');
+    final url = Uri.parse('$baseUrl/goals/$goalId');
     try {
       final response = await http.put(
         url,
@@ -188,7 +189,7 @@ class GoalRepoFromDb extends GoalRepository {
 
     debugPrint('Attempting to delete goal with id: $goalId');
 
-    final url = Uri.parse('http://$baseUrl:8000/goals/$goalId');
+    final url = Uri.parse('$baseUrl/goals/$goalId');
     try {
       final response = await http.delete(
         url,
