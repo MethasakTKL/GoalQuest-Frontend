@@ -15,6 +15,7 @@ class TodoQuestItem extends StatelessWidget {
   final Color cardColor;
   final ValueChanged<bool?>? onChanged;
   final int taskId;
+  final bool isReadOnly;  // เพิ่ม isReadOnly
 
   const TodoQuestItem({
     super.key,
@@ -30,6 +31,7 @@ class TodoQuestItem extends StatelessWidget {
     required this.taskCount,
     this.onChanged,
     required this.taskId,
+    required this.isReadOnly,  // รับค่าจากภายนอก
   });
 
   @override
@@ -41,6 +43,7 @@ class TodoQuestItem extends StatelessWidget {
     bool isComplete = taskCount >= repeatCount;
     final DateFormat dateFormat = DateFormat('d MMMM yyyy');
     final DateTime nextDueDate = dateFormat.parse(nextDue);
+
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
       child: Align(
@@ -49,8 +52,8 @@ class TodoQuestItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             GestureDetector(
-              onTap: isComplete || DateTime.now().isBefore(nextDueDate)
-                  ? null
+              onTap: isReadOnly || isComplete || DateTime.now().isBefore(nextDueDate) 
+                  ? null  // ถ้าเป็น ReadOnly จะไม่ให้กด
                   : () {
                       if (onChanged != null) {
                         onChanged!(!isChecked);
@@ -124,7 +127,10 @@ class TodoQuestItem extends StatelessWidget {
                     bottom: 0,
                     child: IconButton(
                       onPressed: () {
-                        showEditTaskDialog(context, taskId);
+                        // ตรวจสอบว่าไม่ให้แก้ไข task ถ้าเป็น ReadOnly
+                        if (!isReadOnly) {
+                          showEditTaskDialog(context, taskId);
+                        }
                       },
                       icon: const Icon(Icons.more_horiz),
                     ),
@@ -138,3 +144,4 @@ class TodoQuestItem extends StatelessWidget {
     );
   }
 }
+

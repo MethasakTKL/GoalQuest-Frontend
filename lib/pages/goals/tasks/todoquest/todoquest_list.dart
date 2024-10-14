@@ -128,6 +128,7 @@ class _TodoQuestListState extends State<TodoQuestList> {
                               task.id, DateTime.now()));
                         }
                       },
+                      isReadOnly: false,
                     );
                   },
                 ),
@@ -152,14 +153,13 @@ class _TodoQuestListState extends State<TodoQuestList> {
               itemCount: nextTasks.length,
               itemBuilder: (context, index) {
                 final task = nextTasks[index];
-                final isChecked = isCheckedMap[task.id] ?? false;
                 // Debug print task ID
                 debugPrint('Rendering TodoQuestItem with task ID: ${task.id}');
                 return TodoQuestItem(
                   key: ValueKey(task.id),
                   taskId: task.id,
                   cardColor: Colors.grey[300]!,
-                  isChecked: isChecked,
+                  isChecked: true,
                   title: task.title,
                   frequency: 'Every ${task.repeatDays} days',
                   lastDone: task.lastAction != null
@@ -177,19 +177,14 @@ class _TodoQuestListState extends State<TodoQuestList> {
                     context.read<TaskBloc>().add(ClickTaskEvent(
                         task.id, DateTime.now()));
                   },
+                  isReadOnly: true,
                 );
               },
             ),
           if (nextTasks.isEmpty && todayTasks.isEmpty)
             const Padding(
               padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-              child: Text(
-                'No TodoQuest',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey,
-                ),
-              ),
+              child:  SizedBox.shrink()
             ),
           if (completeTasks.isNotEmpty)
             Padding(
@@ -227,14 +222,13 @@ class _TodoQuestListState extends State<TodoQuestList> {
               itemCount: completeTasks.length,
               itemBuilder: (context, index) {
                 final task = completeTasks[index];
-                final isChecked = isCheckedMap[task.id] ?? false;
                 // Debug print task ID
                 debugPrint('Rendering TodoQuestItem with task ID: ${task.id}');
                 return TodoQuestItem(
                   key: ValueKey(task.id),
                   taskId: task.id,
                   cardColor: Colors.grey[300]!,
-                  isChecked: isChecked,
+                  isChecked: true,
                   title: task.title,
                   frequency: 'Every ${task.repeatDays} days',
                   lastDone: task.lastAction != null
@@ -252,6 +246,7 @@ class _TodoQuestListState extends State<TodoQuestList> {
                     context.read<TaskBloc>().add(ClickTaskEvent(
                         task.id, DateTime.now()));
                   },
+                  isReadOnly: true,
                 );
               },
             ),
