@@ -124,7 +124,7 @@ class RewardPage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 0),
             child: Center(
               child: Container(
-                height: 250,
+                height: 280,
                 width: 250,
                 decoration: const BoxDecoration(
                   shape: BoxShape.circle,
@@ -233,7 +233,7 @@ class RewardPage extends StatelessWidget {
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 10.0),
                           child: Container(
-                            height: 120,
+                            height: 150,
                             decoration: BoxDecoration(
                               color: Colors.grey[300],
                               borderRadius: BorderRadius.circular(10),
@@ -295,6 +295,10 @@ class RewardPage extends StatelessWidget {
                                             fontSize: 14,
                                             color: Colors.grey[600],
                                           ),
+                                          maxLines:
+                                              2, // กำหนดให้แสดงเพียง 3 บรรทัด
+                                          overflow: TextOverflow
+                                              .ellipsis, // ถ้าข้อความยาวเกินไปจะแสดงจุดไข่ปลา
                                         ),
                                       ],
                                     ),

@@ -230,7 +230,8 @@ class _NewTaskDialogState extends State<NewTaskDialog> {
           value: durationInput,
           dropdownColor: const Color.fromARGB(
               255, 255, 255, 255), // เปลี่ยนสีพื้นหลังของ Dropdown
-          items: [5, 10, 15, 30, 45, 60, 90, 100, 120, 150].map((int duration) {
+          items:
+              [1, 5, 10, 15, 30, 45, 60, 90, 100, 120, 150].map((int duration) {
             return DropdownMenuItem<int>(
               value: duration,
               child: Text(
