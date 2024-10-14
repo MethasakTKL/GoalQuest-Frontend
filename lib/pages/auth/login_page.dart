@@ -40,7 +40,8 @@ class _LoginPageState extends State<LoginPage> {
                         Colors.green, // เปลี่ยนสีของ SnackBar เป็นสีเขียว
                   ),
                 );
-                Navigator.pushNamed(context, '/bottom_navigation', arguments: state.user.id);
+                Navigator.pushNamed(context, '/bottom_navigation',
+                    arguments: state.user.id);
               });
             } else if (state is UserFailure) {
               SchedulerBinding.instance.addPostFrameCallback((_) {
@@ -222,15 +223,15 @@ class _LoginPageState extends State<LoginPage> {
                                     backgroundColor:
                                         const Color.fromARGB(255, 14, 176, 212),
                                     padding: const EdgeInsets.symmetric(
-                                        vertical: 20, horizontal: 120),
+                                        vertical: 20, horizontal: 110),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                   ),
                                   child: state is UserLoading
                                       ? const SizedBox(
-                                          width: 20,
-                                          height: 20,
+                                          width: 30,
+                                          height: 30,
                                           child: CircularProgressIndicator(
                                             valueColor:
                                                 AlwaysStoppedAnimation<Color>(
@@ -239,11 +240,13 @@ class _LoginPageState extends State<LoginPage> {
                                           ),
                                         )
                                       : const Text(
-                                          'Log in',
+                                          "Login",
                                           style: TextStyle(
-                                            fontSize: 18,
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.bold,
                                             color: Colors.white,
                                           ),
+                                          textAlign: TextAlign.center,
                                         ),
                                 ),
                               ],
